@@ -15,23 +15,17 @@ define([
 
     play : function(params){
 
-      // Handle the opentok session connection stuff
-      var self    = this;
-      var api_key = '44393472';
-      this.game   = {
-        session   : TB.initSession(params.session_id)
-      }
-      this.game.session.connect(api_key, params.token);
-
-      this.game.session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView());
-        subscribeToStreams(e.streams);
+      // View Handling
+      this.view = new GameView({
+        autoRender  : true,
+        region      : 'main'
+      });
+      var webcamview = new WebCamView({
+        autoRender  : true,
+        region      : 'notifier'
       });
 
-      this.game.session.on('streamCreated', function(e){
-        subscribeToStreams(e.streams);
-      });
-
+      // When new people join, this view gets built
       var createNewWatcherView = function(){
         var domID       = _.uniqueId('watcher_');
         var watcherView = new WatcherView({
@@ -43,37 +37,35 @@ define([
         return domID;
       };
 
-      var subscribeToStreams = function(streams) {
-        //if (!self.game.session) return;
+      // Connect to opentok
+      var self      = this;
+      var api_key   = '44393472';
+      var session   = TB.initSession(params.session_id)
+      session.connect(api_key, params.token);
 
-        console.log(streams);
+      // When connected, create self
+      session.on('sessionConnected', function(e){
+        var publisher = TB.initPublisher(api_key, createNewWatcherView());
+        session.publish(publisher);
+        subscribeToStreams(e.streams);
+      });
+
+      // Listen for others to join
+      session.on('streamCreated', function(e){
+        subscribeToStreams(e.streams);
+      });
+
+      // Cool working code
+      var subscribeToStreams = function(streams) {
+        if (!session) return;
 
         for (var i = 0; i < streams.length; i++) {
-            var stream = streams[i];
-            alert('new person')
-            console.log(stream);
-            console.log(self.game.session);
-            if (stream.connection.connectionId != self.game.session.connection.connectionId) {
-                self.game.session.subscribe(stream, createNewWatcherView());
-            }
+          var stream = streams[i];
+          if (stream.connection.connectionId != session.connection.connectionId) {
+            session.subscribe(stream, createNewWatcherView());
+          }
         }
-      }
-
-      var get_element_id_for_stream = function (stream) {
-        return 'viewer_' + self.game.player_count;
       };
-
-
-      // View handling
-      var webcamview = new WebCamView({
-        autoRender  : true,
-        region      : 'notifier'
-      });
-
-      this.view = new GameView({
-        autoRender  : true,
-        region      : 'main'
-      });
 
     }
 

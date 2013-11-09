@@ -45,7 +45,6 @@ define([
 
       socket.on('new_phrase', function(data){
         var cardModel = new Model(data);
-        console.log('card model', cardModel)
         var cardView  = new CardView({
           autoRender  : true,
           region      : 'card',

@@ -9,6 +9,11 @@ define([
   var gameController = Controller.extend({
 
     play : function(){
+      var webcamview = new WebCamView({
+        autoRender  : true,
+        region      : 'notifier'
+      });
+      
       this.view = new GameView({
         autoRender  : true,
         region      : 'main'

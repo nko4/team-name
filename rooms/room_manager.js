@@ -25,7 +25,7 @@ function RoomManager (io, name) {
 util.inherits(RoomManager, EventEmitter);
 
 RoomManager.prototype.get_user_room = function (user) {
-    var result = _.find(this.rooms, function (r) { return r.has_member(user); });
+    var result = _.find(this.rooms, function (r) { return r.has_player(user); });
     console.log(result ? 'existing room found' : 'existing room not found');
     return result;
 };
@@ -35,7 +35,7 @@ RoomManager.prototype.on_user_joined = function (user) {
 
     if (!room) {
         room = this.find_open_room();
-        room.add_member(user);
+        room.add_player(user);
     }
 
     return room;
@@ -58,7 +58,7 @@ RoomManager.prototype.on_user_left = function (user) {
     var room = this.get_user_room(user);
 
     if (room) {
-        room.remove_member(user);
+        room.remove_player(user);
     }
 };
 

@@ -7,6 +7,17 @@ var CHECK_QUEUE_INTERVAL = 300;
 var PHRASE_DURATION = 10 * 1000;
 var PHRASE_LIMIT = 3;
 
+var are_same = function (player1, player2) {
+    
+    if (!player1 && !player2)
+        return true;
+
+    if (player1 && player2) 
+        return player1.id = player2.id;
+
+    return false;
+};
+
 var log = function (message) {
     console.log(message);
 };
@@ -27,6 +38,7 @@ function Game (max_size, name) {
     this.phrase_history = [];
     this.current_phrase = null;
     this.is_started = true;
+    this.queue = [];
 }
 
 util.inherits(Game, EventEmitter);
@@ -36,7 +48,7 @@ Game.prototype.has_space = function () {
 };
 
 Game.prototype.add_player = function (player) {
-    if (this.has_member(player)) 
+    if (this.has_player(player)) 
         return;
     
     player.score = 0;
@@ -65,7 +77,7 @@ Game.prototype.add_player = function (player) {
 
     player.on('dequeue', function () {
         if (_(game.queue).contains(player)) {    
-            game.queue = _(game.queue).reject(function (e) { return e.id == player.id; });
+            game.queue = _(game.queue).reject(function (e) { return are_same(e, player); });
             game.message_players('queue_updated', queue);
         }
     });
@@ -80,19 +92,19 @@ Game.prototype.add_player = function (player) {
 };
 
 Game.prototype.remove_player = function (player) {
-    if (!this.has_member(player)) return;
+    if (!this.has_player(player)) return;
 
-    var is_on_stage = this.stage.player == player;
-    
+    var is_on_stage = are_same(this.stage.player, player);
+
     if (is_on_stage) {
         this.clear_stage();
     }
 
     this.players = _(this.players).reject(function (e) { return e.id == player.id; });
     
-    player.removeAllListeners('guess');
-    player.removeAllListeners('enqueue');
-    player.removeAllListeners('dequeue');
+    player.off('guess');
+    player.off('enqueue');
+    player.off('dequeue');
     
     this.message_players('players', this.players);
     
@@ -143,7 +155,7 @@ Game.prototype.next_phrase = function () {
 };
 
 Game.prototype.set_stage = function (p) {
-    if (this.stage.player == p) return;
+    if (are_same(this.stage.player, p)) return;
 
     this.stage.completed_phrases = 0;
     this.stage.player = p;
@@ -154,7 +166,7 @@ Game.prototype.set_stage = function (p) {
 Game.prototype.complete_phrase = function () {
     this.stage.completed_phrases++;
     this.message_players('phrase_complete', this.players);
-    
+
     var reached_limit = this.stage.completed_phrases >= PHRASE_LIMIT ;
     var others_waiting = this.queue.length > 0;
 
@@ -192,7 +204,7 @@ Game.prototype.start = function () {
         }
     }).bind(this), CHECK_QUEUE_INTERVAL);
 
-    this.message_players('start');
+    this.message_players('start', this.players);
     this.emit('start');
 };
 
@@ -203,11 +215,11 @@ Game.prototype.end = function () {
     this.is_started = false;
     this.clear_stage();
     this.queue = [];
-    this.message_players('end');
+    this.message_players('end', this.players);
     this.emit('end');
 };
 
-Game.prototype.has_member = function (m) {
+Game.prototype.has_player = function (m) {
     return _.chain(this.players).pluck('id').contains(m.id).value();
 };
 

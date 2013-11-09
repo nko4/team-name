@@ -9,8 +9,8 @@ body
 a
   color                 #00B7FF
 .vote
-    position            absolute
-    top                 1em
+    position            fixed
+    bottom              1em
     right               0
 h1
     @extends            .ir
@@ -27,3 +27,6 @@ h1
   transition            all 1s
   &.animate-in
     top                 0px
+#main-container
+  position              relative
+@import './game'

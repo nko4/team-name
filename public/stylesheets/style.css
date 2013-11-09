@@ -7,7 +7,7 @@ h1 {
   font-size: 1px;
 }
 body {
-  padding: 0 50px 50px;
+  padding: 0;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
   background: #fff url("../images/bg-body.png");
 }
@@ -15,8 +15,8 @@ a {
   color: #00b7ff;
 }
 .vote {
-  position: absolute;
-  top: 1em;
+  position: fixed;
+  bottom: 1em;
   right: 0;
 }
 h1 {
@@ -35,4 +35,13 @@ h1 {
 }
 #webcamReminder.animate-in {
   top: 0px;
+}
+#main-container {
+  position: relative;
+}
+.actor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

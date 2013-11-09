@@ -39,9 +39,12 @@ define([
       });
 
       guessinputview.on('guess', function (data) {
+        socket.emit('guess', data.guess);
+      });
+
+      socket.on('bad_guess', function (data) {
+        //data.player, guess
         guesshistoryview.addHistory(data.guess);
-        // send to server, if it's correct
-        // if its incorrect, add to guessed items
       });
 
       // When new people join, this view gets built

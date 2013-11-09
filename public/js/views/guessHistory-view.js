@@ -18,8 +18,8 @@ define([
     }
   });
 
-  view.prototype.init = function(){
-    Chaplin.View.prototype.init.apply(this, arguments);
+  view.prototype.initialize = function(){
+    Chaplin.View.prototype.initialize.apply(this, arguments);
     _.bindAll(this, 'addHistory');
   };
 

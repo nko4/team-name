@@ -26,10 +26,7 @@ define([
 
   view.prototype.killReminder = function(){
     var self = this;
-    $(this.el).removeClass('show');
-    setTimeout(function(){
-      $(self).dispose();
-    }, 500);
+    $(this.el).removeClass('animate-in');
   };
 
 

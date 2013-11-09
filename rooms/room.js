@@ -3,14 +3,10 @@ var _ = require('underscore');
 var PhraseStore = require('./phrase_store');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var TIME_stage = 2 * 60 * 1000;
-var CHECK_QUEUE_INTERVAL = 300;
-var PHRASE_DURATION = 45 * 1000;
-var PHRASE_LIMIT = 3;
+var config = require('../config');
 var phrase_store = new PhraseStore();
 
 var are_same = function (player1, player2) {
-    
     if (!player1 && !player2)
         return true;
 
@@ -153,7 +149,7 @@ Game.prototype.next_phrase = function () {
         set_on: new Date().getTime(),
         hint: p.hint,
         value: p.value,
-        duration: PHRASE_DURATION
+        duration: config.PHRASE_DURATION
     };
     
     var decorate_stage_player = function (player, o) {
@@ -189,7 +185,7 @@ Game.prototype.complete_phrase = function () {
     this.stage.completed_phrases++;
     this.message_players('phrase_complete', this.players);
 
-    var reached_limit = this.stage.completed_phrases >= PHRASE_LIMIT ;
+    var reached_limit = this.stage.completed_phrases >= config.PHRASE_LIMIT ;
     var others_waiting = this.queue.length > 0;
 
     if (reached_limit && others_waiting) {
@@ -218,13 +214,13 @@ Game.prototype.start = function () {
         if (this.queue.length > 0) {
             // If there's nobody on stage OR the player has been on stage long enough
             // This COULD boot somebody in the middle of a phrase for now
-            if (!this.stage.player || this.stage.completed_phrases >= PHRASE_LIMIT) {
+            if (!this.stage.player || this.stage.completed_phrases >= config.PHRASE_LIMIT) {
                 this.clear_stage();
                 this.set_stage(this.queue.shift());
                 this.next_phrase();
             }
         }
-    }).bind(this), CHECK_QUEUE_INTERVAL);
+    }).bind(this), config.CHECK_QUEUE_INTERVAL);
 
     this.message_players('start', this.players);
     this.emit('start');

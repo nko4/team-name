@@ -15,15 +15,16 @@ define([
     play : function(params){
 
       // Handle the opentok session connection stuff
+      //TB.setLogLevel(TB.NONE);
       var self    = this;
-      var api_key = "44393472";
+      var api_key = '44393472';
       this.game   = {
-        session   : TB.initSession(params.session_id),
-        publisher : TB.initPublisher(api_key, 'view_1')
+        session   : TB.initSession(params.session_id)
       }
       this.game.session.connect(api_key, params.token);
-      this.game.session.on("sessionConnected", on_session_connected);
-      this.game.session.on("streamCreated", on_stream_created);
+
+      self.game.session.on('sessionConnected', on_session_connected);
+      self.game.session.on('streamCreated', on_stream_created);
 
       // TODO - clean all this shit up a bit
       var log = function () {

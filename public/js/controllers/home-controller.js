@@ -9,6 +9,9 @@ define([
   var homeController = Controller.extend({
 
     intro : function(){
+
+      var self = this;
+
       this.view = new HomeView({
         autoRender  : true,
         region      : 'main'

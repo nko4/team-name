@@ -1,13 +1,19 @@
 require(['chaplin', 'config/routes', 'socketio'], function(Chaplin, routes, io){
 
-  console.log('start script');
   window.io = io;
   window.socket = io.connect()
+
+  // Wait for socket connection, then build the client side app
   socket.on('connect', function(){
-      var app = Chaplin.Application.extend({
-        title: 'Charades'
-      });
-      new app({ routes : routes, controllerSuffix : '-controller', root : '/ui' });
+    var app = Chaplin.Application.extend({
+      title: 'Charades'
+    });
+    new app({ routes : routes, controllerSuffix : '-controller', root : '/' });
+  });
+
+  // Session events act as new games, navigate to the correct game
+  socket.on('session', function (data) {
+    Chaplin.helpers.redirectTo('game#play', data);
   });
 
   // After going to sleep, some clients lose the socket connection.

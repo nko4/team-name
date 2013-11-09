@@ -11,7 +11,7 @@ define([
     play : function(){
       this.view = new GameView({
         autoRender  : true,
-        region      : 'notifier'
+        region      : 'main'
       });
     },
 

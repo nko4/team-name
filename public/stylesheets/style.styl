@@ -4,21 +4,25 @@
 
 body
   padding               0
-  font                  14px 'Lucida Grande', Helvetica, Arial, sans-serif
+  font                  14px $font_sans, 'Lucida Grande', Helvetica, Arial, sans-serif
   background            #fff url('../images/bg-body.png')
-a
-  color                 #00B7FF
-.vote
-  position            fixed
-  bottom              1em
-  right               0
+em
+  color                 $red
+  font-style            normal
 h1
-  @extends            .ir
-  background          transparent url('../images/txt-heading.png') no-repeat center center
-  margin-top          0
-  min-height          127px
-  min-width           776px
-  text-align          center
+  @extends              .ir
+  background            transparent url('../images/txt-heading.png') no-repeat center center
+  margin-top            0
+  min-height            127px
+  min-width             776px
+  text-align            center
+.vote
+  position              fixed
+  bottom                1em
+  right                 0
+.btn
+  border-radius         3px
+  box-shadow            1px 1px 2px rgba(#000, .25)
 #webcamReminder
   padding               5px
   color                 white
@@ -28,7 +32,7 @@ h1
   position              absolute
   transition            all 1s
   border-bottom         4px solid $blueingreen
-  box-shadow            0 2px 2px rgba(0,0,0,.3);
+  box-shadow            0 2px 2px rgba(0,0,0,.3)
   h2
     margin              5px 0
     text-align          right
@@ -48,4 +52,5 @@ h1
 #main-container
   position              relative
 
+@import './landing'
 @import './game'

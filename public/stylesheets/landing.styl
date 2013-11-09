@@ -1,0 +1,61 @@
+@-webkit-keyframes growshrink
+  0%    { height: 5px }
+  40%   { height: 20px }
+  80%   { height: 1px }
+  100%  { height: 5px }
+
+#introText
+  //background          rgba(red, .5)
+  font-size           2.4em
+  margin-top          40px
+  padding-top         20px
+  height              175px
+  text-align          justify
+
+#startPlaying
+  //background          rgba(blue, .5)
+  height              175px
+  text-align          center
+  .btn-start
+    position          relative
+
+.btn-start
+  font-size           1.8em
+  margin-top          50px
+  background-color    #fff
+  &:hover
+    i
+      -webkit-animation growshrink .25s
+
+.tastetherainbow
+  position          absolute
+  bottom            0
+  left              0
+  width             100%
+  min-height        5px
+  i
+    display         block
+    position        absolute
+    height          5px
+    bottom          0
+    width           20%
+    &:nth-child(1)
+      left                0
+      background-color    $colorSeries[0]
+      -webkit-animation-delay 0
+    &:nth-child(2)
+      left                20%
+      background-color    $colorSeries[1]
+      -webkit-animation-delay .05s
+    &:nth-child(3)
+      left                40%
+      background-color    $colorSeries[2]
+      -webkit-animation-delay .1s
+    &:nth-child(4)
+      left                60%
+      background-color    $colorSeries[3]
+      -webkit-animation-delay .15s
+    &:nth-child(5)
+      left                80%
+      background-color    $colorSeries[4]
+      -webkit-animation-delay .2s

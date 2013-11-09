@@ -13,7 +13,7 @@ define([
         autoRender  : true,
         region      : 'notifier'
       });
-      
+
       this.view = new GameView({
         autoRender  : true,
         region      : 'main'
@@ -23,4 +23,4 @@ define([
   });
 
   return gameController;
-})
+});

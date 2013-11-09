@@ -69,7 +69,8 @@ Game.prototype.add_player = function (player) {
             this.message_players('bad_guess', { player: player, guess: guess });
         }
         else {
-            this.message_players('correct_guess', { player: player, guess: guess });  
+            this.message_players('correct_guess', { player: player, guess: guess }); 
+            this.stage.player.score += this.current_phrase.value * 2; 
             player.score += this.current_phrase.value;
             this.complete_phrase();
         }

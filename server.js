@@ -54,4 +54,8 @@ http.createServer(app).listen(app.get('port'), function(){
         reconnectWait   : null,             // wait forever(or until the room is pruned)
         messages        : game.messages     // load the message responders
     });
+    
+    cloak.on('init', function(){
+        console.log('big ass vegan chili farts');
+    });
 });

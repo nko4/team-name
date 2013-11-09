@@ -6,7 +6,11 @@ define([
   'use strict';
 
   var view = View.extend({
-    template : template
+    template : template,
+    regions       : {
+      'watchers'   : '#watchers',
+      'actor'      : '#actor'
+    }
   });
 
   return view;

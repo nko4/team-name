@@ -38,15 +38,6 @@ define([
         region      : 'guessInput'
       });
 
-      guessinputview.on('guess', function (data) {
-        socket.emit('guess', data.guess);
-      });
-
-      socket.on('bad_guess', function (data) {
-        //data.player, guess
-        guesshistoryview.addHistory(data.guess);
-      });
-
       // When new people join, this view gets built
       var createNewWatcherView = function(uid){
         var domId = 'uid_' + uid;
@@ -55,6 +46,20 @@ define([
           region      : 'watchers',
         });
         watcherView.setDomId(domId);
+
+        socket.on('bad_guess', function (e) {
+          //data.player, guess
+          if (e.player.id === uid) {
+            guesshistoryview.addHistory(e.guess);
+          }
+        });
+
+        socket.on('correct_guess', function (e) {
+          //e.player, e.guess
+          if (e.player.id === uid) {
+            watcherView.trigger('correct_guess', e);
+          }
+        });
 
         return domId;
       };

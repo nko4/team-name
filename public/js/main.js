@@ -4,20 +4,17 @@ window.game = { session: null, publisher: null };
     var log = function () {
         var now = new Date();
         now = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "." + now.getMilliseconds();
-        arguments = [now].concat(arguments);
+        arguments = [now].concat(Array.prototype.slice.call(arguments, 0));
         console.log.apply(console, arguments);
     };
 
     $(document).ready(function () {
         cloak.configure({
             messages: {
-                begin_session: function (session_id, token) {
-                    console.log('begin session' + arguments);
-                }
+                begin_session: join_room
             }
         });
-        cloak.run("http://localhost:8080");
-        start();
+        cloak.run('http://' + window.location.hostname + ':8080');
     });
 
     function subscribe_to_streams(streams) {
@@ -51,11 +48,6 @@ window.game = { session: null, publisher: null };
         return id;
     };
 
-    var start = function () {
-        log('start');
-        join_room();
-    };
-
     var end = function () {
         game.session.off('sessionConnected');
         game.session.off('streamCreated');
@@ -63,10 +55,10 @@ window.game = { session: null, publisher: null };
         game = {};
     };
 
-    var join_room = function (room_id) {
+    var join_room = function (session_id, token) {
         var api_key = "44393472";
-        var session_id = room_id || "1_MX40NDM5MzQ3Mn5-RnJpIE5vdiAwOCAxODoyMzo1MyBQU1QgMjAxM34wLjU2OTE2NzF-";
-        var token = "T1==cGFydG5lcl9pZD00NDM5MzQ3MiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz00MDYzNzFjMTM4NDY1MmJmYWRmOTVlZmNkOWVlZTk3YTc2ZDQzNzk1OnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9MV9NWDQwTkRNNU16UTNNbjUtUm5KcElFNXZkaUF3T0NBeE9Eb3lNem8xTXlCUVUxUWdNakF4TTM0d0xqVTJPVEUyTnpGLSZjcmVhdGVfdGltZT0xMzgzOTYzODU5Jm5vbmNlPTAuMjI5NDU1MzkxNTM0NTUxMiZleHBpcmVfdGltZT0xMzg0MDUwMjU5JmNvbm5lY3Rpb25fZGF0YT0=";
+        session_id = session_id || "1_MX40NDM5MzQ3Mn5-RnJpIE5vdiAwOCAxODoyMzo1MyBQU1QgMjAxM34wLjU2OTE2NzF-";
+        token = token || "T1==cGFydG5lcl9pZD00NDM5MzQ3MiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz00MDYzNzFjMTM4NDY1MmJmYWRmOTVlZmNkOWVlZTk3YTc2ZDQzNzk1OnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9MV9NWDQwTkRNNU16UTNNbjUtUm5KcElFNXZkaUF3T0NBeE9Eb3lNem8xTXlCUVUxUWdNakF4TTM0d0xqVTJPVEUyTnpGLSZjcmVhdGVfdGltZT0xMzgzOTYzODU5Jm5vbmNlPTAuMjI5NDU1MzkxNTM0NTUxMiZleHBpcmVfdGltZT0xMzg0MDUwMjU5JmNvbm5lY3Rpb25fZGF0YT0=";
 
         log('Joining session ' + session_id);
 

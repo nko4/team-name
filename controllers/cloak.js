@@ -1,38 +1,30 @@
 var cloak = require('cloak');
-var _ = require('underscore');
-
+var eventemitter = require('events').EventEmitter;
+var util = require('util');
+/**
+ *  CloakServer is a wrapper around cloak server for our use
+ *  example use:
+ *  var CloakServer = require('./cloakserver.js');
+ *  var cs = new CloakServer({
+ *      <insert a valid cloak server config, see https://github.com/incompl/cloak/wiki/ServerConfiguration
+ *  })
+**/
 module.exports = (function() {
 
     CloakServer.name = 'CloakServer';
 
-    /**
-     *  CloakServer is a wrapper around cloak server for our use
-     *  example use:
-     *  var CloakServer = require('./cloakserver.js');
-     *  var cs = new CloakServer({
-     *      <insert a valid cloak server config, see https://github.com/incompl/cloak/wiki/ServerConfiguration
-     *  })
-    **/
     function CloakServer (options) {
         this.options = options || { port: 8080 };
         this.options.room = {
-            init: function () {
-                console.log('new room created', arguments);
-            },
-            close: function () {
-                console.log('roomm closed', arguments);
-            },
-            newMember: function () {
-                console.log('new room memeber', arguments);
-            },
-            memberLeaves: function () {
-                console.log('room member left', arguments);
-            }
+            init        : function () { this.emit('init', arguments); },
+            close       : function () { this.emit('close', arguments); },
+            newMember   : function () { this.emit('newMember', arguments); },
+            memberLeaves: function () { this.emit('memberLeaves', arguments); },
         };
 
         this.options.lobby = {
             init: function () {
-                console.log('Lobby created');
+                console.log('lobby init', arguments);
             },
             newMember: function () {
                 console.log('new lobby memeber', arguments);
@@ -45,6 +37,8 @@ module.exports = (function() {
         cloak.configure(this.options);
         this.run();
     }
+
+    util.inherits(CloakServer, eventemitter);
 
     CloakServer.prototype.run = function(){
         cloak.run();

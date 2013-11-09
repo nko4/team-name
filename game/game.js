@@ -121,6 +121,9 @@ Game.prototype.remove_player = function (player) {
 };
 
 Game.prototype.check_guess = function (guess) {
+    if (!this.current_phrase) 
+        return false;
+
     return (normalize_string(guess) === this.current_phrase.normalized);
 };
 

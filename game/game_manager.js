@@ -17,6 +17,10 @@ function GameManager (io) {
             game.on_player_joined(new Player(socket, data.name), data.game_name);
         });
 
+        socket.on('leave', function () {
+
+        });
+
         socket.on('disconnect', function () {
             game.on_player_left(new Player(socket));
         });

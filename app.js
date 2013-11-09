@@ -1,34 +1,18 @@
-// https://github.com/nko4/website/blob/master/module/README.md#nodejs-knockout-deploy-check-ins
-require('nko')('GyZ8DfzBgxFRPioc');
-var isProduction = (process.env.NODE_ENV === 'production');
-var http = require('http');
-var port = (isProduction ? 80 : 8000);
-var cloakPort = 8080;
+
+/**
+ * Module dependencies.
+ */
 
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var cloak = require('cloak');
-//var _ = require('underscore');
-
-// server.js
-cloak.configure({
-  port: cloakPort,
-  messages: {
-    chat: function(msg, user) {
-      user.getRoom().messageMembers('chat', msg);
-    }
-  }
-});
-
-cloak.run();
 
 var app = express();
 
 // all environments
-app.set('port', port);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -40,7 +24,6 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.directory(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only

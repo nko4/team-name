@@ -28,38 +28,6 @@ var normalize_string = function (val) {
     return (val || "").trim().toLowerCase().split(/\s+/).join('');
 };
 
-var make_guessable_string = function (val, percent) {
-    var result = "";
-    
-    var replace_at = function (s, index, character) {
-        return s.substr(0, index) + character + s.substr(index + character.length);
-    };
-    var get_random = function (max) {
-        return Math.floor(Math.random() * max);
-    };
-    var replaced = _(val.split(/\s+/)).map(function (p) {
-        var replace_random = function (s) {
-            var char_replaced = "_";
-            
-            do {
-                var i = get_random(s.length);
-            } while (s[i] != "_");
-
-
-            return replace_at(s, i, "_");
-        };
-
-        var replacement_count = Math.floor(percent * p.length);
-
-        for (var i = 0; i < replacement_count.length; i++) {
-            p = replace_random(p);
-        }
-        return p;
-    });
-
-    return replaced.join(" ");
-};
-
 var get_phrase = function (history) {
     return phrase_store.get_phrase(history);
 };
@@ -173,7 +141,7 @@ Game.prototype.next_phrase = function () {
         phrase: p,
         //these are public
         set_on: new Date().getTime(),
-        hint: make_guessable_string(p.phrase),
+        hint: p.hint,
         word_counts: _(parts).map(function (p) { return p.length; }),
         value: 1,
         duration: PHRASE_DURATION

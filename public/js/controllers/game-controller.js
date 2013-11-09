@@ -60,6 +60,10 @@ define([
         socket.emit('enqueue');
       });
 
+      socket.on('queue_updated', function(queue){
+        console.log('queue', queue);
+      });
+
       socket.on('new_phrase', function(data){
         var cardModel = new Model(data);
         $('#cardHint').html('');

@@ -5,7 +5,7 @@ var opentok = new OpenTok.OpenTokSDK(key, secret);
 
 module.exports = {
     get_session_id: function (key, cb) {
-        opentok.createSession('0.0.0.0', function (result) {
+        opentok.createSession('127.0.0.1', function (result) {
             cb(null, result);
         });
     },

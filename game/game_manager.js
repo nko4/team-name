@@ -12,8 +12,9 @@ function GameManager (io) {
     io.sockets.on('connection', (function (socket) {
         var game = this;
 
-        socket.on('join', function (game_name) {
-            game.on_player_joined(new Player(socket), game_name);
+        socket.on('join', function (data) {
+            data = data || {};
+            game.on_player_joined(new Player(socket, data.name), data.game_name);
         });
 
         socket.on('disconnect', function () {

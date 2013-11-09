@@ -1,6 +1,7 @@
-function User (socket) {
+function User (socket, name) {
     this.id = socket.id;
     this.score = 0;
+    this.name = name || socket.id.substring(0, 10);
     this.get_socket = function () {
     	return socket;
     };

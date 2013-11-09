@@ -40,6 +40,7 @@ if ('development' == app.get('env')) {
 
 // Routes
 app.get('/',                routes.index);
+app.get('/game/:id',        routes.index);
 app.get('/lobby',           game.lobby);
 app.get('/play',            game.play);
 

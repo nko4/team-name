@@ -203,12 +203,14 @@ h1 {
 #cardHint .hint {
   text-transform: uppercase;
   font-family: 'Inconsolata', 'monospace';
+  font-weight: bold;
   font-size: 40px;
   letter-spacing: 7px;
+  line-height: 135%;
 }
 #cardHint .hint-markers {
   position: absolute;
-  top: 6px;
+  top: 15px;
 }
 #cardHint h4 {
   margin-bottom: 0;

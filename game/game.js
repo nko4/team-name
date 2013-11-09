@@ -41,6 +41,14 @@ function Game (max_size, name) {
 
 util.inherits(Game, EventEmitter);
 
+Game.prototype.empty = function () {
+    return this.players.length == 0;
+};
+
+Game.prototype.destroy = function () {
+    this.end();
+};
+
 Game.prototype.has_space = function () {
     return this.players.length <= this.max_size;;
 };
@@ -116,16 +124,12 @@ Game.prototype.check_guess = function (guess) {
 };
 
 Game.prototype.message_players = function (message, data, extra) {
-    console.log(this.players);
-    console.log(message);
     this.players.forEach(function (p) {
         var new_data = _.clone(data || {});
         new_data.player_id = p.id;
         
         if (!!extra) {
-            console.log('extra', !!!extra);
             new_data = extra(p, new_data);
-            console.log('result', new_data);
         }
 
         p.emit(message, new_data);

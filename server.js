@@ -15,7 +15,7 @@ var CloakServer, cloak,
     opentok = require('./opentok'),
     _ = require('underscore'),
     io = require('socket.io').listen(server),
-    RoomManager = require('./rooms/room_manager');
+    GameManager = require('./game/game_manager');
 
 // all environments
     app.set('port', port);
@@ -47,9 +47,9 @@ app.get('/play',            game.play);
 // ROW-BRO!
 server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
-    var room_manager = new RoomManager(io);
+    var game_manager = new GameManager(io);
 
-    room_manager.on('game_created', function (game) {
+    game_manager.on('game_created', function (game) {
         var emit_to_players = function (message, args) {
             game.players.forEach(function (p) {
                 p.emit(message, args)

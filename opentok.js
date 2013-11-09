@@ -6,6 +6,7 @@ var sessions = {};
 
 module.exports = {
     get_session_id: function (key, cb) {
+        console.log(sessions);
         if (sessions[key])
             return cb(null, sessions[key]);
 

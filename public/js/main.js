@@ -8,14 +8,15 @@ window.game = { session: null, publisher: null };
         console.log.apply(console, arguments);
     };
 
-    $(document).ready(function () {
-        cloak.configure({
-            messages: {
-                begin_session: join_room
+    cloak.configure({
+        messages: {
+            begin_session: function (data) {
+                join_room(data.session_id, data.token);
             }
-        });
-        cloak.run('http://' + window.location.hostname + ':8080');
+        }
     });
+
+    cloak.run('http://' + window.location.hostname + ':8080');
 
     function subscribe_to_streams(streams) {
         if (!game.session)

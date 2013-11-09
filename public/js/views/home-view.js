@@ -6,7 +6,7 @@ define([
   'use strict';
 
   var view = View.extend({
-    template      : template
+    template : template
   });
 
   return view;

@@ -12,3 +12,11 @@ a {
   top: 1em;
   right: 0;
 }
+#webcamReminder {
+  top: -100px;
+  position: absolute;
+  transition: all 1s;
+}
+#webcamReminder.animate-in {
+  top: 0px;
+}

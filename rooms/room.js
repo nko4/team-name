@@ -5,7 +5,7 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var TIME_stage = 2 * 60 * 1000;
 var CHECK_QUEUE_INTERVAL = 300;
-var PHRASE_DURATION = 10 * 1000;
+var PHRASE_DURATION = 45 * 1000;
 var PHRASE_LIMIT = 3;
 var phrase_store = new PhraseStore();
 
@@ -123,7 +123,7 @@ Game.prototype.message_players = function (message, args, extra) {
     extra = extra || function (p, obj) { return obj; };
 
     this.players.forEach(function (p) {
-        var args = _.clone(args);
+        var args = _.clone(args || {});
         args.player_id = p.id;
         p.emit(message, extra(p, args));
     });
@@ -162,8 +162,6 @@ Game.prototype.next_phrase = function () {
         }
         return obj;
     });
-    
-    
 
     this.phrase_timeout = setTimeout((function () {
         this.complete_phrase();

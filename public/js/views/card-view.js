@@ -7,7 +7,8 @@ define([
   'use strict';
 
   var view = View.extend({
-    template : template
+    template : template,
+    className : 'card-container'
   });
 
   return view;

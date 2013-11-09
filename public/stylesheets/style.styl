@@ -3,7 +3,7 @@
 @import './mixins'
 
 body
-  padding               50px
+  padding               0 50px 50px
   font                  14px 'Lucida Grande', Helvetica, Arial, sans-serif
   background            #fff url('../images/bg-body.png')
 a
@@ -12,8 +12,13 @@ a
     position            absolute
     top                 1em
     right               0
-
-
+h1
+    @extends            .ir
+    background          transparent url('../images/txt-heading.png') no-repeat center center
+    margin-top          0
+    min-height          127px
+    min-width           776px
+    text-align          center
 #webcamReminder
   width                 100%
   background-color      $plumb

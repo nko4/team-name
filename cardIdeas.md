@@ -89,6 +89,7 @@
 * Hat trick
 * Indian giving
 * Shooting lasers
+* Dodging bullets
 * Photo finish
 * Birthday suit
 * Chatroulette
@@ -104,6 +105,7 @@
 * Below the belt
 * Peeping tom
 * Don't tase me bro
+* Eating corn on the cob
 * Yabba dabba doo
 * More cowbell
 * Taste the rainbow
@@ -136,6 +138,8 @@
 * farting in an elevator
 * light a firework out your butt
 * dust in the wind
+* if you like it then you shoulda put a ring on it
+* 
 
 
 

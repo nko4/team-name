@@ -141,6 +141,7 @@ Game.prototype.next_phrase = function () {
         phrase: p,
         //these are public
         set_on: new Date().getTime(),
+        hint: p.hint,
         word_counts: _(parts).map(function (p) { return p.length; }),
         value: 1,
         duration: PHRASE_DURATION
@@ -150,7 +151,8 @@ Game.prototype.next_phrase = function () {
         word_counts: this.current_phrase.word_counts,
         set_on: this.current_phrase.set_on,
         value: this.current_phrase.value,
-        duration: this.current_phrase.duration
+        duration: this.current_phrase.duration,
+        hint: this.current_phrase.hint
     }, function (player, obj) {
         if (are_same(player, this.stage.player)) {
             obj = _.clone(obj);

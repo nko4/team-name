@@ -1,5 +1,6 @@
 var phrases = require('../data/phrases');
 var _ = require('underscore');
+var config = require('../config');
 
 function PhraseStore () { };
 
@@ -10,7 +11,7 @@ PhraseStore.prototype.get_phrase = function (history) {
 };
 
 var generate_hint = function (val, percent) {
-	 percent = percent || 0.25;
+	 percent = percent || config.WORD_HINT_PERCENT;
 
     var replace_at = function (s, index, character) {
         return s.substr(0, index) + character + s.substr(index + character.length);

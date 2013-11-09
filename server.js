@@ -17,8 +17,8 @@ var cloak = require('cloak');
 cloak.configure({
   port: cloakPort,
   messages: {
-    chat: function(msg, user) {
-      user.getRoom().messageMembers('chat', msg);
+    get_room_id: function(msg, user) {
+      console.log('get room id called')
     }
   }
 });

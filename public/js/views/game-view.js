@@ -10,7 +10,9 @@ define([
     regions       : {
       'watchers'   : '#watchers',
       'actor'      : '#actor',
-      'card'       : '#cardHint'
+      'card'       : '#cardHint',
+      'guessInput': '#guessInput',
+      'guessHistory': '#guessHistory'
     },
     events : {
       'click .join-queue'       : 'joinQueue'

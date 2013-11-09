@@ -5,8 +5,10 @@ define([
   'views/game-view',
   'views/watcher-view',
   'views/webcamReminder-view',
+  'views/guessHistory-view',
+  'views/guessInput-view',
   'views/card-view',
-], function(Chaplin, Controller, Model, GameView, WatcherView, WebCamView, CardView){
+], function(Chaplin, Controller, Model, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -26,6 +28,20 @@ define([
       var webcamview = new WebCamView({
         autoRender  : true,
         region      : 'notifier'
+      });
+      var guesshistoryview = new GuessHistoryView({
+        autoRender  : true,
+        region      : 'guessHistory'
+      });
+      var guessinputview = new GuessInputView({
+        autoRender  : true,
+        region      : 'guessInput'
+      });
+
+      guessinputview.on('guess', function (data) {
+        guesshistoryview.addHistory(data.guess);
+        // send to server, if it's correct
+        // if its incorrect, add to guessed items
       });
 
       // When new people join, this view gets built
@@ -56,7 +72,7 @@ define([
 
       // Connect to opentok
       var api_key   = '44393472';
-      var session   = TB.initSession(params.session_id)
+      var session   = TB.initSession(params.session_id);
       session.connect(api_key, params.token);
 
       // When connected, create self

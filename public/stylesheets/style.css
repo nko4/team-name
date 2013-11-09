@@ -27,7 +27,7 @@ h1 {
   text-align: center;
 }
 #webcamReminder {
-  padding: 10px;
+  padding: 5px;
   color: #fff;
   width: 100%;
   background-color: #5c4b51;
@@ -37,30 +37,28 @@ h1 {
   border-bottom: 4px solid #8cbeb2;
   box-shadow: 0 2px 2px rgba(0,0,0,0.3);
 }
+#webcamReminder h2 {
+  margin: 5px 0;
+  text-align: right;
+  font-family: 'Yanone Kaffeesatz', 'Helvetica', sans-serif;
+  font-size: 22px;
+}
+#webcamReminder .arrow {
+  float: right;
+  width: 32px;
+  height: 30px;
+  background: url("../images/reminder-arrow.png") no-repeat;
+  margin: 1px 0 0 25px;
+}
+#webcamReminder a {
+  margin-left: 15px;
+  margin-top: 4px;
+}
 #webcamReminder.animate-in {
   top: 0px;
 }
 #main-container {
   position: relative;
-}
-#main-container h2 {
-  font-family: 'Yanone Kaffeesatz', 'Helvetica', sans-serif;
-  margin: 0;
-  text-align: right;
-  font-size: 18px;
-  padding-top: 5px;
-}
-#main-container a {
-  display: block;
-  padding-left: 10px;
-  float: right;
-}
-#main-container .arrow {
-  float: right;
-  margin-left: 20px;
-  background: url("../images/reminder-arrow.png") no-repeat;
-  width: 32px;
-  height: 30px;
 }
 .actor {
   position: absolute;

@@ -11,8 +11,11 @@ var CloakServer, cloak,
     isProduction = (process.env.NODE_ENV === 'production'),
     port = isProduction ? 80 : 8000,
     app = express(),
+    server = http.createServer(app),
     opentok = require('./opentok'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    io = require('socket.io').listen(server),
+    RoomManager = require('./room_manager');
 
 // all environments
 app.set('port', port);
@@ -41,37 +44,16 @@ app.get('/lobby',   game.lobby);
 app.get('/play',    game.play);
 
 // ROW-BRO!
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 
-    // Create / config CloakServer (sockets dawg!!!)
-    CloakServer = require('./controllers/cloak');
-    cloak = new CloakServer({
-        port            : 8080,
-        defaultRoomSize : 6,                // limiting to 6 per room for now
-        autoJoinLobby   : true,             // everyone is in the lobby by default
-        autoCreateRooms : true,             // new rooms when we need them
-        minRoomMembers  : 2,
-        pruneEmptyRooms : 600000,           // Empty rooms after 10 min
-        reconnectWait   : null,             // wait forever(or until the room is pruned)
-        messages        : game.messages     // load the message responders
-    });
+    var room_manager = new RoomManager(io);
 
-    cloak.on('init', function (room) {
+    room_manager.on('room_created', function (room) {
         opentok.get_session_id(room.name, function (err, session_id) {
-            room.session_id = session_id;
-            _.forEach(room.members, function (m) { begin_member_session(m, room.session_id) });
+            room.set_session_id(session_id, function (user) {
+                return opentok.get_token(session_id, user.id);
+            });
         });
     });
-
-    cloak.on('newMember', function (room, user) {
-        if (room.session_id) {
-            begin_member_session(user, room.session_id);
-        }
-    });
-
-    var begin_member_session = function (user, session_id) {
-        var token = opentok.get_token(session_id, user.id);
-        user.message('begin_session', { session_id: session_id, token: token });
-    }
 });

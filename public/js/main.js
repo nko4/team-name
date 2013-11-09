@@ -1,4 +1,4 @@
-window.game = { session: null, publisher: null };
+window.game = { session: null, publisher: null, player_count: 0 };
 
 (function (game) {
     var log = function () {
@@ -8,15 +8,14 @@ window.game = { session: null, publisher: null };
         console.log.apply(console, arguments);
     };
 
-    cloak.configure({
-        messages: {
-            begin_session: function (data) {
-                join_room(data.session_id, data.token);
-            }
-        }
-    });
+    var socket = game.socket = io.connect('/');
 
-    cloak.run('http://' + window.location.hostname + ':8080');
+    socket.emit('join');
+
+    socket.on('session', function (data) {
+        console.log('session created');
+        join_room(data.session_id, data.token);
+    });
 
     function subscribe_to_streams(streams) {
         if (!game.session)
@@ -32,9 +31,18 @@ window.game = { session: null, publisher: null };
     }
 
     function on_session_connected (event) {
+        game.player_count = event.connections.length;
         log('session created', event);
         game.session.publish(game.publisher);
         subscribe_to_streams(event.streams);
+    }
+
+    function on_connection_destroyed (event) {
+        game.player_count -= event.connections.length;
+    }
+
+    function on_connection_created (event) {
+        game.player_count += event.connections.length;
     }
 
     function on_stream_created(event) {
@@ -43,10 +51,7 @@ window.game = { session: null, publisher: null };
     }
 
     var get_element_id_for_stream = function (stream) {
-        log('get_element_id_for_stream');
-        var id = stream.connection.connectionId;
-        $('body').append($('<div id="' + id +'"></div>'));
-        return id;
+        return 'viewer_' + game.player_count;
     };
 
     var end = function () {
@@ -67,6 +72,9 @@ window.game = { session: null, publisher: null };
         game.publisher = TB.initPublisher(api_key);
         game.session = TB.initSession(session_id);
         game.session.connect(api_key, token);
+
+        game.session.on("connectionCreated", on_connection_created);
+        game.session.on("connectionDestroyed", on_connection_destroyed);
         game.session.on("sessionConnected",on_session_connected);
         game.session.on("streamCreated", on_stream_created);
     };

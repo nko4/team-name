@@ -15,7 +15,7 @@ var CloakServer, cloak,
     opentok = require('./opentok'),
     _ = require('underscore'),
     io = require('socket.io').listen(server),
-    RoomManager = require('./room_manager');
+    RoomManager = require('./rooms/room_manager');
 
 // all environments
     app.set('port', port);
@@ -43,28 +43,13 @@ app.get('/',                routes.index);
 app.get('/lobby',           game.lobby);
 app.get('/play',            game.play);
 
-
 // ROW-BRO!
-http.createServer(app).listen(app.get('port'), function () {
+server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
-
     var room_manager = new RoomManager(io);
-
     room_manager.on('room_created', function (room) {
         opentok.get_session_id(room.name, function (err, session_id) {
-            room.session_id = session_id;
-            _.forEach(room.members, function (m) { begin_member_session(m, room.session_id); });
+            room.set_session_id(session_id);
         });
     });
-
-    cloak.on('newMember', function (room, user) {
-        if (room.session_id) {
-            begin_member_session(user, room.session_id);
-        }
-    });
-
-    var begin_member_session = function (user, session_id) {
-        var token = opentok.get_token(session_id, user.id);
-        user.message('begin_session', { session_id: session_id, token: token });
-    };
 });

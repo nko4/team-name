@@ -1,4 +1,38 @@
-<div id='actor'></div>
-<div id='watchers'></div>
+<div id='actor' class='row'></div>
+<div id='watchers' class='row'></div>
 
 <a class='join-queue'>Join Queue</a>
+
+
+<div id='gameCtrls' class='row'>
+  <div class='col-md-6'>
+    <div id='cardHint'>
+      card hint
+      <h4 class='clearfix border-top'>
+        <span class='pull-right'>20 pts</span>
+      </h4>
+    </div>
+    <div id='guessHistory'>
+      <h4 class='border-bottom'>Incorrect Guesses</h4>
+      Guess History
+    </div>
+  </div>
+  <div class='col-md-6'>
+    <div id='guessInput'>
+      <h4 class='border-bottom'>Your Guess</h4>
+      <input class='form-control'><button>Guess!</button>
+    </div>
+    <div id='actorQueue'>
+      <h4 class='border-bottom'>
+        <div class='text pull-left'>Actor Queue</div>
+        <div class='progress progress-striped active'>
+          <div class='progress-bar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100' style='width: 45%'>
+            <span class='sr-only'>45% Complete</span>
+          </div>
+        </div>
+      </h4>
+      <input class='form-control'>
+    </div>
+  </div>
+
+</div>

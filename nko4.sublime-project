@@ -1,0 +1,28 @@
+{
+    "folders":
+    [
+        {
+            "path": "./",
+            "name": "nko4",
+            "file_exclude_patterns":
+            [
+                "*.sublime-*",
+                ".DS_Store",
+                ".gitignore",
+                ".nodemonignore",
+                ".jshintrc",
+                ".editorconfig",
+                ".bowerrc",
+                "deploy",
+                "deploy.conf",
+                "id_deploy",
+                "id_deploy.pub"
+            ],
+            "folder_exclude_patterns":
+            [
+                "node_modules",
+                ".tmp"
+            ]
+        }
+    ]
+}

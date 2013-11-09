@@ -48,19 +48,23 @@ define([
       });
 
       // When new people join, this view gets built
-      var createNewWatcherView = function(){
-        var domID       = _.uniqueId('watcher_');
+      var createNewWatcherView = function(uid){
+        var domId = 'uid_' + uid;
         var watcherView = new WatcherView({
           autoRender  : true,
           region      : 'watchers',
         });
-        watcherView.setDomId(domID);
+        watcherView.setDomId(domId);
 
-        return domID;
+        return domId;
       };
 
       this.subscribeEvent('joinQueue', function(){
         socket.emit('enqueue');
+      });
+
+      socket.on('queue_updated', function(queue){
+        console.log('queue', queue);
       });
 
       socket.on('new_phrase', function(data){
@@ -86,7 +90,7 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView(), vidOptions);
+        var publisher = TB.initPublisher(api_key, createNewWatcherView(session.connection.connectionId), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });
@@ -103,7 +107,7 @@ define([
         for (var i = 0; i < streams.length; i++) {
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
-            session.subscribe(stream, createNewWatcherView());
+            session.subscribe(stream, createNewWatcherView(stream.connection.connectionId));
           }
         }
       };

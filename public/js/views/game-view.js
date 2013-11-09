@@ -20,7 +20,6 @@ define([
   });
 
   view.prototype.joinQueue = function() {
-    console.log('clicked');
     this.publishEvent('joinQueue');
   };
 

@@ -123,13 +123,14 @@ Game.prototype.message_players = function (message, args, extra) {
     extra = extra || function (p, obj) { return obj; };
 
     this.players.forEach(function (p) {
-        p.emit(message, extra(args));
+        p.emit(message, extra(p, args));
     });
 };
 
 Game.prototype.next_phrase = function () {
     clearTimeout(this.phrase_timeout);
     var p = get_phrase(this.phrase_history);
+    var game = this;
     this.phrase_history.push(p);
 
     var parts = p.phrase.toLowerCase().split(/\s+/);
@@ -152,7 +153,7 @@ Game.prototype.next_phrase = function () {
         value: this.current_phrase.value,
         duration: this.current_phrase.duration
     }, function (player, obj) {
-        if (are_same(player, this.stage.player)) {
+        if (are_same(player, game.stage.player)) {
             obj = _.clone(obj);
             obj.phrase = p.phrase;
         }

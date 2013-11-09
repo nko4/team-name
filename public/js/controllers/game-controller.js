@@ -37,6 +37,14 @@ define([
         return domID;
       };
 
+      this.subscribeEvent('joinQueue', function(){
+        socket.emit('enqueue');
+      });
+
+      socket.on('new_phrase', function(data){
+        console.log(data);
+      });
+
       // Connect to opentok
       var self      = this;
       var api_key   = '44393472';

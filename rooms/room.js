@@ -73,14 +73,14 @@ Game.prototype.add_player = function (player) {
     player.on('enqueue', function () {
         if (!_(game.queue).contains(player)) {
             game.queue.push(player);
-            game.message_players('queue_updated', queue);
+            game.message_players('queue_updated', game.queue);
         }
     });
 
     player.on('dequeue', function () {
         if (_(game.queue).contains(player)) {    
             game.queue = _(game.queue).reject(function (e) { return are_same(e, player); });
-            game.message_players('queue_updated', queue);
+            game.message_players('queue_updated', game.queue);
         }
     });
 
@@ -148,7 +148,7 @@ Game.prototype.next_phrase = function () {
         word_counts: this.current_phrase.word_counts,
         set_on: this.current_phrase.set_on,
         value: this.current_phrase.value,
-        duration: thi.current_phrase.duration
+        duration: this.current_phrase.duration
     });
 
     this.phrase_timeout = setTimeout((function () {

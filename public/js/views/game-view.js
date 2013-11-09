@@ -10,8 +10,16 @@ define([
     regions       : {
       'watchers'   : '#watchers',
       'actor'      : '#actor'
+    },
+    events : {
+      'click .join-queue'       : 'joinQueue'
     }
   });
+
+  view.prototype.joinQueue = function() {
+    console.log('clicked');
+    this.publishEvent('joinQueue');
+  };
 
   return view;
 });

@@ -11,7 +11,7 @@ define([
     intro : function(){
       var view = new WebCamView({
         autoRender  : true,
-        region      : 'main'
+        region      : 'notifier'
       });
     },
 

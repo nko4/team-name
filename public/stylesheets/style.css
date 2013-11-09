@@ -14,6 +14,8 @@ a {
   right: 0;
 }
 #webcamReminder {
+  width: 100%;
+  background-color: #5c4b51;
   top: -100px;
   position: absolute;
   transition: all 1s;

@@ -6,9 +6,9 @@ define([
   var view = View.extend({
     container : 'body',
     id        : 'site-container',
-    className : 'container',
     template  : template,
     regions   : {
+      notifier  : '#notifier',
       main      : '#main-container'
     }
   });

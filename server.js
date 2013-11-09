@@ -58,8 +58,7 @@ server.listen(app.get('port'), function () {
 
         var send_token = function (p) {
             if (!game.session_id) return;
-
-            var token = opentok.get_token(this.session_id);
+            var token = opentok.get_token(game.session_id);
             p.emit('session', { session_id: game.session_id, token: token });
         };
 

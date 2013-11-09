@@ -1,31 +1,16 @@
 // https://github.com/nko4/website/blob/master/module/README.md#nodejs-knockout-deploy-check-ins
 require('nko')('GyZ8DfzBgxFRPioc');
-var isProduction = (process.env.NODE_ENV === 'production');
-var http = require('http');
-var port = (isProduction ? 80 : 8000);
-var cloakPort = 8080;
 
-var express = require('express');
-var routes = require('./routes');
-var game = require('./routes/game');
-var http = require('http');
-var path = require('path');
-var cloak = require('cloak');
-//var _ = require('underscore');
-
-// server.js
-cloak.configure({
-  port: cloakPort,
-  messages: {
-    get_room_id: function(msg, user) {
-      console.log('get room id called')
-    }
-  }
-});
-
-cloak.run();
-
-var app = express();
+// Modules & configs
+var CloakServer, cloak,
+    http = require('http'),
+    path = require('path'),
+    express = require('express'),
+    routes = require('./routes'),
+    game = require('./routes/game'),
+    isProduction = (process.env.NODE_ENV === 'production'),
+    port = isProduction ? 80 : 8000,
+    app = express();
 
 // all environments
 app.set('port', port);
@@ -49,11 +34,24 @@ if ('development' == app.get('env')) {
 }
 
 // Routes
-app.get('/', routes.index);
-app.get('/lobby', game.lobby);
-app.get('/play', game.play);
+app.get('/',        routes.index);
+app.get('/lobby',   game.lobby);
+app.get('/play',    game.play);
 
 // ROW-BRO!
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
+
+    // Create / config CloakServer (sockets dawg!!!)
+    CloakServer = require('./controllers/cloak');
+    cloak = new CloakServer({
+        port            : 8080,
+        defaultRoomSize : 6,                // limiting to 6 per room for now
+        autoJoinLobby   : true,             // everyone is in the lobby by default
+        autoCreateRooms : true,             // new rooms when we need them
+        minRoomMembers  : 2,
+        pruneEmptyRooms : 600000,           // Empty rooms after 10 min
+        reconnectWait   : null,             // wait forever(or until the room is pruned)
+        messages        : game.messages     // load the message responders
+    });
 });

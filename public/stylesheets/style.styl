@@ -20,10 +20,29 @@ h1
     min-width           776px
     text-align          center
 #webcamReminder
+  padding               10px
+  color                 white
   width                 100%
   background-color      $plumb
   top                   -100px
   position              absolute
   transition            all 1s
+  border-bottom         4px solid $blueingreen
+  box-shadow            0 2px 2px rgba(0,0,0,.3);
   &.animate-in
     top                 0px
+  h2
+    margin              0
+    text-align          right
+    font-size           18px
+    padding-top         5px
+  a
+    display             block
+    padding-left        10px
+    float               right
+  .arrow
+    float               right
+    margin-left         20px
+    background          url('../images/reminder-arrow.png') no-repeat
+    width               32px
+    height              30px

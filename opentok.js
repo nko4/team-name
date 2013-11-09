@@ -1,6 +1,6 @@
 var OpenTok = require('opentok');
-var key = '';    // Replace with your API key
-var secret = '';  // Replace with your API secret
+var key = env.TOKBOX_KEY;    // Replace with your API key
+var secret = env.TOKBOX_SECRET;  // Replace with your API secret
 var opentok = new OpenTok.OpenTokSDK(key, secret);
 
 module.exports = {

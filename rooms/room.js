@@ -15,7 +15,7 @@ var are_same = function (player1, player2) {
         return true;
 
     if (player1 && player2) 
-        return player1.id = player2.id;
+        return player1.id == player2.id;
 
     return false;
 };
@@ -71,14 +71,14 @@ Game.prototype.add_player = function (player) {
     }).bind(this));
 
     player.on('enqueue', function () {
-        if (!_(game.queue).contains(player)) {
+        if (!_.findWhere(game.queue, { id: player.id })) {
             game.queue.push(player);
             game.message_players('queue_updated', game.queue);
         }
     });
 
     player.on('dequeue', function () {
-        if (_(game.queue).contains(player)) {    
+        if (_.findWhere(game.queue, { id: player.id })) {    
             game.queue = _(game.queue).reject(function (e) { return are_same(e, player); });
             game.message_players('queue_updated', game.queue);
         }
@@ -119,13 +119,20 @@ Game.prototype.check_guess = function (guess) {
     return (normalize_string(guess) === this.current_phrase.normalized);
 };
 
-Game.prototype.message_players = function (message, args, extra) {
-    extra = extra || function (p, obj) { return obj; };
-
+Game.prototype.message_players = function (message, data, extra) {
+    console.log(this.players);
+    console.log(message);
     this.players.forEach(function (p) {
-        var args = _.clone(args || {});
-        args.player_id = p.id;
-        p.emit(message, extra(p, args));
+        var new_data = _.clone(data || {});
+        new_data.player_id = p.id;
+        
+        if (!!extra) {
+            console.log('extra', !!!extra);
+            new_data = extra(p, new_data);
+            console.log('result', new_data);
+        }
+
+        p.emit(message, new_data);
     });
 };
 
@@ -148,20 +155,21 @@ Game.prototype.next_phrase = function () {
         value: p.value,
         duration: PHRASE_DURATION
     };
-
+    
+    var decorate_stage_player = function (player, o) {
+        if (are_same(player, game.stage.player)) {
+            o = _.clone(o);
+            o.phrase = p.phrase;
+        }
+        return o;
+    };
+    
     this.message_players('new_phrase', {
-        word_counts: this.current_phrase.word_counts,
         set_on: this.current_phrase.set_on,
         value: this.current_phrase.value,
         duration: this.current_phrase.duration,
         hint: this.current_phrase.hint
-    }, function (player, obj) {
-        if (are_same(player, game.stage.player)) {
-            obj = _.clone(obj);
-            obj.phrase = p.phrase;
-        }
-        return obj;
-    });
+    }, decorate_stage_player);
 
     this.phrase_timeout = setTimeout((function () {
         this.complete_phrase();

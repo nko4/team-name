@@ -47,9 +47,33 @@ app.get('/play',            game.play);
 server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
     var room_manager = new RoomManager(io);
-    room_manager.on('room_created', function (room) {
-        opentok.get_session_id(room.name, function (err, session_id) {
-            room.set_session_id(session_id);
+
+    room_manager.on('game_created', function (game) {
+        var emit_to_players = function (message, args) {
+            game.players.forEach(function (p) {
+                p.emit(message, args)
+            });
+        };
+
+        var send_token = function (p) {
+            if (!game.session_id) return;
+
+            var token = opentok.get_token(this.session_id);
+            p.emit('session', { session_id: game.session_id, token: token });
+        };
+
+        game.on('player_joined', function (p) {
+            send_token(p);
+        });
+
+        game.on('session_joined', function () {
+            game.players.forEach(function (p) {
+                send_token(p);
+            });
+        }); 
+
+        opentok.get_session_id(game.name, function (err, session_id) {
+            game.set_session_id(session_id);
         });
     });
 });

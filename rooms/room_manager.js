@@ -48,7 +48,7 @@ RoomManager.prototype.find_open_room = function () {
     if (!room) {
         room = new Room(this.max_room_size, 'Room ' + this.rooms.length);
         this.rooms.push(room);
-        this.emit('room_created', room);
+        this.emit('game_created', room);
     }
 
     return room;

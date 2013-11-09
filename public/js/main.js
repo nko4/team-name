@@ -31,18 +31,9 @@ window.game = { session: null, publisher: null, player_count: 0 };
     }
 
     function on_session_connected (event) {
-        game.player_count = event.connections.length;
         log('session created', event);
         game.session.publish(game.publisher);
         subscribe_to_streams(event.streams);
-    }
-
-    function on_connection_destroyed (event) {
-        game.player_count -= event.connections.length;
-    }
-
-    function on_connection_created (event) {
-        game.player_count += event.connections.length;
     }
 
     function on_stream_created(event) {
@@ -69,13 +60,11 @@ window.game = { session: null, publisher: null, player_count: 0 };
         log('Joining session ' + session_id);
 
         TB.setLogLevel(TB.NONE);
-        game.publisher = TB.initPublisher(api_key);
+        game.publisher = TB.initPublisher(api_key, 'view_1');
         game.session = TB.initSession(session_id);
         game.session.connect(api_key, token);
 
-        game.session.on("connectionCreated", on_connection_created);
-        game.session.on("connectionDestroyed", on_connection_destroyed);
-        game.session.on("sessionConnected",on_session_connected);
+        game.session.on("sessionConnected", on_session_connected);
         game.session.on("streamCreated", on_stream_created);
     };
 })(window.game);

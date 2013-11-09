@@ -7,7 +7,7 @@ var cloakPort = 8080;
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var game = require('./routes/game');
 var http = require('http');
 var path = require('path');
 var cloak = require('cloak');
@@ -48,9 +48,12 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// Routes
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/lobby', game.lobby);
+app.get('/play', game.play);
 
+// ROW-BRO!
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

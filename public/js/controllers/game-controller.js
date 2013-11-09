@@ -2,8 +2,9 @@ define([
   'chaplin',
   'controllers/base/controller',
   'views/game-view',
+  'views/watcher-view',
   'views/webcamReminder-view'
-], function(Chaplin, Controller, GameView, WebCamView){
+], function(Chaplin, Controller, GameView, WatcherView, WebCamView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -22,22 +23,38 @@ define([
       }
       this.game.session.connect(api_key, params.token);
 
-      self.game.session.on('sessionConnected', function(e){
-        self.game.session.publish(self.game.publisher);
+      this.game.session.on('sessionConnected', function(e){
+        var publisher = TB.initPublisher(api_key, createNewWatcherView());
         subscribeToStreams(e.streams);
       });
 
-      self.game.session.on('streamCreated', function(e){
+      this.game.session.on('streamCreated', function(e){
         subscribeToStreams(e.streams);
       });
+
+      var createNewWatcherView = function(){
+        var domID       = _.uniqueId('watcher_');
+        var watcherView = new WatcherView({
+          autoRender  : true,
+          region      : 'watchers',
+        });
+        watcherView.setDomId(domID);
+
+        return domID;
+      };
 
       var subscribeToStreams = function(streams) {
-        if (!self.game.session) return;
+        //if (!self.game.session) return;
+
+        console.log(streams);
 
         for (var i = 0; i < streams.length; i++) {
             var stream = streams[i];
+            alert('new person')
+            console.log(stream);
+            console.log(self.game.session);
             if (stream.connection.connectionId != self.game.session.connection.connectionId) {
-                self.game.session.subscribe(stream, get_element_id_for_stream(stream));
+                self.game.session.subscribe(stream, createNewWatcherView());
             }
         }
       }
@@ -57,6 +74,7 @@ define([
         autoRender  : true,
         region      : 'main'
       });
+
     }
 
   });

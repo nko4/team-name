@@ -4,59 +4,79 @@
   80%   { height: 1px }
   100%  { height: 5px }
 
+
 #introText
-  //background          rgba(red, .5)
-  font-size           2.4em
-  margin-top          40px
-  padding-top         20px
-  height              175px
-  text-align          justify
+  margin-top              40px
+  padding-top             10px
+  height                  175px
+  text-align              justify
+  h3
+    font-size             2.4em
 
 #startPlaying
-  //background          rgba(blue, .5)
-  height              175px
-  text-align          center
-  .btn-start
-    position          relative
-    -webkit-transition        color 1s
+  height                  175px
+  text-align              center
+  .btn-text
+    color                 #444
+
+#instructions
+  height                  175px
+  h3
+    font-size             2.4em
+  li
+    font-size             1.4em
+    padding-left          1em
+    padding-bottom        .15em
+    &:before
+      margin-right        .5em
+      content             '*'
+
 
 .btn-start
-  font-size           1.8em
-  margin-top          50px
-  background-color    #fff
+  background-color      #fff
+  font-size             1.8em
+  margin-top            50px
+  padding-left          2em
+  padding-right         2em
+  position              relative
+  -webkit-transition    color 1s, box-shadow .25s, top .1s,  left .1s
   &:hover
+    top                 -2px
+    left                -2px
+    box-shadow          2px 2px 4px rgba(#000, .15)
     i
       -webkit-animation growshrink .25s
 
 .tastetherainbow
-  position          absolute
-  bottom            0
-  left              0
-  width             100%
-  min-height        5px
+  position                absolute
+  bottom                  0
+  left                    5%
+  right                   5%
+  width                   90%
+  min-height              5px
   i
-    display         block
-    position        absolute
-    height          5px
-    bottom          0
-    width           20%
+    display               block
+    position              absolute
+    height                5px
+    bottom                0
+    width                 20%
     &:nth-child(1)
-      left                0
-      background-color    $colorSeries[0]
+      left                    0
+      background-color        $colorSeries[0]
       -webkit-animation-delay 0
     &:nth-child(2)
-      left                20%
-      background-color    $colorSeries[1]
+      left                    20%
+      background-color        $colorSeries[1]
       -webkit-animation-delay .05s
     &:nth-child(3)
-      left                40%
-      background-color    $colorSeries[2]
+      left                    40%
+      background-color        $colorSeries[2]
       -webkit-animation-delay .1s
     &:nth-child(4)
-      left                60%
-      background-color    $colorSeries[3]
+      left                    60%
+      background-color        $colorSeries[3]
       -webkit-animation-delay .15s
     &:nth-child(5)
-      left                80%
-      background-color    $colorSeries[4]
+      left                    80%
+      background-color        $colorSeries[4]
       -webkit-animation-delay .2s

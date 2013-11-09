@@ -1,12 +1,51 @@
 @import './bootstrap.css'
 @import './bootstrap-theme.css'
+@import './mixins'
 
 body
-  padding               50px
-  font                  14px "Lucida Grande", Helvetica, Arial, sans-serif
+  padding               0
+  font                  14px 'Lucida Grande', Helvetica, Arial, sans-serif
+  background            #fff url('../images/bg-body.png')
 a
   color                 #00B7FF
 .vote
-    position            absolute
-    top                 1em
-    right               0
+  position            fixed
+  bottom              1em
+  right               0
+h1
+  @extends            .ir
+  background          transparent url('../images/txt-heading.png') no-repeat center center
+  margin-top          0
+  min-height          127px
+  min-width           776px
+  text-align          center
+#webcamReminder
+  padding               5px
+  color                 white
+  width                 100%
+  background-color      $plumb
+  top                   -100px
+  position              absolute
+  transition            all 1s
+  border-bottom         4px solid $blueingreen
+  box-shadow            0 2px 2px rgba(0,0,0,.3);
+  h2
+    margin              5px 0
+    text-align          right
+    font-family         $font_sans
+    font-size           22px
+  .arrow
+    float               right
+    width               32px
+    height              30px
+    background          url('../images/reminder-arrow.png') no-repeat
+    margin              1px 0 0 25px
+  a
+    margin-left         15px
+    margin-top          4px
+  &.animate-in
+    top                 0px
+#main-container
+  position              relative
+
+@import './game'

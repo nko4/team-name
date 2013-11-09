@@ -16,6 +16,7 @@ define([
     },
 
     play : function(params){
+      var self      = this;
 
       // View Handling
       this.view = new GameView({
@@ -45,6 +46,7 @@ define([
 
       socket.on('new_phrase', function(data){
         var cardModel = new Model(data);
+        $('#cardHint').html('');
         var cardView  = new CardView({
           autoRender  : true,
           region      : 'card',
@@ -53,7 +55,6 @@ define([
       });
 
       // Connect to opentok
-      var self      = this;
       var api_key   = '44393472';
       var session   = TB.initSession(params.session_id)
       session.connect(api_key, params.token);

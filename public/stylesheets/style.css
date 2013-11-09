@@ -188,7 +188,7 @@ h1 {
 #actorQueue {
   background-color: #fff;
   border-radius: 3px;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
 }
 #cardHint .card-container,
 #cardHint .phrase-container {

@@ -124,7 +124,7 @@
 * cool, a lightsaber
 * overdoing it
 * making a sandwich with your feet
-* i am a coccoon
+* coccoon
 * choking to death
 * eating tacos
 * dig to china
@@ -139,7 +139,13 @@
 * light a firework out your butt
 * dust in the wind
 * if you like it then you shoulda put a ring on it
-* 
+* picking up dog poop
+* sharting
+* hot dog eating contest
+* birth of a butterly
+* the miracle of birth
+* white guy dancing
+* what the fox say
 
 
 

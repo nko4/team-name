@@ -252,3 +252,32 @@ h4.border-top {
 h4.border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
+#watchers {
+  position: relative;
+  height: 510px;
+}
+#watchers .watcher {
+  position: absolute;
+  left: 15px;
+}
+#watchers .watcher:nth-child(even) {
+  left: auto;
+  right: 15px;
+}
+#watchers .watcher:nth-child(1),
+#watchers .watcher:nth-child(2) {
+  top: 0;
+}
+#watchers .watcher:nth-child(3),
+#watchers .watcher:nth-child(4) {
+  top: 175px;
+}
+#watchers .watcher:nth-child(5),
+#watchers .watcher:nth-child(6) {
+  top: 350px;
+}
+#watchers .thumbnail {
+  overflow: hidden;
+  width: 160px;
+  height: 160px;
+}

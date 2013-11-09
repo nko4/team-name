@@ -7,11 +7,11 @@ define([
 
   var view = View.extend({
     template  : template,
-    className : 'col-sm-6 col-md-3'
+    className : 'watcher'
   });
 
   view.prototype.setDomId = function(id){
-    $(this.el).find('.thumbnail').attr('id', id);
+    $(this.el).find('.video').attr('id', id);
   }
 
 

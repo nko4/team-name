@@ -15,6 +15,33 @@ module.exports = (function() {
     **/
     function CloakServer (options) {
         this.options = options || { port: 8080 };
+        this.options.room = {
+            init: function () {
+                console.log('new room created', arguments);
+            },
+            close: function () {
+                console.log('roomm closed', arguments);
+            },
+            newMember: function () {
+                console.log('new room memeber', arguments);
+            },
+            memberLeaves: function () {
+                console.log('room member left', arguments);
+            }
+        };
+
+        this.options.lobby = {
+            init: function () {
+                console.log('Lobby created');
+            },
+            newMember: function () {
+                console.log('new lobby memeber', arguments);
+            },
+            memberLeaves: function () {
+                console.log('lobby member left', arguments);
+            }
+        };
+
         cloak.configure(this.options);
         this.run();
     }

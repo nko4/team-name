@@ -15,6 +15,12 @@ em {
   color: #f06060;
   font-style: normal;
 }
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Yanone Kaffeesatz', 'Helvetica', sans-serif, 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
 h1 {
   background: transparent url("../images/txt-heading.png") no-repeat center center;
   margin-top: 0;
@@ -83,24 +89,49 @@ h1 {
   }
 }
 #introText {
-  font-size: 2.4em;
   margin-top: 40px;
-  padding-top: 20px;
+  padding-top: 10px;
   height: 175px;
   text-align: justify;
+}
+#introText h3 {
+  font-size: 2.4em;
 }
 #startPlaying {
   height: 175px;
   text-align: center;
 }
-#startPlaying .btn-start {
-  position: relative;
-  -webkit-transition: color 1s;
+#startPlaying .btn-text {
+  color: #444;
+}
+#instructions {
+  height: 175px;
+}
+#instructions h3 {
+  font-size: 2.4em;
+}
+#instructions li {
+  font-size: 1.4em;
+  padding-left: 1em;
+  padding-bottom: 0.15em;
+}
+#instructions li:before {
+  margin-right: 0.5em;
+  content: '*';
 }
 .btn-start {
+  background-color: #fff;
   font-size: 1.8em;
   margin-top: 50px;
-  background-color: #fff;
+  padding-left: 2em;
+  padding-right: 2em;
+  position: relative;
+  -webkit-transition: color 1s, box-shadow 0.25s, top 0.1s, left 0.1s;
+}
+.btn-start:hover {
+  top: -2px;
+  left: -2px;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
 }
 .btn-start:hover i {
   -webkit-animation: growshrink 0.25s;
@@ -108,8 +139,9 @@ h1 {
 .tastetherainbow {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 5%;
+  right: 5%;
+  width: 90%;
   min-height: 5px;
 }
 .tastetherainbow i {

@@ -9,7 +9,8 @@ define([
     template : template,
     regions       : {
       'watchers'   : '#watchers',
-      'actor'      : '#actor'
+      'actor'      : '#actor',
+      'card'       : '#cardHint'
     },
     events : {
       'click .join-queue'       : 'joinQueue'

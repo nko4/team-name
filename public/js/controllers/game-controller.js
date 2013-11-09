@@ -1,10 +1,12 @@
 define([
   'chaplin',
   'controllers/base/controller',
+  'models/base/model',
   'views/game-view',
   'views/watcher-view',
-  'views/webcamReminder-view'
-], function(Chaplin, Controller, GameView, WatcherView, WebCamView){
+  'views/webcamReminder-view',
+  'views/card-view',
+], function(Chaplin, Controller, Model, GameView, WatcherView, WebCamView, CardView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -42,7 +44,13 @@ define([
       });
 
       socket.on('new_phrase', function(data){
-        console.log(data);
+        var cardModel = new Model(data);
+        console.log('card model', cardModel)
+        var cardView  = new CardView({
+          autoRender  : true,
+          region      : 'card',
+          model       : cardModel
+        });
       });
 
       // Connect to opentok

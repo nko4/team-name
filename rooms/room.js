@@ -125,13 +125,14 @@ Game.prototype.message_players = function (message, args, extra) {
     this.players.forEach(function (p) {
         var args = _.clone(args);
         args.player_id = p.id;
-        p.emit(message, extra(args));
+        p.emit(message, extra(p, args));
     });
 };
 
 Game.prototype.next_phrase = function () {
     clearTimeout(this.phrase_timeout);
     var p = get_phrase(this.phrase_history);
+    var game = this;
     this.phrase_history.push(p);
 
     var parts = p.phrase.toLowerCase().split(/\s+/);
@@ -155,7 +156,7 @@ Game.prototype.next_phrase = function () {
         duration: this.current_phrase.duration,
         hint: this.current_phrase.hint
     }, function (player, obj) {
-        if (are_same(player, this.stage.player)) {
+        if (are_same(player, game.stage.player)) {
             obj = _.clone(obj);
             obj.phrase = p.phrase;
         }

@@ -9,7 +9,7 @@ define([
   var homeController = Controller.extend({
 
     intro : function(){
-      var view = new WebCamView({
+      this.view = new WebCamView({
         autoRender  : true,
         region      : 'notifier'
       });

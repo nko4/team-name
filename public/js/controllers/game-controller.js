@@ -60,8 +60,14 @@ define([
       session.connect(api_key, params.token);
 
       // When connected, create self
+      var vidOptions = {
+        publishAudio  : false,
+        publishVideo  : true,
+        width         : 150,
+        height        : 150
+      };
       session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView());
+        var publisher = TB.initPublisher(api_key, createNewWatcherView(), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });

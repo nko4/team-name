@@ -59,3 +59,24 @@ h4
     border-top      1px solid #e5e5e5
   &.border-bottom
     border-bottom   1px solid #e5e5e5
+
+#watchers
+  position          relative
+  height            510px
+  .watcher
+    position        absolute
+    left            15px
+    &:nth-child(even)
+      left          auto
+      right         15px
+    &:nth-child(1), &:nth-child(2)
+      top           0
+    &:nth-child(3), &:nth-child(4)
+      top           175px
+    &:nth-child(5), &:nth-child(6)
+      top           350px
+
+  .thumbnail
+    overflow        hidden
+    width           160px
+    height          160px

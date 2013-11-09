@@ -56,7 +56,7 @@ h1 {
   margin: 1px 0 0 25px;
 }
 #webcamReminder a {
-  margin-left: 15px;
+  margin-left: 25px;
   margin-top: 4px;
 }
 #webcamReminder.animate-in {
@@ -95,6 +95,7 @@ h1 {
 }
 #startPlaying .btn-start {
   position: relative;
+  -webkit-transition: color 1s;
 }
 .btn-start {
   font-size: 1.8em;

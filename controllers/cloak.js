@@ -15,11 +15,12 @@ module.exports = (function() {
 
     function CloakServer (options) {
         this.options = options || { port: 8080 };
+        var that = this;
         this.options.room = {
-            init        : function () { this.emit('init', arguments); },
-            close       : function () { this.emit('close', arguments); },
-            newMember   : function () { this.emit('newMember', arguments); },
-            memberLeaves: function () { this.emit('memberLeaves', arguments); },
+            init        : function () { that.emit.apply(that, ['init', this].concat(Array.prototype.slice.call(arguments, 0))); },
+            close       : function () { that.emit.apply(that, ['close', this].concat(Array.prototype.slice.call(arguments, 0))); },
+            newMember   : function () { that.emit.apply(that, ['newMember', this].concat(Array.prototype.slice.call(arguments, 0))); },
+            memberLeaves: function () { that.emit.apply(that, ['memberLeaves', this].concat(Array.prototype.slice.call(arguments, 0))); }
         };
 
         this.options.lobby = {

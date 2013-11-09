@@ -10,7 +10,8 @@ var CloakServer, cloak,
     game = require('./routes/game'),
     isProduction = (process.env.NODE_ENV === 'production'),
     port = isProduction ? 80 : 8000,
-    app = express();
+    app = express(),
+    opentok = require('./opentok');
 
 // all environments
 app.set('port', port);
@@ -49,13 +50,17 @@ http.createServer(app).listen(app.get('port'), function(){
         defaultRoomSize : 6,                // limiting to 6 per room for now
         autoJoinLobby   : true,             // everyone is in the lobby by default
         autoCreateRooms : true,             // new rooms when we need them
-        minRoomMembers  : 2,
+        minRoomMembers  : 1,
         pruneEmptyRooms : 600000,           // Empty rooms after 10 min
         reconnectWait   : null,             // wait forever(or until the room is pruned)
         messages        : game.messages     // load the message responders
     });
-    
-    cloak.on('init', function(){
-        console.log('big ass vegan chili farts');
+
+    cloak.on('newMember', function (room, user) {
+        console.log(user)
+        opentok.get_session_id(room.name, function (err, session_id) {
+            var token = opentok.get_token(session_id, user.id);
+            user.message('begin_session', session_id, token);
+        });
     });
 });

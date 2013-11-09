@@ -9,6 +9,14 @@ window.game = { session: null, publisher: null };
     };
 
     $(document).ready(function () {
+        cloak.configure({
+            messages: {
+                begin_session: function (session_id, token) {
+                    console.log('begin session' + arguments);
+                }
+            }
+        });
+        cloak.run("http://localhost:8080");
         start();
     });
 
@@ -21,7 +29,6 @@ window.game = { session: null, publisher: null };
             if (stream.connection.connectionId != game.session.connection.connectionId) {
                 game.session.subscribe(stream, get_element_id_for_stream(stream));
                 log('subscribing to stream ', stream);
-
             }
         }
     }

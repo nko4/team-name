@@ -6,16 +6,15 @@ var sessions = {};
 
 module.exports = {
     get_session_id: function (key, cb) {
-        console.log(sessions);
         if (sessions[key])
             return cb(null, sessions[key]);
 
-        opentok.createSession("127.0.0.1", {'p2p.preference':'enabled'}, function (result) {
+        opentok.createSession("127.0.0.1", function (result) {
             sessions[key] = result;
             cb(null, result);
         });
     },
-    get_token: function(session_id, user_id) {
-        return opentok.generateToken({session_id: session_id, 'role': "publisher", connection_data: 'user_id:' + user_id });
+    get_token: function(session_id) {
+        return opentok.generateToken({session_id: session_id, 'role': "publisher" });
     }
 };

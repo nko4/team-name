@@ -15,13 +15,18 @@
     </div>
     <div id='guessHistory'>
       <h4 class='border-bottom'>Incorrect Guesses</h4>
-      Guess History
+      <p class='historyLog'>A one-legged ninja, white raddish, smiling at strangers, bourgeois fantasy, that hand thing</p>
     </div>
   </div>
   <div class='col-md-6'>
-    <div id='guessInput'>
+    <div id='guessInput' class='clearfix'>
       <h4 class='border-bottom'>Your Guess</h4>
-      <input class='form-control'><button>Guess!</button>
+      <div class='col-md-9'>
+        <input type='email' class='form-control' id='userGuess' placeholder='Enter guess'>
+      </div>
+      <div class='col-md-3'>
+        <button type='submit' class='btn btn-default col-md-12'>Guess!</button>
+      </div>
     </div>
     <div id='actorQueue'>
       <h4 class='border-bottom'>
@@ -32,7 +37,30 @@
           </div>
         </div>
       </h4>
-      <input class='form-control'>
+      <div class='thumbnails'>
+        <div class='row'>
+          <div class='col-sm-6 col-md-3'>
+            <a href='#' class='thumbnail'>
+              <img src='http://placekitten.com/100/100' alt=''>
+            </a>
+          </div>
+          <div class='col-sm-6 col-md-3'>
+            <a href='#' class='thumbnail'>
+              <img src='http://placekitten.com/100/100' alt=''>
+            </a>
+          </div>
+          <div class='col-sm-6 col-md-3'>
+            <a href='#' class='thumbnail'>
+              <img src='http://placekitten.com/100/100' alt=''>
+            </a>
+          </div>
+          <div class='col-sm-6 col-md-3'>
+            <a href='#' class='thumbnail'>
+              <img src='http://placekitten.com/100/100' alt=''>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

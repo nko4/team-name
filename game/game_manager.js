@@ -11,9 +11,11 @@ function GameManager (io) {
 
     io.sockets.on('connection', (function (socket) {
         var game = this;
-        socket.on('join', function () {
-            game.on_player_joined(new Player(socket));
+
+        socket.on('join', function (game_name) {
+            game.on_player_joined(new Player(socket), game_name);
         });
+
         socket.on('disconnect', function () {
             game.on_player_left(new Player(socket));
         });
@@ -22,35 +24,75 @@ function GameManager (io) {
 
 util.inherits(GameManager, EventEmitter);
 
-GameManager.prototype.find_game = function (p) {
+GameManager.prototype.find_game_by_player = function (p) {
     return _.find(this.games, function (r) { return r.has_player(p); });
 };
 
-GameManager.prototype.on_player_joined = function (p) {
-    var game = this.find_game(p);
+GameManager.prototype.get_named_game = function (name) {
+    var game = _.find(this.games, function (g) { return g.name.toLowerCase() == name.toLowerCase(); });
 
     if (!game) {
-        game = this.get_open_game();
+        game = this.create_game(name, true);
+    } 
+
+    return game;
+};
+
+
+GameManager.prototype.get_public_game = function () {
+    var game = _.find(this.games, function (r) { return !r.private && r.has_space(); });
+
+    if (!game) {
+        game = this.create_game('Game ' + this.games.length, false);
+    }
+
+    return game;
+};
+
+GameManager.prototype.create_game = function (name, private) {
+    var game = new Game(config.MAX_GAME_SIZE, name);
+    game.private = private;
+    this.games.push(game);
+    this.emit('game_created', game);
+    return game;
+};
+
+GameManager.prototype.on_player_joined = function (p, game_name) {
+    var game = this.find_game_by_player(p);
+    
+    // If the user is currently in a game
+    // AND
+    // The user has not specified a game name OR the game name is the same
+    if (game && (!game_name || game_name.toLowerCase() == game.name.toLowerCase())) {
+        return game;
+    }
+
+    // Found a game but we need to leave to join a different one because we specified a name
+    if (game) {
+        game.remove_player(p);
+        game = null;
+    }
+    
+    if (game_name) {
+        game = this.get_named_game(game_name);
+        
+        if (game.has_space()) {
+            game.add_player(p);    
+        } else { //Too bad you gotta go to a random game.
+            game = null;
+        }
+    }
+    
+    if (!game) {
+        game = this.get_public_game();
         game.add_player(p);
     }
 
     return game;
 };
 
-GameManager.prototype.get_open_game = function () {
-    var game = _.find(this.games, function (r) { return r.has_space(); });
-
-    if (!game) {
-        game = new Game(config.MAX_GAME_SIZE, 'Game ' + this.games.length);
-        this.games.push(game);
-        this.emit('game_created', game);
-    }
-
-    return game;
-};
-
 GameManager.prototype.on_player_left = function (p) {
-    var game = this.find_game(p);
+    var game = this.find_game_by_player(p);
 
     if (game) {
         game.remove_player(p);

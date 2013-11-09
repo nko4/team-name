@@ -37,6 +37,7 @@ function Game (max_size, name) {
     this.current_phrase = null;
     this.is_started = true;
     this.queue = [];
+    this.private = false;
 }
 
 util.inherits(Game, EventEmitter);

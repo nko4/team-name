@@ -123,6 +123,8 @@ Game.prototype.message_players = function (message, args, extra) {
     extra = extra || function (p, obj) { return obj; };
 
     this.players.forEach(function (p) {
+        var args = _.clone(args);
+        args.player_id = p.id;
         p.emit(message, extra(args));
     });
 };
@@ -142,8 +144,7 @@ Game.prototype.next_phrase = function () {
         //these are public
         set_on: new Date().getTime(),
         hint: p.hint,
-        word_counts: _(parts).map(function (p) { return p.length; }),
-        value: 1,
+        value: p.value,
         duration: PHRASE_DURATION
     };
 

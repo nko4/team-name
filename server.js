@@ -57,8 +57,8 @@ http.createServer(app).listen(app.get('port'), function(){
     });
 
     cloak.on('newMember', function (room, user) {
-        console.log(user)
         opentok.get_session_id(room.name, function (err, session_id) {
+            console.log('got session id ' + session_id + ' for room ' + room.name);
             var token = opentok.get_token(session_id, user.id);
             user.message('begin_session', session_id, token);
         });

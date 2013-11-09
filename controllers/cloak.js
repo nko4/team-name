@@ -25,13 +25,13 @@ module.exports = (function() {
 
         this.options.lobby = {
             init: function () {
-                console.log('lobby init', arguments);
+                //console.log('lobby init', arguments);
             },
             newMember: function () {
-                console.log('new lobby memeber', arguments);
+                //console.log('new lobby memeber', arguments);
             },
             memberLeaves: function () {
-                console.log('lobby member left', arguments);
+                //console.log('lobby member left', arguments);
             }
         };
 

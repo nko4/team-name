@@ -1,72 +1,75 @@
 * Default
 - Marked for review
 + Archive
++ Winning the special olympics
+
+- Eating other people
+- Mitt Romney is a mormon
+- Experimenting on animals
+- Eating a tub of ice cream
+- Being torn apart by zombies
+- 50,000 volts straight to the nipples
+- Trading your soul for drugs
+- Chopping someone's head off
+- Riding a donkey
+- Stealing money from homeless people
+- Talking to a telemarketer
+
++ Picture of boobs
++ Crucifixion
++ Coat hanger abortion
++ Spousal abuse
++ Dying of cancer
++ Being spanked to death
++ Beating a dog
++ Slapping a bitch
+
 
 * Being on fire
 * Beinging and purging
 * Hardworking minorities
 * Eating a turkey leg
-+ Picture of boobs
 * Children on leashes
-- Eating other people
 * Ice dancing
 * Eaten by dinosaurs
-- Mitt Romney is a mormon
 * Dead baby jokes
 * Santa isn't real
 * Taco bell alarm clock
 * Fat people
-- Experimenting on animals
 * Animal mating
 * A sassy black woman
 * Farting and walking away
-- Eating a tub of ice cream
-- Being torn apart by zombies
 * Forgetting pants
 * Assless chaps
-+ Winning the special olympics
 * Laying an egg
-- 50,000 volts straight to the nipples
 * Finding a dead person
 * Being fat and stupid
-+ Crucifixion
 * Bees
-+ Coat hanger abortion
 * Running out of toilet paper
-+ Spousal abuse
 * Not giving one shit
-+ Dying of cancer
 * Five dollar foot long
 * Falling to your death
-+ Being spanked to death
 * Getting electrocuted
 * Losing a limb
 * Delivering a baby
 * Praying the gay away
-- Trading your soul for drugs
 * Deal wit the devil
 * Running over an animal
-+ Slapping a bitch
 * Throwing a baby
 * Eating food off the floor
-+ Beating a dog
 * Dumpster Diving
 * Peeing off a balcony
-- Stealing money from homeless people
 * A Fart charade
 * Chainsaws for hands
 * Throwing up
 * Roller blading
 + A butt pirate
-- Talking to a telemarketer
 * Running up a hill
 * Falling down the stairs
 * Shooting your eye out
 * Playing charades
 * Being covered in peanut butter
-- Riding a donkey
 * A dog in heat
-- Chopping someone's head off
 * Eating spaghetti
 * Slip 'n slide
 * A wrecking ball

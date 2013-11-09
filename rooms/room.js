@@ -1,11 +1,13 @@
 var opentok = require('../opentok');
 var _ = require('underscore');
+var PhraseStore = require('./phrase_store');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var TIME_stage = 2 * 60 * 1000;
 var CHECK_QUEUE_INTERVAL = 300;
 var PHRASE_DURATION = 10 * 1000;
 var PHRASE_LIMIT = 3;
+var phrase_store = new PhraseStore();
 
 var are_same = function (player1, player2) {
     
@@ -27,7 +29,7 @@ var normalize_string = function (val) {
 };
 
 var get_phrase = function (history) {
-    return "this is a test";
+    return phrase_store.get_phrase(history);
 };
 
 function Game (max_size, name) {
@@ -125,16 +127,16 @@ Game.prototype.message_players = function (message, args) {
 
 Game.prototype.next_phrase = function () {
     clearTimeout(this.phrase_timeout);
-    var phrase = get_phrase(this.phrase_history);
-    this.phrase_history.push(phrase);
+    var p = get_phrase(this.phrase_history);
+    this.phrase_history.push(p);
 
-    var parts = phrase.toLowerCase().split(/\s+/);
+    var parts = p.phrase.toLowerCase().split(/\s+/);
     
     this.current_phrase = {
         //these are private
         parts: parts,
-        normalized: normalize_string(phrase),
-        phrase: phrase,
+        normalized: normalize_string(p.phrase),
+        phrase: p,
         //these are public
         set_on: new Date().getTime(),
         word_counts: _(parts).map(function (p) { return p.length; }),

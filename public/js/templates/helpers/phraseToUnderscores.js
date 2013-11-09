@@ -10,8 +10,6 @@ define([
       ret += result
     }
 
-    console.log(ret);
-
     return ret
   }
 

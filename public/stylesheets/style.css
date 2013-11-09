@@ -215,6 +215,11 @@ h1 {
 #cardHint h4 {
   margin-bottom: 0;
 }
+#cardHint .progress {
+  float: left;
+  width: 70%;
+  margin-bottom: 0;
+}
 #guessHistory {
   font-size: 1.2em;
 }

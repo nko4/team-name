@@ -15,7 +15,8 @@
     "express": "3.4.4",
     "jade": "~0.35.0",
     "stylus": "~0.40.0",
-    "cloak": "~0.1.0"
+    "cloak": "~0.1.0",
+    "underscore": "~1.5.2"
   },
   "engines": {
     "node": "0.10.x"

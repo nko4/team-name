@@ -119,9 +119,11 @@ Game.prototype.check_guess = function (guess) {
     return (normalize_string(guess) === this.current_phrase.normalized);
 };
 
-Game.prototype.message_players = function (message, args) {
+Game.prototype.message_players = function (message, args, extra) {
+    extra = extra || function (p, obj) { return obj; };
+
     this.players.forEach(function (p) {
-        p.emit(message, args);
+        p.emit(message, extra(args));
     });
 };
 
@@ -149,7 +151,15 @@ Game.prototype.next_phrase = function () {
         set_on: this.current_phrase.set_on,
         value: this.current_phrase.value,
         duration: this.current_phrase.duration
+    }, function (player, obj) {
+        if (are_same(player, this.stage.player)) {
+            obj = _.clone(obj);
+            obj.phrase = p.phrase;
+        }
+        return obj;
     });
+    
+    
 
     this.phrase_timeout = setTimeout((function () {
         this.complete_phrase();

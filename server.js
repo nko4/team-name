@@ -37,7 +37,8 @@ var CloakServer, cloak,
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
+    io.set('log level', 1);
 }
 
 // Routes

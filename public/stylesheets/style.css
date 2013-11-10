@@ -149,6 +149,7 @@ h1 {
   height: 5px;
   bottom: 0;
   width: 20%;
+  pointer-events: none;
 }
 .tastetherainbow i:nth-child(1) {
   left: 0;

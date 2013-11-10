@@ -225,7 +225,7 @@ Game.prototype.guess_phrase_info = function () {
         return {
             value: this.current_phrase.value,
             duration: this.current_phrase.duration,
-            time_left: this.current_phrase.duration - (new Date().getTime() - this.current_phrase.set_on),
+            time_left: this.phrase_time_left(),
             hint: this.current_phrase.hint
         }
     }
@@ -243,17 +243,13 @@ Game.prototype.set_stage = function (p) {
 
 Game.prototype.complete_phrase = function () {
     this.stage.completed_phrases++;
+    this.current_phrase = null;
     this.message_players('phrase_complete', this.players);
-
-    var reached_limit = this.stage.completed_phrases >= config().PHRASE_LIMIT ;
-    var others_waiting = this.queue.length > 0;
-
-    if (reached_limit && others_waiting) {
-        // allow next queue entry to start phrase 
-        return;
+    
+    // Start the next phrase if the stage didn't change
+    if (!this.update_queue()) {
+        this.next_phrase();
     }
-
-    this.next_phrase();
 };
 
 Game.prototype.clear_stage = function () {
@@ -269,17 +265,7 @@ Game.prototype.start = function () {
     this.is_started = true;
 
     this.queue_handle = setInterval((function () {
-        if (!this.is_started) return;
-
-        if (this.queue.length > 0) {
-            // If there's nobody on stage OR the player has been on stage long enough
-            // This COULD boot somebody in the middle of a phrase for now
-            if (!this.stage.player || this.stage.completed_phrases >= config().PHRASE_LIMIT) {
-                this.clear_stage();
-                this.set_stage(this.queue.shift());
-                this.next_phrase();
-            }
-        }
+        this.update_queue();
     }).bind(this), config().CHECK_QUEUE_INTERVAL);
 
     this.message_players('start', this.players);
@@ -305,6 +291,30 @@ Game.prototype.end = function () {
     this.current_phrase = null;
     this.message_players('end', this.players);
     this.emit('end');
+};
+
+Game.prototype.update_queue = function () {
+    if (!this.is_started || this.queue.length == 0)
+        return false;
+
+    // If there's nobody on stage OR the player has been on stage long enough
+    if (!this.stage.player || this.stage.completed_phrases >= config().PHRASE_LIMIT) {
+        console.log('time left', this.phrase_time_left());
+        // If we are not in the middle of a phrase
+        if (this.phrase_time_left() < config().CHECK_QUEUE_INTERVAL) {
+            this.clear_stage();
+            this.set_stage(this.queue.shift());
+            this.next_phrase();                    
+            return true;
+        }
+    }
+
+    return false;
+};
+
+Game.prototype.phrase_time_left = function () {
+    if (!this.current_phrase) return 0;
+    return this.current_phrase.duration - (new Date().getTime() - this.current_phrase.set_on);
 };
 
 Game.prototype.has_player = function (p) {

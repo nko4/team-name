@@ -82,7 +82,7 @@ GameManager.prototype.get_public_game = function () {
 };
 
 GameManager.prototype.create_game = function (name, private) {
-    var game = new Game(config.MAX_GAME_SIZE, name, this.db);
+    var game = new Game(config().MAX_GAME_SIZE, name, this.db);
     game.private = private;
     this.games.push(game);
     this.emit('game_created', game);

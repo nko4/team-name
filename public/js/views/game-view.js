@@ -11,18 +11,12 @@ define([
       'watchers'   : '#watchers',
       'actor'      : '#actor',
       'card'       : '#cardHint',
-      'guessInput': '#guessInput',
+      'guessInput' : '#guessInput',
       'guessHistory': '#guessHistory',
-      'actorQueue'  : '#actorQueue'
-    },
-    events : {
-      'click .join-queue'       : 'joinQueue'
+      'actorQueue'  : '#actorQueue',
+      'players'     : '#players'
     }
   });
-
-  view.prototype.joinQueue = function() {
-    this.publishEvent('joinQueue');
-  };
 
   return view;
 });

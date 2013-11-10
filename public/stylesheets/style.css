@@ -248,10 +248,14 @@ h1 {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
+#actorQueue h4 {
+  margin-top: 0px;
+}
 #actorQueue h4 .pull-left {
   margin-right: 1em;
 }
 #guessInput {
+  margin-bottom: 15px;
   padding-bottom: 1em;
 }
 #guessInput h4 {

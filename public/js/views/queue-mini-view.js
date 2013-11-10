@@ -9,7 +9,7 @@ define([
   });
 
   view.prototype.initialize = function(){
-    Chaplin.View.prototype.initalize.apply(this, arguments);
+    Chaplin.View.prototype.initialize.apply(this, arguments);
     var _this = this;
     this.model.on('destroy', function(){
       this.remove();

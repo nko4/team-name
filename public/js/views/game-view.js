@@ -16,8 +16,15 @@ define([
       'actorQueue'  : '#actorQueue',
       'players'     : '#players'
     },
+    events : {
+      'click .volunteer' : 'volunteer'
+    },
     className : 'gameWrapper'
   });
+
+  view.prototype.volunteer = function(first_argument) {
+    this.publishEvent('joinQueue');
+  };
 
   return view;
 });

@@ -70,6 +70,7 @@ h1 {
 }
 #main-container {
   position: relative;
+  margin-bottom: 15px;
 }
 @-webkit-keyframes growshrink {
   0% {
@@ -230,10 +231,19 @@ h1 {
   margin-bottom: 0;
 }
 #actorQueue .thumbnail {
-  width: 50px;
-  height: 50px;
+  float: left;
+  margin: 0;
+  overflow: hidden;
+  width: 85px;
+  height: 85px;
+}
+#actorQueue .thumbnail .video {
+  width: 75px;
+  height: 75px;
 }
 #actorQueue .actors {
+  overflow: hidden;
+  padding-bottom: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }

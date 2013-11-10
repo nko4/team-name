@@ -145,9 +145,9 @@ define([
 
       // When connected, create self
       var vidOptions = {
-        publishAudio  : false,
+        publishAudio  : true,
         publishVideo  : true,
-        width         : 350,
+        width         : 370,
         height        : 150
       };
       session.on('sessionConnected', function(e){

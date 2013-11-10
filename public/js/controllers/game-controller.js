@@ -61,7 +61,7 @@ define([
         }
 
         // Add players to the queue
-        if(data.queue) queueCollection.add(data.queue)
+        if(data.queue) queueCollection.add(data.queue);
       });
 
       guessinputview.on('guess', function (e) {
@@ -69,6 +69,7 @@ define([
       });
 
       socket.on('bad_guess', function (e) {
+        guesshistoryview.addHistory(e.guess);
         players.findWhere({ id: e.player.id }).trigger('bad_guess', e);
       });
 
@@ -83,7 +84,7 @@ define([
       });
 
       socket.on('start', function(data){
-        console.log('start', data)
+        console.log('start', data);
       });
 
       // Listen for stage chane events to update the actor attribute

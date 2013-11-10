@@ -18,11 +18,11 @@ function GameManager (io) {
         });
 
         socket.on('leave', function () {
-
+            game.on_player_disconnect(socket.id);
         });
 
         socket.on('disconnect', function () {
-            game.on_player_left(new Player(socket));
+            game.on_player_disconnect(socket.id);
         });
     }).bind(this));
 }
@@ -31,6 +31,10 @@ util.inherits(GameManager, EventEmitter);
 
 GameManager.prototype.find_game_by_player = function (p) {
     return _.find(this.games, function (r) { return r.has_player(p); });
+};
+
+GameManager.prototype.find_game_by_player_id = function (id) {
+    return _.find(this.games, function (r) { return r.has_player_with_id(id); });
 };
 
 GameManager.prototype.get_named_game = function (name) {
@@ -96,11 +100,11 @@ GameManager.prototype.on_player_joined = function (p, game_name) {
     return game;
 };
 
-GameManager.prototype.on_player_left = function (p) {
-    var game = this.find_game_by_player(p);
+GameManager.prototype.on_player_disconnect = function (id) {
+    var game = this.find_game_by_player_id(id);
 
     if (game) {
-        game.remove_player(p);
+        game.remove_player_with_id(id);
     
         if (game.empty()) {
            this.games.splice(this.games.indexOf(game), 1);

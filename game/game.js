@@ -124,6 +124,11 @@ Game.prototype.remove_player = function (player) {
     }
 };
 
+Game.prototype.remove_player_with_id = function (id) {
+    var player = _.find(this.players, function (p) { return p.id == id});
+    this.remove_player(player);
+};
+
 Game.prototype.check_guess = function (guess) {
     if (!this.current_phrase) 
         return false;
@@ -249,8 +254,14 @@ Game.prototype.end = function () {
     this.emit('end');
 };
 
-Game.prototype.has_player = function (m) {
-    return _.chain(this.players).pluck('id').contains(m.id).value();
+Game.prototype.has_player = function (p) {
+    if (!p) return false;
+    return !!this.has_player_with_id(p.id);
+};
+
+Game.prototype.has_player_with_id = function (id) {
+    if (!id) return false;
+    return !!_.chain(this.players).pluck('id').contains(id).value();
 };
 
 Game.prototype.set_session_id = function (session_id) {

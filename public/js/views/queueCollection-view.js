@@ -16,7 +16,8 @@ define([
     return new this.itemView({
       model           : model,
       collectionView  : this,
-      session         : this.options.session
+      session         : this.options.session,
+      api_key         : this.options.api_key
     });
   };
 

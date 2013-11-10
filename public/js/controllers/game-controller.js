@@ -20,6 +20,7 @@ define([
     },
 
     play : function(params){
+      var api_key   = '44393472';
       var self      = this;
 
       // View Handling
@@ -68,7 +69,8 @@ define([
           autoRender : true,
           collection : queueCollection,
           region     : 'actorQueue',
-          session    : session
+          session    : session,
+          api_key    : api_key
         })
       });
 
@@ -83,7 +85,6 @@ define([
       });
 
       // Connect to opentok
-      var api_key   = '44393472';
       var session   = TB.initSession(params.session_id);
       session.connect(api_key, params.token);
 
@@ -95,6 +96,7 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
+        console.log(socket.socket.sessionid);
         var publisher = TB.initPublisher(api_key, createNewWatcherView(socket.socket.sessionid), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);

@@ -11,9 +11,9 @@ define([
   });
 
   view.prototype.render = function(){
-    Chaplin.View.prototype.render.apply(this, arguments);
-    console.log(this.options.session)
-    //session.subscribe(stream, createNewWatcherView(stream.connection.connectionId));
+    var uid = 'uid_' + this.model.get('id');
+    var clone = $('#' + uid).clone();
+    $(this.el).html(clone);
   }
 
   return view;

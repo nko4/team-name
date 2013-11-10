@@ -28,9 +28,19 @@ h1 {
   min-width: 776px;
   text-align: center;
 }
-.nko-vote {
+.toolbar {
   position: absolute;
   top: -2em;
+}
+.nko-vote {
+  display: inline-block;
+}
+.gohome {
+  display: block;
+  float: left;
+  margin-top: 0;
+  margin-right: 0.5em;
+  padding: 0 1em;
 }
 .btn {
   border-radius: 3px;
@@ -527,6 +537,11 @@ h4.border-bottom {
   height: 100%;
   overflow: hidden;
   margin-left: 0;
+}
+.winner .btn,
+#winner .btn {
+  margin-right: 5px;
+  margin-top: 5px;
 }
 .winner .info,
 #winner .info {

@@ -7,7 +7,10 @@ define([
 
   var view = View.extend({
     template  : template,
-    className : 'player'
+    className : 'player',
+    listen : {
+      'change:actor model' : 'adjustActorRole'
+    }
   });
 
   view.prototype.initialize = function () {
@@ -20,6 +23,11 @@ define([
   
   view.prototype.acting_points = function (e) {
     $this.find('.score').text(e.stage.score);
+  };
+
+  view.prototype.adjustActorRole = function(e){
+    if(this.model.get('actor')) $(this.el).addClass('actor');
+    else $(this.el).removeClass('actor');
   };
 
   view.prototype.correct_guess = function (e) {

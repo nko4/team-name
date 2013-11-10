@@ -12,7 +12,7 @@ define([
     var uid = 'uid_' + this.model.get('id');
     var clone = $('#' + uid).clone();
     $(this.el).html(clone);
-    $(this.el).attr('id', this.model.get('id'));
+    //$(this.el).attr('id', this.model.get('id'));
   }
 
   return view;

@@ -20,6 +20,8 @@ define([
     },
 
     play : function(params){
+      TB.setLogLevel(0);
+
       var api_key   = '44393472';
       var self      = this;
       var players   = new Collection();
@@ -65,6 +67,20 @@ define([
         socket.emit('enqueue');
       });
 
+      socket.on('start', function(data){
+        console.log('start', data)
+      });
+
+      // Listen for stage chane events to update the actor attribute
+      socket.on('stage_change', function(data){
+        players.each(function(item){
+          item.set({ 'actor' : false });
+        });
+
+        var player = players.findWhere({ id : data.player.id });
+        player.set({ 'actor' : true });
+      });
+
       var queueCollection = new Collection();
       var queueCollectionView = new QueueCollectionView({
           autoRender : true,
@@ -97,7 +113,7 @@ define([
       var vidOptions = {
         publishAudio  : false,
         publishVideo  : true,
-        width         : 150,
+        width         : 300,
         height        : 150
       };
       session.on('sessionConnected', function(e){

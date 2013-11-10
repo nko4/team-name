@@ -177,12 +177,6 @@ h1 {
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
 }
-.actor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
 #cardHint,
 #guessHistory,
 #guessInput,
@@ -317,6 +311,17 @@ h4.border-bottom {
 #players .player:nth-child(5),
 #players .player:nth-child(6) {
   top: 350px;
+}
+#players .player.actor {
+  left: 225px;
+}
+#players .player.actor .video {
+  width: 740px !important;
+  height: 320px !important;
+}
+#players .player.actor .thumbnail {
+  width: 750px;
+  height: 330px;
 }
 #players .thumbnail {
   overflow: hidden;

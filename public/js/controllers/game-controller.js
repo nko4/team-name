@@ -194,6 +194,7 @@ define([
 
         session.publish(publisher);
         subscribeToStreams(e.streams);
+        $('#userGuess').focus();
       });
 
 

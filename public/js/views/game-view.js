@@ -11,9 +11,10 @@ define([
       'watchers'   : '#watchers',
       'actor'      : '#actor',
       'card'       : '#cardHint',
-      'guessInput': '#guessInput',
+      'guessInput' : '#guessInput',
       'guessHistory': '#guessHistory',
-      'actorQueue'  : '#actorQueue'
+      'actorQueue'  : '#actorQueue',
+      'players'     : '#players'
     }
   });
 

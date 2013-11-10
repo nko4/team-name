@@ -10,7 +10,8 @@ define([
   'views/guessInput-view',
   'views/card-view',
   'views/queueCollection-view',
-], function(Chaplin, Controller, Model, Collection, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView){
+  'views/playerCollection-view',
+], function(Chaplin, Controller, Model, Collection, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView, PlayerCollectionView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -31,6 +32,10 @@ define([
       var webcamview = new WebCamView({
         autoRender  : true,
         region      : 'notifier'
+      });
+      var playersview = new PlayerCollectionView({
+        autoRender  : true,
+        region      : 'players'
       });
       var guesshistoryview = new GuessHistoryView({
         autoRender  : true,

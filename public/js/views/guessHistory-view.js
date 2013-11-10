@@ -9,12 +9,10 @@ define([
     template : template,
     addHistory : function (word) {
       var $log = $(this.el).find('.historyLog');
-      var string = $log.text();
-
-      string += string.length < 1 ? '' : ', ';
-      string += word;
-
-      $log.text(string);
+      $log.append('<li>' + word + '</li>')
+    },
+    clearHistory : function(){
+      $(this.el).find('.historyLog').html('');
     }
   });
 

@@ -132,6 +132,7 @@ define([
       socket.on('new_phrase', function(data){
         // Clear out the guess inputs when cards change
         guessinputview.trigger('new_card')
+        guesshistoryview.clearHistory();
 
         // Re render the card view
         cardModel.reset();
@@ -150,6 +151,8 @@ define([
         width         : 370,
         height        : 150
       };
+
+      window.mySocketId = 0;
       session.on('sessionConnected', function(e){
         window.mySocketId = socket.socket.sessionid;
 

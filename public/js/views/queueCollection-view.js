@@ -39,7 +39,7 @@ define([
   };
 
   collectionView.prototype.updateQueueAction = function(queue) {
-    var me  = _.findWhere(queue, { id : mySocketId });
+    var me  = _.findWhere(queue, { id : window.mySocketId });
     var $el = $(this.el);
     if(me) {
       $el.find('.leave-queue').removeClass('hidden');

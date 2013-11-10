@@ -416,7 +416,7 @@ h4.border-bottom {
   height: 395px;
 }
 #players .player.actor .score {
-  bottom: 1em;
+  bottom: 0.5em;
   right: 1em;
 }
 #players .guess {
@@ -447,7 +447,7 @@ h4.border-bottom {
   text-shadow: 1px 1px 5px rgba(0,0,0,0.9), -1px -1px 5px rgba(0,0,0,0.9);
   font-size: 1.8em;
   position: absolute;
-  bottom: 0.5em;
+  bottom: 0.25em;
   right: 0.5em;
 }
 @media (max-width: 1200px) and (min-width:992px) {

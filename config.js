@@ -6,7 +6,7 @@ var base = {
 };
 
 var config = {
-	WORD_HINT_PERCENT: .40,
+	WORD_HINT_PERCENT: .60,
 	CHECK_QUEUE_INTERVAL: 300,
 	PHRASE_DURATION: 45 * 1000,
 	PHRASE_LIMIT: 3,
@@ -26,8 +26,8 @@ MongoClient.connect(process.env.PHRASE_MONGO_DB, function (err, db) {
 		console.log('Reloading config');
 		collection.findOne(function (err, result) {
 			if (err || !result) return;
-			console.log('Config reloaded', result);
-			current_config = _.extend({}, config, base);
+			current_config = _.extend({}, config, result, base);
+			console.log('Config reloaded', current_config)
 		});
 	};
 	

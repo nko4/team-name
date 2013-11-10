@@ -22,6 +22,7 @@ define([
   };
   
   view.prototype.acting_points = function (e) {
+    var $this = $(this.el);
     $this.find('.score').text(e.stage.score);
   };
 

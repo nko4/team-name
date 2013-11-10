@@ -5,9 +5,10 @@ var Player = require('./player');
 var Game = require('./game');
 var config = require('../config');
 
-function GameManager (io) {
+function GameManager (io, db) {
     this.games = [];
     this.io = io;
+    this.db = db;
 
     io.sockets.on('connection', (function (socket) {
         var game = this;
@@ -70,7 +71,6 @@ GameManager.prototype.get_named_game = function (name) {
     return game;
 };
 
-
 GameManager.prototype.get_public_game = function () {
     var game = _.find(this.games, function (r) { return !r.private && r.has_space(); });
 
@@ -82,7 +82,7 @@ GameManager.prototype.get_public_game = function () {
 };
 
 GameManager.prototype.create_game = function (name, private) {
-    var game = new Game(config.MAX_GAME_SIZE, name);
+    var game = new Game(config.MAX_GAME_SIZE, name, this.db);
     game.private = private;
     this.games.push(game);
     this.emit('game_created', game);

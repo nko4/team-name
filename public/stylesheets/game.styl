@@ -1,10 +1,16 @@
-#cardHint
-#guessHistory
-#guessInput
-#actorQueue
-  background-color  #fff
-  border-radius     3px
-  box-shadow        0px 0px 3px rgba(#000, .4)
+.gameWrapper
+  margin-top          -50px
+
+#gameCtrls
+  .control-set
+    margin-bottom     15px
+    background-color  #fff
+    border-radius     3px
+    box-shadow        0px 0px 3px rgba(#000, .4)
+
+#guessWrapper
+  width             48.5%
+  float             right
 
 #cardHint
   .card-container, .phrase-container
@@ -22,8 +28,6 @@
   .hint-markers
     position        absolute
     top             15px
-  h4
-    margin-bottom   0
   .progress
     float           left
     width           70%
@@ -33,6 +37,7 @@
   font-size         1.2em
   p
     padding         0 .5em .5em .5em
+
 #actorQueue
   .progress
     margin-bottom   0
@@ -52,33 +57,40 @@
     padding-left    .5em
     padding-right   .5em
   h4
-    margin-top      0px
     .pull-left
       margin-right  1em
+  .join-queue
+    margin-bottom   10px
+
 #guessInput
   margin-bottom     15px
   padding-bottom    1em
-  h4
-    margin-top      0
 h4
   padding           .5em
   background-color  #f3f3f3
   &.border-top
+    margin-bottom   0
     border-radius   0 0 3px 3px
     border-top      1px solid #e5e5e5
   &.border-bottom
+    margin-top      0
     border-radius   3px 3px 0 0
     border-bottom   1px solid #e5e5e5
 
 #players
   position          relative
-  height            510px
-  .video
-    width           150px !important
-    height          150px !important
+  height            410px
+  .thumbnail
+    overflow        hidden
+    width           135px
+    height          135px
+    margin          0
+    .video
+      width           125px !important
+      height          125px !important
   .player
     position        absolute
-    left            15px
+    left            0
     &.bad_guess
       video
         border      1px solid red
@@ -89,7 +101,7 @@ h4
         border      1px solid green
     &:nth-child(even)
       left          auto
-      right         15px
+      right         0
       .guess
         left        auto
         right       90%
@@ -99,26 +111,21 @@ h4
     &:nth-child(1), &:nth-child(2)
       top           0
     &:nth-child(3), &:nth-child(4)
-      top           175px
+      top           135px
     &:nth-child(5), &:nth-child(6)
-      top           350px
+      top           270px
     &.actor
       top           0
       left          225px
       .video
         width       740px !important
-        height      320px !important
+        height      385px !important
       .thumbnail
         width       750px
-        height      330px
+        height      395px
       .score
         bottom      1em
         right       1em
-  .thumbnail
-    overflow        hidden
-    width           160px
-    height          160px
-    margin          0
   .guess
     color           #fff
     min-width       100px

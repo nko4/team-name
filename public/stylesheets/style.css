@@ -177,13 +177,15 @@ h1 {
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
 }
-#cardHint,
-#guessHistory,
-#guessInput,
-#actorQueue {
+#gameCtrls .control-set {
+  margin-bottom: 15px;
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+}
+#guessWrapper {
+  width: 48.5%;
+  float: right;
 }
 #cardHint .card-container,
 #cardHint .phrase-container {
@@ -206,9 +208,6 @@ h1 {
 #cardHint .hint-markers {
   position: absolute;
   top: 15px;
-}
-#cardHint h4 {
-  margin-bottom: 0;
 }
 #cardHint .progress {
   float: left;
@@ -242,28 +241,27 @@ h1 {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
-#actorQueue h4 {
-  margin-top: 0px;
-}
 #actorQueue h4 .pull-left {
   margin-right: 1em;
+}
+#actorQueue .join-queue {
+  margin-bottom: 10px;
 }
 #guessInput {
   margin-bottom: 15px;
   padding-bottom: 1em;
-}
-#guessInput h4 {
-  margin-top: 0;
 }
 h4 {
   padding: 0.5em;
   background-color: #f3f3f3;
 }
 h4.border-top {
+  margin-bottom: 0;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid #e5e5e5;
 }
 h4.border-bottom {
+  margin-top: 0;
   border-radius: 3px 3px 0 0;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -271,9 +269,15 @@ h4.border-bottom {
   position: relative;
   height: 510px;
 }
-#players .video {
-  width: 150px !important;
-  height: 150px !important;
+#players .thumbnail {
+  overflow: hidden;
+  width: 135px;
+  height: 135px;
+  margin: 0;
+}
+#players .thumbnail .video {
+  width: 125px !important;
+  height: 125px !important;
 }
 #players .player {
   position: absolute;
@@ -327,12 +331,6 @@ h4.border-bottom {
 #players .player.actor .score {
   bottom: 1em;
   right: 1em;
-}
-#players .thumbnail {
-  overflow: hidden;
-  width: 160px;
-  height: 160px;
-  margin: 0;
 }
 #players .guess {
   color: #fff;

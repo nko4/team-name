@@ -1,10 +1,10 @@
 <div id='actor' class='row'><!-- Region --></div>
 <div id='players' class='row'><!-- Region --></div>
 
-<div id='gameCtrls' class='row'>
-  
-  <div class='col-md-6'>
-    <div id='cardHint'>
+<div id='gameCtrls' class='row'>  
+  <div class='col-md-6 col-lg-6'>
+    <div id='cardHint' class='row control-set'>
+      <!-- Region with Default -->
       <div class='phrase-container'>
         <div class='hint'>Hints Go Here</div>
       </div>
@@ -12,11 +12,12 @@
         <span class='pull-right'>Points per card go here</span>
       </h4>
     </div>
-    <div id='guessHistory'><!-- Region --></div>
+    <div id='actorQueue' class='row control-set'><!-- Region --></div>
   </div>
-  <div class='col-md-6'>
-    <div id='guessInput' class='clearfix row'><!-- Region --></div>
-    <div id='actorQueue' class='clearfix row'><!-- Region --></div>
+
+  <div class='col-md-6 col-lg-6' id='guessWrapper'>
+    <div id='guessInput' class='row control-set'><!-- Region --></div>
+    <div id='guessHistory' class='row control-set'><!-- Region --></div>
   </div>
 
 </div>

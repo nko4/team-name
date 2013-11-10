@@ -59,9 +59,8 @@ GameManager.prototype.get_public_game = function () {
     return game;
 };
 
-GameManager.prototype.create_game = function (name, private) {
+GameManager.prototype.create_game = function (name) {
     var game = new Game(config().MAX_GAME_SIZE, name, this.db);
-    game.private = private;
     this.games.push(game);
     this.emit('game_created', game);
     return game;
@@ -98,6 +97,11 @@ GameManager.prototype.on_player_disconnect = function (id) {
 
     if (game) {
         game.remove_player_with_id(id);
+    
+        if (game.empty()) {
+           this.games.splice(this.games.indexOf(game), 1);
+           game.destroy();
+        }
     }   
 };
 

@@ -177,6 +177,9 @@ h1 {
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
 }
+.gameWrapper {
+  margin-top: -50px;
+}
 #gameCtrls .control-set {
   margin-bottom: 15px;
   background-color: #fff;
@@ -220,6 +223,9 @@ h1 {
 #guessHistory p {
   padding: 0 0.5em 0.5em 0.5em;
 }
+#actorQueue {
+  position: relative;
+}
 #actorQueue .progress {
   margin-bottom: 0;
 }
@@ -244,6 +250,11 @@ h1 {
 #actorQueue h4 .pull-left {
   margin-right: 1em;
 }
+#actorQueue .queue-actions {
+  top: 2px;
+  position: absolute;
+  right: 3px;
+}
 #actorQueue .join-queue {
   margin-bottom: 10px;
 }
@@ -267,7 +278,7 @@ h4.border-bottom {
 }
 #players {
   position: relative;
-  height: 510px;
+  height: 410px;
 }
 #players .thumbnail {
   overflow: hidden;
@@ -281,7 +292,7 @@ h4.border-bottom {
 }
 #players .player {
   position: absolute;
-  left: 15px;
+  left: 0;
 }
 #players .player.bad_guess video {
   border: 1px solid #f00;
@@ -294,7 +305,7 @@ h4.border-bottom {
 }
 #players .player:nth-child(even) {
   left: auto;
-  right: 15px;
+  right: 0;
 }
 #players .player:nth-child(even) .guess {
   left: auto;
@@ -310,11 +321,11 @@ h4.border-bottom {
 }
 #players .player:nth-child(3),
 #players .player:nth-child(4) {
-  top: 175px;
+  top: 135px;
 }
 #players .player:nth-child(5),
 #players .player:nth-child(6) {
-  top: 350px;
+  top: 270px;
 }
 #players .player.actor {
   top: 0;
@@ -322,11 +333,11 @@ h4.border-bottom {
 }
 #players .player.actor .video {
   width: 740px !important;
-  height: 320px !important;
+  height: 385px !important;
 }
 #players .player.actor .thumbnail {
   width: 750px;
-  height: 330px;
+  height: 395px;
 }
 #players .player.actor .score {
   bottom: 1em;

@@ -52,8 +52,6 @@ define([
 
       // On page load
       socket.emit('info', function(data){
-        console.log(data);
-
         // add the players
         if(data.players) players.add(data.players);
         // mark a player as the actor... maybe
@@ -117,7 +115,10 @@ define([
         queueCollectionView.renderAllItems();
       });
 
+      window.guessinputview = guessinputview;
       socket.on('new_phrase', function(data){
+        //var me = players.findWhere({ me : true }).trigger('new_card', e);
+        guessinputview.trigger('new_card')
         var cardModel = new Model(data);
         $('#cardHint').html('');
         var cardView  = new CardView({
@@ -139,7 +140,7 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var player = new Model({ 'id' : socket.socket.sessionid });
+        var player = new Model({ 'id' : socket.socket.sessionid, me : true });
         players.add(player);
         var view = playersview.initItemView(player);
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);

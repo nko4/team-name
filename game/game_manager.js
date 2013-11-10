@@ -50,7 +50,7 @@ GameManager.prototype.get_named_game = function (name) {
 };
 
 GameManager.prototype.get_public_game = function () {
-    var game = _.find(this.games, function (r) { return !r.private && r.has_space(); });
+    var game = _.find(this.games, function (r) { return r.has_space(); });
 
     if (!game) {
         game = this.create_game('Game ' + this.games.length, false);
@@ -98,11 +98,6 @@ GameManager.prototype.on_player_disconnect = function (id) {
 
     if (game) {
         game.remove_player_with_id(id);
-    
-        if (game.empty()) {
-           this.games.splice(this.games.indexOf(game), 1);
-           game.destroy();
-        }
     }   
 };
 

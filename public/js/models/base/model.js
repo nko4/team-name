@@ -30,7 +30,7 @@ define([
 
     reset : function(){
       var self = this;
-      for(key in this.attributes){
+      for(var key in this.attributes){
         var obj = {}
         obj[key] = null;
         self.set(obj)

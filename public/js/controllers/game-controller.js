@@ -129,7 +129,6 @@ define([
         self.publishEvent('queue_updated', queue);
       });
 
-      window.guessinputview = guessinputview;
       socket.on('new_phrase', function(data){
         // Clear out the guess inputs when cards change
         guessinputview.trigger('new_card')

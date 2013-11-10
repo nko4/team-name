@@ -238,8 +238,8 @@ h1 {
   height: 85px;
 }
 #actorQueue .thumbnail .video {
-  width: 75px;
-  height: 75px;
+  width: 75px !important;
+  height: 75px !important;
 }
 #actorQueue .actors {
   overflow: hidden;
@@ -271,6 +271,10 @@ h4.border-bottom {
 #watchers {
   position: relative;
   height: 510px;
+}
+#watchers .video {
+  width: 150px !important;
+  height: 150px !important;
 }
 #watchers .watcher {
   position: absolute;

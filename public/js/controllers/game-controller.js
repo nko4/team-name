@@ -25,6 +25,7 @@ define([
       var api_key   = '44393472';
       var self      = this;
       var players   = new Collection();
+      var queueCollection = new Collection();
 
       // View Handling
       this.view = new GameView({
@@ -47,6 +48,20 @@ define([
       var guessinputview = new GuessInputView({
         autoRender  : true,
         region      : 'guessInput'
+      });
+
+      // On page load
+      socket.emit('info', function(data){
+        // add the players
+        if(data.players) players.add(data.players);
+        // mark a player as the actor... maybe
+        if(data.stage.player){
+          var actor = players.findWhere({ id : data.stage.player.id });
+          actor.set({ actor : true });
+        }
+
+        // Add players to the queue
+        if(data.queue) queueCollection.add(data.queue)
       });
 
       guessinputview.on('guess', function (e) {
@@ -81,7 +96,6 @@ define([
         player.set({ 'actor' : true });
       });
 
-      var queueCollection = new Collection();
       var queueCollectionView = new QueueCollectionView({
           autoRender : true,
           collection : queueCollection,

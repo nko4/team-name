@@ -12,8 +12,8 @@ function GameManager (io) {
     io.sockets.on('connection', (function (socket) {
         var game = this;
 
-        socket.on('info', function () {
-            socket.emit('info', game.get_game_data_for_player(socket.id));
+        socket.on('info', function (cb) {
+            cb(game.get_game_data_for_player(socket.id));
         });
 
         socket.on('join', function (data) {

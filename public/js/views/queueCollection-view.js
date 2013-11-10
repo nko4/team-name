@@ -12,7 +12,8 @@ define([
     listSelector  : '.actors',
     events        : {
       'click .join-queue' : 'joinQueue',
-      'click .leave-queue' : 'leaveQueue'
+      'click .leave-queue': 'leaveQueue',
+      'click .volunteer'  : 'joinQueue'
     },
     listen        : {
       'queue_updated mediator' : 'updateQueueAction',
@@ -29,6 +30,7 @@ define([
   };
 
   collectionView.prototype.joinQueue = function(e) {
+    e.preventDefault();
     this.publishEvent('joinQueue');
   };
 

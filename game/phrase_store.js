@@ -1,14 +1,47 @@
-var all_phrases = require('../data/phrases');
 var _ = require('underscore');
 var config = require('../config');
+var mongodb = null;
 
 function PhraseStore () {
-    this.phrases = all_phrases.slice(0);
+    this.phrases = PhraseStore.all_phrases.slice(0);
 };
+
+PhraseStore.initialize = function (db, cb) {
+    PhraseStore.load_data(db, function (err, results) {
+        if (err) throw err;
+        cb();
+        
+        var orig = PhraseStore.load_data;
+
+        PhraseStore.load_data = function () {
+            orig(db);
+        };
+
+        setInterval(function () {
+            PhraseStore.load_data();
+        }, 10 * 60 * 1000);
+    });
+};
+
+PhraseStore.load_data = function (db, cb) {
+    var collection = db.collection('phrases');
+    collection.find().toArray(function (err, results) {
+        if (err && !cb) {
+            console.log('error loading phrases');
+            return;
+        }
+
+        PhraseStore.all_phrases = results;
+        console.log(results.length + ' Phrases loaded');
+        
+        if (cb) { cb(err, results); }
+    });
+};
+
 
 PhraseStore.prototype.get = function () {
     if (this.phrases.length == 0) {
-        this.phrases = all_phrases.slice(0);
+        this.phrases = PhraseStore.all_phrases.slice(0);
     }
 
     var i = Math.floor(Math.random() * this.phrases.length);
@@ -17,7 +50,7 @@ PhraseStore.prototype.get = function () {
 };
 
 var generate_hint = function (val, percent) {
-	 percent = percent || config.WORD_HINT_PERCENT;
+	 percent = percent || config().WORD_HINT_PERCENT;
 
     var replace_at = function (s, index, character) {
         return s.substr(0, index) + character + s.substr(index + character.length);

@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'You on da\' landing page' });
+  res.render('index', { title: 'Charade Parade' });
 };

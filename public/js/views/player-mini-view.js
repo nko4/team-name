@@ -7,13 +7,8 @@ define([
 
   var view = View.extend({
     template  : template,
-    className : 'watcher'
+    className : 'player'
   });
-
-  view.prototype.setDomId = function(id){
-    $(this.el).find('.video').attr('id', id);
-  };
-
 
   view.prototype.correct_guess = function(e){
 

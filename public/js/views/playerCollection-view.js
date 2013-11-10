@@ -9,7 +9,7 @@ define([
   var collectionView = CollectionView.extend({
     itemView      : PlayerMiniView,
     template      : playerCollectionTemplate,
-    listSelector  : '.players',
+    listSelector  : '.players'
   });
 
   return collectionView;

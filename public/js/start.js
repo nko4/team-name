@@ -15,7 +15,7 @@ require(['chaplin', 'config/routes', 'socketio'], function(Chaplin, routes, io){
   // Session events act as new games, navigate to the correct game
   socket.on('session', function (data) {
     window.game = data;
-    Chaplin.helpers.redirectTo('game#play', { session_id: data.session_id });
+    Chaplin.helpers.redirectTo('game#play', { game_name: data.game_name });
   });
 
   // After going to sleep, some clients lose the socket connection.

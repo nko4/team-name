@@ -70,19 +70,11 @@ GameManager.prototype.create_game = function (name, private) {
 GameManager.prototype.on_player_joined = function (p, game_name) {
     var game = this.find_game_by_player(p);
     
-    // If the user is currently in a game
-    // AND
-    // The user has not specified a game name OR the game name is the same
-    if (game && (!game_name || game_name.toLowerCase() == game.name.toLowerCase())) {
-        return game;
+    // If they are rejoining
+    if (game) { 
+        game.remove_player(p);
     }
 
-    // Found a game but we need to leave to join a different one because we specified a name
-    if (game) {
-        game.remove_player(p);
-        game = null;
-    }
-    
     if (game_name) {
         game = this.get_named_game(game_name);
         

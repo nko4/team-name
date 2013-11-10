@@ -134,9 +134,11 @@ define([
       session.on('sessionConnected', function(e){
         var player = new Model({ 'id' : socket.socket.sessionid });
         players.add(player);
-        playersview.initItemView(player);
+        var view = playersview.initItemView(player);
+        view.append_name_entry();
 
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
+
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });

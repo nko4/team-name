@@ -46,6 +46,12 @@ define([
       $el.find('.leave-queue').addClass('hidden');
       $el.find('.join-queue').removeClass('hidden');
     }
+
+    if (queue.length == 0) {
+      $el.find('.no-actors').removeClass('hidden');
+    } else {
+      $el.find('.no-actors').addClass('hidden');
+    }
   };
 
   return collectionView;

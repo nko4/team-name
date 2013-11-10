@@ -475,3 +475,459 @@ h4.border-bottom {
     height: 300px !important;
   }
 }
+#winner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.winner,
+#winner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin-left: 0;
+}
+.winner .info,
+#winner .info {
+  position: absolute;
+  text-align: center;
+  width: 400px;
+  height: 375px;
+  top: 50%;
+  left: 50%;
+  margin-top: -190px;
+  margin-left: -190px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 1s;
+  transition-delay: 3s;
+}
+.winner h3,
+#winner h3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+  font-size: 3em;
+  text-align: center;
+  transition: opacity 1s;
+  transition-delay: 3s;
+  z-index: 200;
+}
+.winner button,
+#winner button {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 200;
+  transition: opacity;
+  transition-delay: 3s;
+}
+.winner .video,
+#winner .video {
+  position: relative !important;
+  width: 400px !important;
+  height: 375px !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  z-index: 100;
+}
+.winner .OT_video-container,
+#winner .OT_video-container {
+  width: 400px !important;
+  height: 375px !important;
+  position: static;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 100;
+}
+.winner i,
+#winner i {
+  display: block;
+  width: 50px;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: height 2s;
+}
+.winner i:nth-child(1),
+#winner i:nth-child(1) {
+  left: 0px;
+}
+.winner i:nth-child(2),
+#winner i:nth-child(2) {
+  left: 50px;
+}
+.winner i:nth-child(3),
+#winner i:nth-child(3) {
+  left: 100px;
+}
+.winner i:nth-child(4),
+#winner i:nth-child(4) {
+  left: 150px;
+}
+.winner i:nth-child(5),
+#winner i:nth-child(5) {
+  left: 200px;
+}
+.winner i:nth-child(6),
+#winner i:nth-child(6) {
+  left: 250px;
+}
+.winner i:nth-child(7),
+#winner i:nth-child(7) {
+  left: 300px;
+}
+.winner i:nth-child(8),
+#winner i:nth-child(8) {
+  left: 350px;
+}
+.winner i:nth-child(9),
+#winner i:nth-child(9) {
+  left: 400px;
+}
+.winner i:nth-child(10),
+#winner i:nth-child(10) {
+  left: 450px;
+}
+.winner i:nth-child(11),
+#winner i:nth-child(11) {
+  left: 500px;
+}
+.winner i:nth-child(12),
+#winner i:nth-child(12) {
+  left: 550px;
+}
+.winner i:nth-child(13),
+#winner i:nth-child(13) {
+  left: 600px;
+}
+.winner i:nth-child(14),
+#winner i:nth-child(14) {
+  left: 650px;
+}
+.winner i:nth-child(15),
+#winner i:nth-child(15) {
+  left: 700px;
+}
+.winner i:nth-child(16),
+#winner i:nth-child(16) {
+  left: 750px;
+}
+.winner i:nth-child(17),
+#winner i:nth-child(17) {
+  left: 800px;
+}
+.winner i:nth-child(18),
+#winner i:nth-child(18) {
+  left: 850px;
+}
+.winner i:nth-child(19),
+#winner i:nth-child(19) {
+  left: 900px;
+}
+.winner i:nth-child(20),
+#winner i:nth-child(20) {
+  left: 950px;
+}
+.winner i:nth-child(21),
+#winner i:nth-child(21) {
+  left: 1000px;
+}
+.winner i:nth-child(22),
+#winner i:nth-child(22) {
+  left: 1050px;
+}
+.winner i:nth-child(23),
+#winner i:nth-child(23) {
+  left: 1100px;
+}
+.winner i:nth-child(24),
+#winner i:nth-child(24) {
+  left: 1150px;
+}
+.winner i:nth-child(25),
+#winner i:nth-child(25) {
+  left: 1200px;
+}
+.winner i:nth-child(26),
+#winner i:nth-child(26) {
+  left: 1250px;
+}
+.winner i:nth-child(27),
+#winner i:nth-child(27) {
+  left: 1300px;
+}
+.winner i:nth-child(28),
+#winner i:nth-child(28) {
+  left: 1350px;
+}
+.winner i:nth-child(29),
+#winner i:nth-child(29) {
+  left: 1400px;
+}
+.winner i:nth-child(30),
+#winner i:nth-child(30) {
+  left: 1450px;
+}
+.winner i:nth-child(31),
+#winner i:nth-child(31) {
+  left: 1500px;
+}
+.winner i:nth-child(32),
+#winner i:nth-child(32) {
+  left: 1550px;
+}
+.winner i:nth-child(33),
+#winner i:nth-child(33) {
+  left: 1600px;
+}
+.winner i:nth-child(34),
+#winner i:nth-child(34) {
+  left: 1650px;
+}
+.winner i:nth-child(35),
+#winner i:nth-child(35) {
+  left: 1700px;
+}
+.winner i:nth-child(36),
+#winner i:nth-child(36) {
+  left: 1750px;
+}
+.winner i:nth-child(37),
+#winner i:nth-child(37) {
+  left: 1800px;
+}
+.winner i:nth-child(38),
+#winner i:nth-child(38) {
+  left: 1850px;
+}
+.winner i:nth-child(39),
+#winner i:nth-child(39) {
+  left: 1900px;
+}
+.winner i:nth-child(40),
+#winner i:nth-child(40) {
+  left: 1950px;
+}
+.winner i:nth-child(41),
+#winner i:nth-child(41) {
+  left: 2000px;
+}
+.winner i:nth-child(42),
+#winner i:nth-child(42) {
+  left: 2050px;
+}
+.winner i:nth-child(43),
+#winner i:nth-child(43) {
+  left: 2100px;
+}
+.winner i:nth-child(44),
+#winner i:nth-child(44) {
+  left: 2150px;
+}
+.winner i:nth-child(45),
+#winner i:nth-child(45) {
+  left: 2200px;
+}
+.winner i:nth-child(46),
+#winner i:nth-child(46) {
+  left: 2250px;
+}
+.winner i:nth-child(47),
+#winner i:nth-child(47) {
+  left: 2300px;
+}
+.winner i:nth-child(48),
+#winner i:nth-child(48) {
+  left: 2350px;
+}
+.winner i:nth-child(49),
+#winner i:nth-child(49) {
+  left: 2400px;
+}
+.winner i:nth-child(50),
+#winner i:nth-child(50) {
+  left: 2450px;
+}
+.winner i:nth-child(10n-19),
+#winner i:nth-child(10n-19) {
+  transition-delay: 0.03407417400000001s;
+}
+.winner i:nth-child(10n-20),
+#winner i:nth-child(10n-20) {
+  transition-delay: 0.13397459599999995s;
+}
+.winner i:nth-child(10n-21),
+#winner i:nth-child(10n-21) {
+  transition-delay: 0.292893219s;
+}
+.winner i:nth-child(10n-22),
+#winner i:nth-child(10n-22) {
+  transition-delay: 0.5s;
+}
+.winner i:nth-child(10n-23),
+#winner i:nth-child(10n-23) {
+  transition-delay: 0.7411809549999999s;
+}
+.winner i:nth-child(10n-24),
+#winner i:nth-child(10n-24) {
+  transition-delay: 1s;
+}
+.winner i:nth-child(10n-25),
+#winner i:nth-child(10n-25) {
+  transition-delay: 1.258819045s;
+}
+.winner i:nth-child(10n-26),
+#winner i:nth-child(10n-26) {
+  transition-delay: 1.5s;
+}
+.winner i:nth-child(10n-27),
+#winner i:nth-child(10n-27) {
+  transition-delay: 1.707106781s;
+}
+.winner i:nth-child(10n-28),
+#winner i:nth-child(10n-28) {
+  transition-delay: 1.8660254040000002s;
+}
+.winner i:nth-child(10n-29),
+#winner i:nth-child(10n-29) {
+  transition-delay: 1.9659258259999999s;
+}
+.winner i:nth-child(10n-30),
+#winner i:nth-child(10n-30) {
+  transition-delay: 2s;
+}
+.winner i:nth-child(10n-31),
+#winner i:nth-child(10n-31) {
+  transition-delay: 1.9659258259999999s;
+}
+.winner i:nth-child(10n-32),
+#winner i:nth-child(10n-32) {
+  transition-delay: 1.8660254040000002s;
+}
+.winner i:nth-child(10n-33),
+#winner i:nth-child(10n-33) {
+  transition-delay: 1.707106781s;
+}
+.winner i:nth-child(10n-34),
+#winner i:nth-child(10n-34) {
+  transition-delay: 1.5s;
+}
+.winner i:nth-child(10n-35),
+#winner i:nth-child(10n-35) {
+  transition-delay: 1.258819045s;
+}
+.winner i:nth-child(10n-36),
+#winner i:nth-child(10n-36) {
+  transition-delay: 1s;
+}
+.winner i:nth-child(10n-37),
+#winner i:nth-child(10n-37) {
+  transition-delay: 0.7411809549999999s;
+}
+.winner i:nth-child(10n-38),
+#winner i:nth-child(10n-38) {
+  transition-delay: 0.5s;
+}
+.winner i:nth-child(10n-39),
+#winner i:nth-child(10n-39) {
+  transition-delay: 0.292893219s;
+}
+.winner i:nth-child(10n-40),
+#winner i:nth-child(10n-40) {
+  transition-delay: 0.13397459599999995s;
+}
+.winner i:nth-child(10n-41),
+#winner i:nth-child(10n-41) {
+  transition-delay: 0.03407417400000001s;
+}
+.winner i:nth-child(10n-42),
+#winner i:nth-child(10n-42) {
+  transition-delay: 0s;
+}
+.winner i:nth-child(10n-43),
+#winner i:nth-child(10n-43) {
+  transition-delay: 0.03407417400000001s;
+}
+.winner i:nth-child(10n-44),
+#winner i:nth-child(10n-44) {
+  transition-delay: 0.13397459599999995s;
+}
+.winner i:nth-child(10n-45),
+#winner i:nth-child(10n-45) {
+  transition-delay: 0.292893219s;
+}
+.winner i:nth-child(10n-46),
+#winner i:nth-child(10n-46) {
+  transition-delay: 0.5s;
+}
+.winner i:nth-child(10n-47),
+#winner i:nth-child(10n-47) {
+  transition-delay: 0.7411809549999999s;
+}
+.winner i:nth-child(10n-48),
+#winner i:nth-child(10n-48) {
+  transition-delay: 1s;
+}
+.winner i:nth-child(10n-49),
+#winner i:nth-child(10n-49) {
+  transition-delay: 1.258819045s;
+}
+.winner i:nth-child(10n-50),
+#winner i:nth-child(10n-50) {
+  transition-delay: 1.5s;
+}
+.winner i:nth-child(5n-9),
+#winner i:nth-child(5n-9) {
+  background-color: #5c4b51;
+}
+.winner i:nth-child(5n-10),
+#winner i:nth-child(5n-10) {
+  background-color: #8cbeb2;
+}
+.winner i:nth-child(5n-11),
+#winner i:nth-child(5n-11) {
+  background-color: #f2ebbf;
+}
+.winner i:nth-child(5n-12),
+#winner i:nth-child(5n-12) {
+  background-color: #f3b562;
+}
+.winner i:nth-child(5n-13),
+#winner i:nth-child(5n-13) {
+  background-color: #f06060;
+}
+.winner.falldown,
+#winner.falldown {
+  display: block;
+}
+.winner.falldown .info,
+#winner.falldown .info {
+  opacity: 1;
+}
+.winner.falldown h3,
+#winner.falldown h3,
+.winner.falldown button,
+#winner.falldown button {
+  opacity: 1;
+}
+.winner.falldown i,
+#winner.falldown i {
+  height: 100% !important;
+}

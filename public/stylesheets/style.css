@@ -130,9 +130,7 @@ h1 {
   -webkit-transition: color 1s, box-shadow 0.25s, top 0.1s, left 0.1s;
 }
 .btn-start:hover {
-  top: -2px;
-  left: -2px;
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+  top: -5px;
 }
 .btn-start:hover i {
   -webkit-animation: growshrink 0.25s;
@@ -177,6 +175,19 @@ h1 {
   left: 80%;
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
+}
+#doSomething h2 {
+  opacity: 0.15;
+  text-transform: uppercase;
+  font-size: 5em;
+  font-weight: bold;
+  margin-top: 0;
+  text-align: center;
+}
+#doSomething .volunteer {
+  display: block;
+  width: 50%;
+  margin: 75px auto 0;
 }
 .gameWrapper {
   margin-top: 15px;

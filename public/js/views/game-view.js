@@ -14,15 +14,8 @@ define([
       'guessInput': '#guessInput',
       'guessHistory': '#guessHistory',
       'actorQueue'  : '#actorQueue'
-    },
-    events : {
-      'click .join-queue'       : 'joinQueue'
     }
   });
-
-  view.prototype.joinQueue = function() {
-    this.publishEvent('joinQueue');
-  };
 
   return view;
 });

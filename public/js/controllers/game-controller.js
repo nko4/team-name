@@ -76,17 +76,18 @@ define([
         socket.emit('enqueue');
       });
 
-      socket.on('queue_updated', function(queue){
-        console.log(queue);
-        var queueCollection = new Collection(queue);
-        $('#actorQueue').html('');
-        var queueCollectionView = new QueueCollectionView({
+      var queueCollection = new Collection();
+      var queueCollectionView = new QueueCollectionView({
           autoRender : true,
           collection : queueCollection,
           region     : 'actorQueue',
           session    : session,
           api_key    : api_key
-        })
+      });
+
+      socket.on('queue_updated', function(queue){
+        queueCollection.add(queue);
+        queueCollectionView.renderAllItems();
       });
 
       socket.on('new_phrase', function(data){
@@ -100,7 +101,7 @@ define([
       });
 
       // Connect to opentok
-      var session   = TB.initSession(params.session_id);
+      var session = TB.initSession(params.session_id);
       session.connect(api_key, params.token);
 
       // When connected, create self

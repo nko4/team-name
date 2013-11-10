@@ -9,7 +9,10 @@ define([
   var collectionView = CollectionView.extend({
     itemView      : QueueMini,
     template      : queueCollectionTemplate,
-    listSelector  : '.actors'
+    listSelector  : '.actors',
+    events        : {
+      'click .join-queue' : 'joinQueue'
+    }
   });
 
   collectionView.prototype.initItemView = function(model){
@@ -19,6 +22,10 @@ define([
       session         : this.options.session,
       api_key         : this.options.api_key
     });
+  };
+
+  collectionView.prototype.joinQueue = function() {
+    this.publishEvent('joinQueue');
   };
 
   return collectionView;

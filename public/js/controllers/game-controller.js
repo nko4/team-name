@@ -126,6 +126,7 @@ define([
         });
 
         cardModel.reset();
+        cardView.render();
       });
 
       // Listen for stage chane events to update the actor attribute
@@ -230,8 +231,15 @@ define([
       });
 
       // Are players leaving?
-      session.on('players', function(e){
+      socket.on('players', function(e){
         console.log(e)
+        for (var p in players.models) {
+          var player = players.models[p];
+          console.log(player);
+          if (!_.findWhere(e, { id: player.attributes.id })) {
+              players.remove(player)
+          }
+        }
       });
 
       // Cool working code

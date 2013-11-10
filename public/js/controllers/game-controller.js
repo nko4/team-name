@@ -20,9 +20,12 @@ define([
     },
 
     play : function(params){
+      TB.setLogLevel(0);
+
       var api_key   = '44393472';
       var self      = this;
       var players   = new Collection();
+      var queueCollection = new Collection();
 
       // View Handling
       this.view = new GameView({
@@ -47,30 +50,52 @@ define([
         region      : 'guessInput'
       });
 
+      // On page load
+      socket.emit('info', function(data){
+        // add the players
+        if(data.players) players.add(data.players);
+        // mark a player as the actor... maybe
+        if(data.stage.player){
+          var actor = players.findWhere({ id : data.stage.player.id });
+          actor.set({ actor : true });
+        }
+
+        // Add players to the queue
+        if(data.queue) queueCollection.add(data.queue)
+      });
+
       guessinputview.on('guess', function (e) {
         socket.emit('guess', e.guess);
       });
 
       socket.on('bad_guess', function (e) {
-        //data.player, guess
-        if (e.player.id === uid) {
-          guesshistoryview.addHistory(e.guess);
-        }
+        players.findWhere({ id: e.player.id }).trigger('bad_guess', e);
       });
 
       socket.on('correct_guess', function (e) {
-        //e.player, e.guess
-        if (e.player.id === uid) {
-          //watcherView.trigger('correct_guess', e);
-        }
+        players.findWhere({ id: e.player.id }).trigger('correct_guess', e);
+        players.findWhere({ id: e.stage.id }).trigger('acting_points', e);
       });
 
       this.subscribeEvent('joinQueue', function(){
-        guessinputview.disableInput();
+        //guessinputview.disableInput();
         socket.emit('enqueue');
       });
 
-      var queueCollection = new Collection();
+      socket.on('start', function(data){
+        console.log('start', data)
+      });
+
+      // Listen for stage chane events to update the actor attribute
+      socket.on('stage_change', function(data){
+        players.each(function(item){
+          item.set({ 'actor' : false });
+        });
+
+        var player = players.findWhere({ id : data.player.id });
+        player.set({ 'actor' : true });
+      });
+
       var queueCollectionView = new QueueCollectionView({
           autoRender : true,
           collection : queueCollection,
@@ -102,7 +127,7 @@ define([
       var vidOptions = {
         publishAudio  : false,
         publishVideo  : true,
-        width         : 150,
+        width         : 300,
         height        : 150
       };
       session.on('sessionConnected', function(e){

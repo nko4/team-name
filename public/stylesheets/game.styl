@@ -1,9 +1,3 @@
-.actor
-  position          absolute
-  top               0
-  left              0
-  width             100%
-
 #cardHint
 #guessHistory
 #guessInput
@@ -85,17 +79,69 @@ h4
   .player
     position        absolute
     left            15px
+    &.bad_guess
+      video
+        border      1px solid red
+      .guess
+        background-color red
+    &.correct_guess
+      video
+        border      1px solid green
     &:nth-child(even)
       left          auto
       right         15px
+      .guess
+        left        auto
+        right       90%
+        &.in
+          opacity   1
+          right     110%
     &:nth-child(1), &:nth-child(2)
       top           0
     &:nth-child(3), &:nth-child(4)
       top           175px
     &:nth-child(5), &:nth-child(6)
       top           350px
-
+    &.actor
+      left          225px
+      .video
+        width       740px !important
+        height      320px !important
+      .thumbnail
+        width       750px
+        height      330px
+      .score
+        bottom      1em
+        right       1em
   .thumbnail
     overflow        hidden
     width           160px
     height          160px
+    margin          0
+  .guess
+    color           #fff
+    min-width       100px
+    max-width       600px
+    margin-top      -0.5em
+    opacity         0
+    position        absolute
+    top             50%
+    left            90%
+    transition      left 1s, opacity .5s
+    padding         .5em
+    font-size       1.4em
+    border-radius   3px
+    box-shadow      0px 0px 3px rgba(#000, .9) 
+    border          2px solid #fff
+    background-color green
+    z-index         100
+    &.in
+      opacity       1
+      left          110%
+  .score
+    color           #fff
+    text-shadow     1px 1px 5px rgba(#000, .9), -1px -1px 5px rgba(#000, .9)
+    font-size       1.8em
+    position        absolute
+    bottom          .5em
+    right           .5em

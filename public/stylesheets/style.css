@@ -177,12 +177,6 @@ h1 {
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
 }
-.actor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
 #cardHint,
 #guessHistory,
 #guessInput,
@@ -285,9 +279,26 @@ h4.border-bottom {
   position: absolute;
   left: 15px;
 }
+#players .player.bad_guess video {
+  border: 1px solid #f00;
+}
+#players .player.bad_guess .guess {
+  background-color: #f00;
+}
+#players .player.correct_guess video {
+  border: 1px solid #008000;
+}
 #players .player:nth-child(even) {
   left: auto;
   right: 15px;
+}
+#players .player:nth-child(even) .guess {
+  left: auto;
+  right: 90%;
+}
+#players .player:nth-child(even) .guess.in {
+  opacity: 1;
+  right: 110%;
 }
 #players .player:nth-child(1),
 #players .player:nth-child(2) {
@@ -301,8 +312,54 @@ h4.border-bottom {
 #players .player:nth-child(6) {
   top: 350px;
 }
+#players .player.actor {
+  left: 225px;
+}
+#players .player.actor .video {
+  width: 740px !important;
+  height: 320px !important;
+}
+#players .player.actor .thumbnail {
+  width: 750px;
+  height: 330px;
+}
+#players .player.actor .score {
+  bottom: 1em;
+  right: 1em;
+}
 #players .thumbnail {
   overflow: hidden;
   width: 160px;
   height: 160px;
+  margin: 0;
+}
+#players .guess {
+  color: #fff;
+  min-width: 100px;
+  max-width: 600px;
+  margin-top: -0.5em;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transition: left 1s, opacity 0.5s;
+  padding: 0.5em;
+  font-size: 1.4em;
+  border-radius: 3px;
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.9);
+  border: 2px solid #fff;
+  background-color: #008000;
+  z-index: 100;
+}
+#players .guess.in {
+  opacity: 1;
+  left: 110%;
+}
+#players .score {
+  color: #fff;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.9), -1px -1px 5px rgba(0,0,0,0.9);
+  font-size: 1.8em;
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
 }

@@ -28,10 +28,9 @@ h1 {
   min-width: 776px;
   text-align: center;
 }
-.vote {
-  position: fixed;
-  bottom: 1em;
-  right: 0;
+.nko-vote {
+  position: absolute;
+  top: -2em;
 }
 .btn {
   border-radius: 3px;
@@ -180,6 +179,9 @@ h1 {
 }
 .gameWrapper {
   margin-top: 15px;
+}
+#gameCtrls {
+  position: relative;
 }
 #gameCtrls .control-set {
   margin-bottom: 15px;

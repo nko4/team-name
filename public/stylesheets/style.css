@@ -22,7 +22,7 @@ h4 {
   font-family: 'Yanone Kaffeesatz', 'Helvetica', sans-serif, 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 h1 {
-  background: transparent url("../images/txt-heading.png") no-repeat center center;
+  background: transparent url("../images/frazy.gif") no-repeat center center;
   margin-top: 0;
   min-height: 127px;
   min-width: 776px;
@@ -308,6 +308,12 @@ h1 {
 #guessInput {
   margin-bottom: 15px;
   padding-bottom: 1em;
+}
+#guessInput #userGuess {
+  height: 42px;
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
 #guessInput h5 {
   width: 100%;

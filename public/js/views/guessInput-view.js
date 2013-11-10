@@ -37,8 +37,6 @@ define([
     Chaplin.View.prototype.render.apply(this, arguments);
     var self = this;
     var bitly_uri = "https://api-ssl.bitly.com/shorten?callback=?&access_token=74b52c220435d964a2e7b4806cf42300e6a7af55&longUrl=" + encodeURI(window.location.href);
-    
-    $('#userGuess').focus();
 
     $.getJSON(bitly_uri, function (response) {
       if (response.errorCode == 0) {

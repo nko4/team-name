@@ -69,6 +69,7 @@ define([
       };
 
       this.subscribeEvent('joinQueue', function(){
+        guessinputview.disableInput();
         socket.emit('enqueue');
       });
 

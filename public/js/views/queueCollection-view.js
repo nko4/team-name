@@ -11,7 +11,8 @@ define([
     template      : queueCollectionTemplate,
     listSelector  : '.actors',
     events        : {
-      'click .join-queue' : 'joinQueue'
+      'click .join-queue' : 'joinQueue',
+      'click .leave-queue' : 'leaveQueue'
     }
   });
 
@@ -24,8 +25,16 @@ define([
     });
   };
 
-  collectionView.prototype.joinQueue = function() {
+  collectionView.prototype.joinQueue = function(e) {
+    $(e.currentTarget).hide();
+    $(this.el).find('.leave-queue').removeClass('hidden').show();
     this.publishEvent('joinQueue');
+  };
+
+  collectionView.prototype.leaveQueue = function(e) {
+    $(e.currentTarget).hide();
+    $(this.el).find('.join-queue').show();
+    this.publishEvent('leaveQueue');
   };
 
   return collectionView;

@@ -85,6 +85,10 @@ define([
         socket.emit('enqueue');
       });
 
+      this.subscribeEvent('leaveQueue', function(){
+        socket.emit('dequeue');
+      });
+
       socket.on('start', function(data){
         console.log('start', data);
       });
@@ -108,6 +112,7 @@ define([
       });
 
       socket.on('queue_updated', function(queue){
+        queueCollection.reset();
         queueCollection.add(queue);
         queueCollectionView.renderAllItems();
       });
@@ -130,7 +135,7 @@ define([
       var vidOptions = {
         publishAudio  : false,
         publishVideo  : true,
-        width         : 300,
+        width         : 350,
         height        : 150
       };
       session.on('sessionConnected', function(e){

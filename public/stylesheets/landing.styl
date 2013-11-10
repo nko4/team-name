@@ -9,9 +9,9 @@
   margin-top              40px
   padding-top             10px
   height                  175px
-  text-align              justify
   h3
-    font-size             2.4em
+    font-size             1.9em
+    line-height           160%
 
 #startPlaying
   height                  175px
@@ -19,17 +19,18 @@
   .btn-text
     color                 #444
 
-#instructions
-  height                  175px
-  h3
-    font-size             2.4em
+#tips
+  ul
+    border                4px solid $yellow
+    padding               10px
+    background-color      rgba(255,255,255,.6)
+    box-shadow            4px 4px 0 $orange
+    margin-top            12px
   li
     font-size             1.4em
-    padding-left          1em
-    padding-bottom        .15em
+    padding-bottom        .4em
     &:before
       margin-right        .5em
-      content             '*'
 
 
 .btn-start
@@ -79,3 +80,8 @@
       left                    80%
       background-color        $colorSeries[4]
       -webkit-animation-delay .2s
+
+#about
+  text-align    center
+  font-size     1em
+  padding-top   70px

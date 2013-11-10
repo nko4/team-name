@@ -224,6 +224,9 @@ h1 {
 #guessHistory p {
   padding: 0 0.5em 0.5em 0.5em;
 }
+#actorQueue {
+  position: relative;
+}
 #actorQueue .progress {
   margin-bottom: 0;
 }
@@ -247,6 +250,11 @@ h1 {
 }
 #actorQueue h4 .pull-left {
   margin-right: 1em;
+}
+#actorQueue .queue-actions {
+  top: 2px;
+  position: absolute;
+  right: 3px;
 }
 #actorQueue .join-queue {
   margin-bottom: 10px;

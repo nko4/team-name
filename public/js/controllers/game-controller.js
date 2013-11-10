@@ -52,6 +52,8 @@ define([
 
       // On page load
       socket.emit('info', function(data){
+        console.log(data);
+
         // add the players
         if(data.players) players.add(data.players);
         // mark a player as the actor... maybe
@@ -150,6 +152,11 @@ define([
       session.on('streamCreated', function(e){
         webcamview.killReminder();
         subscribeToStreams(e.streams);
+      });
+
+      // Are players leaving?
+      session.on('players', function(e){
+        condole.log(e)
       });
 
       // Cool working code

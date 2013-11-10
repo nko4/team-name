@@ -15,7 +15,8 @@ define([
       'guessHistory': '#guessHistory',
       'actorQueue'  : '#actorQueue',
       'players'     : '#players'
-    }
+    },
+    className : 'gameWrapper'
   });
 
   return view;

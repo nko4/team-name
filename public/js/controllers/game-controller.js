@@ -35,6 +35,8 @@ define([
         return Chaplin.helpers.redirectTo('game#idle')
       }
 
+      window.trackEvent('game', 'name', window.game.game_name);
+
       var api_key   = '44393472';
       var self      = this;
       var players   = new Collection();
@@ -90,6 +92,7 @@ define([
       });
 
       guessinputview.on('guess', function (e) {
+        window.trackEvent('game', 'guess');
         socket.emit('guess', e.guess);
       });
 
@@ -104,10 +107,12 @@ define([
       });
 
       this.subscribeEvent('joinQueue', function(){
+        window.trackEvent('game', 'enqueue');
         socket.emit('enqueue');
       });
 
       this.subscribeEvent('leaveQueue', function(){
+        window.trackEvent('game', 'dequeue');
         socket.emit('dequeue');
       });
 
@@ -134,6 +139,8 @@ define([
       });
 
       socket.on('winner', function (e) {
+        window.trackEvent('game', 'winner');
+        
         var $player = $('#uid_'+e.player_id);
         var $yay = $('#winner').removeClass('hidden');
         

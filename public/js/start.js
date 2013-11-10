@@ -4,6 +4,11 @@ require(['chaplin', 'config/routes', 'socketio'], function(Chaplin, routes, io){
   window.socket = io.connect()
   window.game = window.game || {};
 
+  window.trackEvent = function(category, action, label, value) {
+    if (!ga) return;
+    ga('send', 'event', category, action, label, value);
+  };
+
   // Wait for socket connection, then build the client side app
   socket.on('connect', function(){
     var app = Chaplin.Application.extend({

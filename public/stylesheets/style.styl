@@ -55,5 +55,29 @@ h1
   position              relative
   margin-bottom         15px
 
+#vote-arrows
+  position              absolute
+  width                 30px
+  height                30px
+  top                   410px
+  .marker
+    position            absolute
+    width               2px
+    background-color    $blueingreen
+    height              38px
+    top                 -5px
+  .arrow
+    position            absolute
+    background-color    $plumb
+    width               25px
+    height              25px
+    -webkit-transform   rotate(45deg)
+    -moz-transform      rotate(45deg)
+    left                -10px
+    &:nth-child(2)
+      top               2px
+      left              -9px
+      opacity           .5
+
 @import './landing'
 @import './game'

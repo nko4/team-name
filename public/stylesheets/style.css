@@ -72,6 +72,33 @@ h1 {
   position: relative;
   margin-bottom: 15px;
 }
+#vote-arrows {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 410px;
+}
+#vote-arrows .marker {
+  position: absolute;
+  width: 2px;
+  background-color: #8cbeb2;
+  height: 38px;
+  top: -5px;
+}
+#vote-arrows .arrow {
+  position: absolute;
+  background-color: #5c4b51;
+  width: 25px;
+  height: 25px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  left: -10px;
+}
+#vote-arrows .arrow:nth-child(2) {
+  top: 2px;
+  left: -9px;
+  opacity: 0.5;
+}
 @-webkit-keyframes growshrink {
   0% {
     height: 5px;
@@ -130,9 +157,7 @@ h1 {
   -webkit-transition: color 1s, box-shadow 0.25s, top 0.1s, left 0.1s;
 }
 .btn-start:hover {
-  top: -2px;
-  left: -2px;
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+  top: -5px;
 }
 .btn-start:hover i {
   -webkit-animation: growshrink 0.25s;
@@ -177,6 +202,19 @@ h1 {
   left: 80%;
   background-color: #f06060;
   -webkit-animation-delay: 0.2s;
+}
+#doSomething h2 {
+  opacity: 0.15;
+  text-transform: uppercase;
+  font-size: 5em;
+  font-weight: bold;
+  margin-top: 0;
+  text-align: center;
+}
+#doSomething .volunteer {
+  display: block;
+  width: 50%;
+  margin: 75px auto 0;
 }
 .gameWrapper {
   margin-top: 15px;

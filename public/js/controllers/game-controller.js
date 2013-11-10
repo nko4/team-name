@@ -91,7 +91,6 @@ define([
       });
 
       this.subscribeEvent('joinQueue', function(){
-        //guessinputview.disableInput();
         socket.emit('enqueue');
       });
 
@@ -156,6 +155,10 @@ define([
 
         session.publish(publisher);
         subscribeToStreams(e.streams);
+      });
+
+      session.on('sessionDisconnected', function (e) {
+        debugger;
       });
 
       // Listen for others to join

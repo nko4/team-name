@@ -142,7 +142,7 @@ define([
 
       // Connect to opentok
       var session = TB.initSession(params.session_id);
-      session.connect(api_key, params.token);
+      session.connect(api_key, window.game.token);
 
       // When connected, create self
       var vidOptions = {

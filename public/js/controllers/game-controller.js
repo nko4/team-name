@@ -38,6 +38,10 @@ define([
         region      : 'guessInput'
       });
 
+      guessinputview.on('guess', function (e) {
+        socket.emit('guess', e.guess);
+      });
+
       // When new people join, this view gets built
       var createNewWatcherView = function(uid){
         var domId = 'uid_' + uid;

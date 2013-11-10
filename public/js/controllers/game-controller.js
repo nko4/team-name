@@ -121,6 +121,19 @@ define([
           api_key    : api_key
       });
 
+      socket.on('winner', function (e) {
+        var $player = $('#uid_'+e.player_id);
+        var $yay = $('#winner').removeClass('hidden');
+        
+        setTimeout(function(){
+          $yay.addClass('falldown');
+        },10);
+
+        setTimeout(function(){
+          $yay.find('.info').append($player.clone());
+        },3000);
+      });
+
       socket.on('queue_updated', function(queue){
         queueCollection.reset();
         queueCollection.add(queue);

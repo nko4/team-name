@@ -135,6 +135,7 @@ define([
         guessinputview.trigger('new_card')
 
         // Re render the card view
+        cardModel.reset();
         cardModel.set(data);
         cardView.render()
       });

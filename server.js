@@ -38,7 +38,6 @@ var CloakServer, cloak,
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
-    io.set('log level', 1);
 }
 
 // Routes
@@ -81,7 +80,13 @@ var start_server = function (db) {
             var send_token = function (p) {
                 if (!game.session_id) return;
                 var token = opentok.get_token(game.session_id, p.id);
-                p.emit('session', { session_id: game.session_id, token: token, socket_id: p.id });
+                
+                p.emit('session', { 
+                    session_id: game.session_id, 
+                    token: token, 
+                    socket_id: p.id,
+                    game_name: game.name
+                });
             };
 
             game.on('player_joined', function (p) {

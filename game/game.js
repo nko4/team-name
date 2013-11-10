@@ -296,7 +296,6 @@ Game.prototype.update_queue = function () {
 
     // If there's nobody on stage OR the player has been on stage long enough
     if (!this.stage.player || this.stage.completed_phrases >= config().PHRASE_LIMIT) {
-        console.log('time left', this.phrase_time_left());
         // If we are not in the middle of a phrase
         if (this.phrase_time_left() < config().CHECK_QUEUE_INTERVAL) {
             this.clear_stage();
@@ -326,6 +325,7 @@ Game.prototype.has_player_with_id = function (id) {
 
 Game.prototype.set_session_id = function (session_id) {
     this.session_id = session_id;
+    this.name = this.name || session_id;
     this.emit('session_joined');
 };
 

@@ -273,9 +273,6 @@ Game.prototype.start = function () {
 Game.prototype.winner = function (winner) {
     this.message_players("winner", winner);
     this.end();
-    setTimeout((function () {
-        this.start();
-    }).bind(this), config().TIME_BETWEEN_GAMES);
 };
 
 Game.prototype.end = function () {

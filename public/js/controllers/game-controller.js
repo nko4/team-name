@@ -2,13 +2,15 @@ define([
   'chaplin',
   'controllers/base/controller',
   'models/base/model',
+  'models/base/collection',
   'views/game-view',
   'views/watcher-view',
   'views/webcamReminder-view',
   'views/guessHistory-view',
   'views/guessInput-view',
   'views/card-view',
-], function(Chaplin, Controller, Model, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView){
+  'views/queueCollection-view',
+], function(Chaplin, Controller, Model, Collection, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -61,7 +63,13 @@ define([
       });
 
       socket.on('queue_updated', function(queue){
-        console.log('queue', queue);
+        var queueCollection = new Collection(queue);
+        var queueCollectionView = new QueueCollectionView({
+          autoRender : true,
+          collection : queueCollection,
+          region     : 'actorQueue',
+          session    : session
+        })
       });
 
       socket.on('new_phrase', function(data){
@@ -87,7 +95,7 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView(session.connection.connectionId), vidOptions);
+        var publisher = TB.initPublisher(api_key, createNewWatcherView(socket.socket.sessionid), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });

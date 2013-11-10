@@ -12,7 +12,8 @@ define([
       'actor'      : '#actor',
       'card'       : '#cardHint',
       'guessInput': '#guessInput',
-      'guessHistory': '#guessHistory'
+      'guessHistory': '#guessHistory',
+      'actorQueue'  : '#actorQueue'
     },
     events : {
       'click .join-queue'       : 'joinQueue'

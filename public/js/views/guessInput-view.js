@@ -39,11 +39,13 @@ define([
     var bitly_uri = "https://api-ssl.bitly.com/shorten?callback=?&access_token=74b52c220435d964a2e7b4806cf42300e6a7af55&longUrl=" + encodeURI(window.location.href);
 
     $.getJSON(bitly_uri, function (response) {
-      if (response.errorCode == 500) {
-        $('#shortUrl').val(window.location.href);
+      if (response.errorCode == 0) {
+        for (var x in response.results) {
+          $('#shortUrl').val(response.results[x].shortUrl);
+        }
       } 
       else {
-        $('#shortUrl').val(response.url);  
+        $('#shortUrl').val(window.location.href);
       }
     });
 

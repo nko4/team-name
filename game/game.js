@@ -20,7 +20,7 @@ var log = function (message) {
 };
 
 var normalize_string = function (val) {
-    return (val || "").trim().toLowerCase().split(/\s+/).join('');
+    return (val || "").replace(/\W+/gi, '');
 };
 
 function Game (max_size, name) {
@@ -28,7 +28,6 @@ function Game (max_size, name) {
     this.max_size = max_size;
     this.players = [];
     this.stage = { player: null, time: null };
-    this.phrase_history = [];
     this.current_phrase = null;
     this.is_started = true;
     this.queue = [];
@@ -189,8 +188,6 @@ Game.prototype.next_phrase = function () {
     clearTimeout(this.phrase_timeout);
     var p = this.phrase_store.get();
     var game = this;
-    this.phrase_history.push(p);
-
     var parts = p.phrase.toLowerCase().split(/\s+/);
     
     this.current_phrase = {
@@ -234,12 +231,11 @@ Game.prototype.guess_phrase_info = function () {
 };
 
 Game.prototype.set_stage = function (p) {
-    
     if (are_same(this.stage.player, p)) return;
-
     this.stage.completed_phrases = 0;
     this.stage.player = p;
     this.message_players('stage_change', this.stage);
+    this.next_phrase();                    
 };
 
 Game.prototype.complete_phrase = function () {
@@ -256,6 +252,7 @@ Game.prototype.complete_phrase = function () {
 Game.prototype.clear_stage = function () {
     clearInterval(this.phrase_timeout);
     this.stage.completed_phrases = 0;
+    this.current_phrase = null;
     var p = this.stage.player;
     this.stage.player = null;
     this.message_players('stage_clear', p);
@@ -276,10 +273,6 @@ Game.prototype.start = function () {
 Game.prototype.winner = function (winner) {
     this.message_players("winner", winner);
     this.end();
-
-    setTimeout((function () {
-        this.start();
-    }).bind(this), config().TIME_BETWEEN_GAMES);
 };
 
 Game.prototype.end = function () {
@@ -300,13 +293,11 @@ Game.prototype.update_queue = function () {
 
     // If there's nobody on stage OR the player has been on stage long enough
     if (!this.stage.player || this.stage.completed_phrases >= config().PHRASE_LIMIT) {
-        console.log('time left', this.phrase_time_left());
         // If we are not in the middle of a phrase
         if (this.phrase_time_left() < config().CHECK_QUEUE_INTERVAL) {
             this.clear_stage();
             this.set_stage(this.queue.shift());
             this.message_players('queue_updated', this.queue);
-            this.next_phrase();                    
             return true;
         }
     }
@@ -331,6 +322,7 @@ Game.prototype.has_player_with_id = function (id) {
 
 Game.prototype.set_session_id = function (session_id) {
     this.session_id = session_id;
+    this.name = this.name || session_id;
     this.emit('session_joined');
 };
 

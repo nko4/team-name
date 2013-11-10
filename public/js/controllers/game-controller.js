@@ -10,17 +10,30 @@ define([
   'views/card-view',
   'views/queueCollection-view',
   'views/playerCollection-view',
-], function(Chaplin, Controller, Model, Collection, GameView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView, PlayerCollectionView){
+  'jquery-cookie'
+], function(Chaplin, Controller, Model, Collection, GameView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView, PlayerCollectionView, jQueryCookie){
   'use strict';
 
   var gameController = Controller.extend({
 
-    wait : function(){
-      socket.emit('join');
+    idle : function() {
+      if (window.game.game_name) {
+        Chaplin.helpers.redirectTo('game#play', { game_name: window.game.game_name});
+      }
     },
 
-    play : function(params){
+    // Join a random game
+    wait : function(){
+      socket.emit('join', { name: $.cookie('frazy.username') });
+    },
+
+    play : function(params){      
       TB.setLogLevel(0);
+
+      if (!window.game.game_name) {
+        socket.emit('join', { name: $.cookie('frazy.username'), game_name: params.game_name });
+        return Chaplin.helpers.redirectTo('game#idle')
+      }
 
       var api_key   = '44393472';
       var self      = this;
@@ -60,7 +73,6 @@ define([
 
       // On page load
       socket.emit('info', function(data){
-
         // add the players
         if(data.players) players.add(data.players);
         // mark a player as the actor... maybe
@@ -145,6 +157,7 @@ define([
       socket.on('new_phrase', function(data){
         // Clear out the guess inputs when cards change
         guessinputview.trigger('new_card')
+        guesshistoryview.clearHistory();
 
         // Re render the card view
         cardModel.reset();
@@ -153,16 +166,18 @@ define([
       });
 
       // Connect to opentok
-      var session = TB.initSession(params.session_id);
+      var session = TB.initSession(window.game.session_id);
       session.connect(api_key, window.game.token);
 
       // When connected, create self
       var vidOptions = {
-        publishAudio  : false,
+        publishAudio  : true,
         publishVideo  : true,
-        width         : 350,
+        width         : 370,
         height        : 150
       };
+
+      window.mySocketId = 0;
       session.on('sessionConnected', function(e){
         window.mySocketId = socket.socket.sessionid;
 

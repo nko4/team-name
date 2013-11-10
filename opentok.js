@@ -9,7 +9,7 @@ module.exports = {
             cb(null, result);
         });
     },
-    get_token: function (session_id) {
-        return opentok.generateToken({ session_id: session_id });
+    get_token: function (session_id, socket_id) {
+        return opentok.generateToken({ session_id: session_id, connection_data: "socket_id:" + socket_id });
     }
 };

@@ -49,13 +49,15 @@ app.get('/reload_data', function (req, res) {
     require('./game/phrase_store').load_data();
     res.end();
 });
+app.get('/reload_config', function (req, res) {
+    config.reload();
+    res.end();
+});
 
 // ROW-BRO!
-MongoClient.connect(config.MONGO_DB_CONNECTION, function (err, db) {
+MongoClient.connect(config().MONGO_DB_CONNECTION, function (err, db) {
     if (err) throw err;
-    
     console.log('Connected to mongodb');
-    
     //Gotta load the phrases or we're no good
     require('./game/phrase_store').initialize(db, function () {
         start_server(db);

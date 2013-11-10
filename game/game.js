@@ -70,14 +70,14 @@ Game.prototype.add_player = function (player) {
             this.message_players('bad_guess', { player: player, guess: guess });
         }
         else {
-            this.stage.player.score += this.current_phrase.value * config.STAGE_PLAYER_SCORE_MOD; 
+            this.stage.player.score += this.current_phrase.value * config().STAGE_PLAYER_SCORE_MOD; 
             player.score += this.current_phrase.value;
             this.message_players('correct_guess', { player: player, guess: guess, stage: this.stage.player }); 
 
-            if (this.stage.player.score >= config.WINNING_SCORE) {
+            if (this.stage.player.score >= config().WINNING_SCORE) {
                 this.winner(this.stage.player);
             }
-            else if (player.score >= config.WINNING_SCORE) {
+            else if (player.score >= config().WINNING_SCORE) {
                 this.winner(player);
             }
             else {
@@ -85,6 +85,17 @@ Game.prototype.add_player = function (player) {
             }
         }
     }).bind(this));
+
+    player.on('info', function (cb) {
+        var info = game.info();
+        cb(_.extend({ player_id: player.id }, info));
+    });
+
+    player.on('leave_stage', function () {
+        if (this.stage.player && this.stage.player.id == socket.id) {
+            game.leave_stage();
+        }
+    });
 
     player.on('enqueue', function () {
         if (!_.findWhere(game.queue, { id: player.id })) {
@@ -121,6 +132,9 @@ Game.prototype.remove_player = function (player) {
     this.players = _(this.players).reject(function (e) { return e.id == player.id; });
     
     player.off('guess');
+    player.off('info');
+    player.off('guess');
+    player.off('leave_stage');
     player.off('enqueue');
     player.off('dequeue');
     
@@ -172,7 +186,7 @@ Game.prototype.next_phrase = function () {
         set_on: new Date().getTime(),
         hint: p.hint,
         value: p.value,
-        duration: config.PHRASE_DURATION
+        duration: config().PHRASE_DURATION
     };
     
     var decorate_stage_player = function (player, o) {
@@ -183,16 +197,24 @@ Game.prototype.next_phrase = function () {
         return o;
     };
     
-    this.message_players('new_phrase', {
-        set_on: this.current_phrase.set_on,
-        value: this.current_phrase.value,
-        duration: this.current_phrase.duration,
-        hint: this.current_phrase.hint
-    }, decorate_stage_player);
+    this.message_players('new_phrase', this.guess_phrase_info(), decorate_stage_player);
 
     this.phrase_timeout = setTimeout((function () {
         this.complete_phrase();
     }).bind(this),  this.current_phrase.duration);
+};
+
+Game.prototype.guess_phrase_info = function () {
+    if (this.current_phrase) {
+        return {
+            value: this.current_phrase.value,
+            duration: this.current_phrase.duration,
+            time_left: this.current_phrase.duration - (new Date().getTIme() - this.current_phrase.set_on),
+            hint: this.current_phrase.hint
+        }
+    }
+
+    return {};
 };
 
 Game.prototype.set_stage = function (p) {
@@ -200,7 +222,6 @@ Game.prototype.set_stage = function (p) {
 
     this.stage.completed_phrases = 0;
     this.stage.player = p;
-    this.stage.time = new Date().getTime();
     this.message_players('stage_change', this.stage);
 };
 
@@ -208,7 +229,7 @@ Game.prototype.complete_phrase = function () {
     this.stage.completed_phrases++;
     this.message_players('phrase_complete', this.players);
 
-    var reached_limit = this.stage.completed_phrases >= config.PHRASE_LIMIT ;
+    var reached_limit = this.stage.completed_phrases >= config().PHRASE_LIMIT ;
     var others_waiting = this.queue.length > 0;
 
     if (reached_limit && others_waiting) {
@@ -222,9 +243,9 @@ Game.prototype.complete_phrase = function () {
 Game.prototype.clear_stage = function () {
     clearInterval(this.phrase_timeout);
     this.stage.completed_phrases = 0;
+    var p = this.stage.player;
     this.stage.player = null;
-    this.stage.time = null;
-    this.message_players('stage_clear');
+    this.message_players('stage_clear', p);
 };
 
 Game.prototype.start = function () {
@@ -237,13 +258,13 @@ Game.prototype.start = function () {
         if (this.queue.length > 0) {
             // If there's nobody on stage OR the player has been on stage long enough
             // This COULD boot somebody in the middle of a phrase for now
-            if (!this.stage.player || this.stage.completed_phrases >= config.PHRASE_LIMIT) {
+            if (!this.stage.player || this.stage.completed_phrases >= config().PHRASE_LIMIT) {
                 this.clear_stage();
                 this.set_stage(this.queue.shift());
                 this.next_phrase();
             }
         }
-    }).bind(this), config.CHECK_QUEUE_INTERVAL);
+    }).bind(this), config().CHECK_QUEUE_INTERVAL);
 
     this.message_players('start', this.players);
     this.emit('start');
@@ -255,7 +276,7 @@ Game.prototype.winner = function (winner) {
 
     setTimeout((function () {
         this.start();
-    }).bind(this), config.TIME_BETWEEN_GAMES);
+    }).bind(this), config().TIME_BETWEEN_GAMES);
 };
 
 Game.prototype.end = function () {
@@ -286,10 +307,15 @@ Game.prototype.set_session_id = function (session_id) {
 };
 
 Game.prototype.info = function () {
-    return {
-        player_count: this.players.length,
-        session_id: this.session_id
-    }
+    return { 
+        game_name: this.name,
+        players: this.players, 
+        queue: this.queue, 
+        stage: this.stage, 
+        is_started: this.is_started, 
+        private: this.private,
+        phrase: this.guess_phrase_info()
+    };
 };
 
 module.exports = Game;

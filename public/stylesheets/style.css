@@ -313,6 +313,7 @@ h4.border-bottom {
   top: 350px;
 }
 #players .player.actor {
+  top: 0;
   left: 225px;
 }
 #players .player.actor .video {

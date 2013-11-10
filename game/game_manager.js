@@ -13,10 +13,6 @@ function GameManager (io, db) {
     io.sockets.on('connection', (function (socket) {
         var game = this;
 
-        socket.on('info', function (cb) {
-            cb(game.get_game_data_for_player(socket.id));
-        });
-
         socket.on('join', function (data) {
             data = data || {};
             game.on_player_joined(new Player(socket, data.name), data.game_name);
@@ -34,24 +30,6 @@ function GameManager (io, db) {
 }
 
 util.inherits(GameManager, EventEmitter);
-
-GameManager.prototype.get_game_data_for_player = function (id) {
-    var game = this.find_game_by_player_id(id);
-    var data = {};
-
-    if (game) {
-        data = { 
-            game_name: game.name,
-            players: game.players, 
-            queue: game.queue, 
-            stage: game.stage, 
-            is_started: game.is_started, 
-            private: game.private 
-        };
-    }
-
-    return _.extend({ player_id: id }, data);    
-};
 
 GameManager.prototype.find_game_by_player = function (p) {
     return _.find(this.games, function (r) { return r.has_player(p); });
@@ -82,7 +60,7 @@ GameManager.prototype.get_public_game = function () {
 };
 
 GameManager.prototype.create_game = function (name, private) {
-    var game = new Game(config.MAX_GAME_SIZE, name, this.db);
+    var game = new Game(config().MAX_GAME_SIZE, name, this.db);
     game.private = private;
     this.games.push(game);
     this.emit('game_created', game);

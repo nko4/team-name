@@ -50,7 +50,7 @@ PhraseStore.prototype.get = function () {
 };
 
 var generate_hint = function (val, percent) {
-	 percent = percent || config.WORD_HINT_PERCENT;
+	 percent = percent || config().WORD_HINT_PERCENT;
 
     var replace_at = function (s, index, character) {
         return s.substr(0, index) + character + s.substr(index + character.length);

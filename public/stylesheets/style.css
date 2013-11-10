@@ -72,6 +72,33 @@ h1 {
   position: relative;
   margin-bottom: 15px;
 }
+#vote-arrows {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 410px;
+}
+#vote-arrows .marker {
+  position: absolute;
+  width: 2px;
+  background-color: #8cbeb2;
+  height: 38px;
+  top: -5px;
+}
+#vote-arrows .arrow {
+  position: absolute;
+  background-color: #5c4b51;
+  width: 25px;
+  height: 25px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  left: -10px;
+}
+#vote-arrows .arrow:nth-child(2) {
+  top: 2px;
+  left: -9px;
+  opacity: 0.5;
+}
 @-webkit-keyframes growshrink {
   0% {
     height: 5px;

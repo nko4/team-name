@@ -99,6 +99,10 @@ h1 {
   left: -9px;
   opacity: 0.5;
 }
+.thumbnail {
+  -webkit-transition: none;
+  transition: none;
+}
 @-webkit-keyframes growshrink {
   0% {
     height: 5px;
@@ -412,7 +416,7 @@ h4.border-bottom {
   height: 395px;
 }
 #players .player.actor .score {
-  bottom: 1em;
+  bottom: 0.5em;
   right: 1em;
 }
 #players .guess {
@@ -443,7 +447,7 @@ h4.border-bottom {
   text-shadow: 1px 1px 5px rgba(0,0,0,0.9), -1px -1px 5px rgba(0,0,0,0.9);
   font-size: 1.8em;
   position: absolute;
-  bottom: 0.5em;
+  bottom: 0.25em;
   right: 0.5em;
 }
 @media (max-width: 1200px) and (min-width:992px) {
@@ -465,6 +469,35 @@ h4.border-bottom {
   }
   #players .player.actor {
     left: 200px;
+  }
+  #players .player.actor .thumbnail {
+    width: 610px;
+    height: 310px;
+  }
+  #players .player.actor .video {
+    width: 600px !important;
+    height: 300px !important;
+  }
+}
+@media (max-width: 991px) {
+  #players .thumbnail {
+    width: 95px;
+    height: 95px;
+  }
+  #players .thumbnail .video {
+    width: 85px !important;
+    height: 85px !important;
+  }
+  #players .player:nth-child(3),
+  #players .player:nth-child(4) {
+    top: 107px;
+  }
+  #players .player:nth-child(5),
+  #players .player:nth-child(6) {
+    top: 215px;
+  }
+  #players .player.actor {
+    left: 100px;
   }
   #players .player.actor .thumbnail {
     width: 610px;

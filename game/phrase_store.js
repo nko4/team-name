@@ -1,13 +1,19 @@
-var phrases = require('../data/phrases');
+var all_phrases = require('../data/phrases');
 var _ = require('underscore');
 var config = require('../config');
 
-function PhraseStore () { };
+function PhraseStore () {
+    this.phrases = all_phrases.slice(0);
+};
 
-PhraseStore.prototype.get_phrase = function (history) {
-	var p = _.clone(phrases[Math.round(Math.random() * phrases.length)]);
-	p.hint = generate_hint(p.phrase);
-	return p;
+PhraseStore.prototype.get = function () {
+    if (this.phrases.length == 0) {
+        this.phrases = all_phrases.slice(0);
+    }
+
+    var i = Math.floor(Math.random() * this.phrases.length);
+    var p = this.phrases.splice(i, 1);
+	return _.extend({ hint: generate_hint(p[0].phrase) }, p[0]);
 };
 
 var generate_hint = function (val, percent) {

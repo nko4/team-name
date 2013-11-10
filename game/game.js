@@ -4,7 +4,6 @@ var PhraseStore = require('./phrase_store');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var config = require('../config');
-var phrase_store = new PhraseStore();
 
 var are_same = function (player1, player2) {
     if (!player1 && !player2)
@@ -24,10 +23,6 @@ var normalize_string = function (val) {
     return (val || "").trim().toLowerCase().split(/\s+/).join('');
 };
 
-var get_phrase = function (history) {
-    return phrase_store.get_phrase(history);
-};
-
 function Game (max_size, name) {
     this.name = name;
     this.max_size = max_size;
@@ -38,6 +33,7 @@ function Game (max_size, name) {
     this.is_started = true;
     this.queue = [];
     this.private = false;
+    this.phrase_store = new PhraseStore();
 }
 
 util.inherits(Game, EventEmitter);
@@ -76,9 +72,17 @@ Game.prototype.add_player = function (player) {
         else {
             this.stage.player.score += this.current_phrase.value * config.STAGE_PLAYER_SCORE_MOD; 
             player.score += this.current_phrase.value;
-            
             this.message_players('correct_guess', { player: player, guess: guess }); 
-            this.complete_phrase();
+
+            if (this.stage.player.score >= config.WINNING_SCORE) {
+                this.winner(this.stage.player);
+            }
+            else if (player.score >= config.WINNING_SCORE) {
+                this.winner(player);
+            }
+            else {
+                this.complete_phrase();    
+            }
         }
     }).bind(this));
 
@@ -135,7 +139,6 @@ Game.prototype.remove_player_with_id = function (id) {
 Game.prototype.check_guess = function (guess) {
     if (!this.current_phrase) 
         return false;
-
     return (normalize_string(guess) === this.current_phrase.normalized);
 };
 
@@ -154,7 +157,7 @@ Game.prototype.message_players = function (message, data, extra) {
 
 Game.prototype.next_phrase = function () {
     clearTimeout(this.phrase_timeout);
-    var p = get_phrase(this.phrase_history);
+    var p = this.phrase_store.get();
     var game = this;
     this.phrase_history.push(p);
 
@@ -246,6 +249,15 @@ Game.prototype.start = function () {
     this.emit('start');
 };
 
+Game.prototype.winner = function (winner) {
+    this.message_players("winner", winner);
+    this.end();
+
+    setTimeout((function () {
+        this.start();
+    }).bind(this), config.TIME_BETWEEN_GAMES);
+};
+
 Game.prototype.end = function () {
     clearInterval(this.queue_handle);
     clearTimeout(this.phrase_timeout);
@@ -253,6 +265,7 @@ Game.prototype.end = function () {
     this.is_started = false;
     this.clear_stage();
     this.queue = [];
+    this.current_phrase = null;
     this.message_players('end', this.players);
     this.emit('end');
 };

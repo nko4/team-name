@@ -72,7 +72,7 @@ Game.prototype.add_player = function (player) {
         else {
             this.stage.player.score += this.current_phrase.value * config.STAGE_PLAYER_SCORE_MOD; 
             player.score += this.current_phrase.value;
-            this.message_players('correct_guess', { player: player, guess: guess }); 
+            this.message_players('correct_guess', { player: player, guess: guess, stage: this.stage.player }); 
 
             if (this.stage.player.score >= config.WINNING_SCORE) {
                 this.winner(this.stage.player);

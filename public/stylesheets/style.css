@@ -29,8 +29,7 @@ h1 {
   text-align: center;
 }
 .toolbar {
-  position: absolute;
-  top: -2em;
+  margin-bottom: 2px;
 }
 .nko-vote {
   display: inline-block;
@@ -427,7 +426,7 @@ h4.border-bottom {
 }
 #players .player.actor .score {
   bottom: 0.5em;
-  right: 1em;
+  left: 1em;
 }
 #players .guess {
   color: #fff;

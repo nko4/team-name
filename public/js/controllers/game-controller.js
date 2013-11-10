@@ -102,6 +102,7 @@ define([
 
       // Listen for others to join
       session.on('streamCreated', function(e){
+        webcamview.killReminder();
         subscribeToStreams(e.streams);
       });
 

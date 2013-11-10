@@ -1,5 +1,5 @@
 .gameWrapper
-  margin-top          -50px
+  margin-top          15px
 
 #gameCtrls
   .control-set
@@ -79,26 +79,27 @@ h4
 
 #players
   position          relative
-  height            410px
+  height            395px
+  margin-bottom     30px
   .thumbnail
     overflow        hidden
-    width           135px
-    height          135px
+    width           125px
+    height          125px
     margin          0
     .video
-      width           125px !important
-      height          125px !important
+      width           115px !important
+      height          115px !important
   .player
     position        absolute
     left            0
     &.bad_guess
-      video
-        border      1px solid red
+      .video
+        border      1px solid $red
       .guess
-        background-color red
+        background-color $red
     &.correct_guess
-      video
-        border      1px solid green
+      .video
+        border      1px solid $blueingreen
     &:nth-child(even)
       left          auto
       right         0
@@ -140,9 +141,10 @@ h4
     font-size       1.4em
     border-radius   3px
     box-shadow      0px 0px 3px rgba(#000, .9) 
-    border          2px solid #fff
-    background-color green
+    border          3px solid #fff
+    background-color $blueingreen
     z-index         100
+    text-shadow     1px 1px 1px rgba(0,0,0,.5)
     &.in
       opacity       1
       left          110%

@@ -442,3 +442,37 @@ h4.border-bottom {
   bottom: 0.5em;
   right: 0.5em;
 }
+@media (max-width: 1200px) and (min-width:992px) {
+  #players .thumbnail {
+    width: 95px;
+    height: 95px;
+  }
+  #players .thumbnail .video {
+    width: 85px !important;
+    height: 85px !important;
+  }
+  #players .player:nth-child(3),
+  #players .player:nth-child(4) {
+    top: 107px;
+  }
+  #players .player:nth-child(5),
+  #players .player:nth-child(6) {
+    top: 215px;
+  }
+  #players .player.actor {
+    left: 200px;
+  }
+  #players .player.actor .thumbnail {
+    width: 610px;
+    height: 310px;
+  }
+  #players .player.actor .video {
+    width: 600px !important;
+    height: 300px !important;
+  }
+}
+@media (max-width: 991px) {
+  #playes .thumbnail.actor {
+    left: 150px;
+  }
+}

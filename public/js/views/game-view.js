@@ -22,7 +22,9 @@ define([
     className : 'gameWrapper'
   });
 
-  view.prototype.volunteer = function(first_argument) {
+  view.prototype.volunteer = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
     this.publishEvent('joinQueue');
   };
 

@@ -2,13 +2,15 @@ define([
   'chaplin',
   'controllers/base/controller',
   'models/base/model',
+  'models/base/collection',
   'views/game-view',
   'views/watcher-view',
   'views/webcamReminder-view',
   'views/guessHistory-view',
   'views/guessInput-view',
   'views/card-view',
-], function(Chaplin, Controller, Model, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView){
+  'views/queueCollection-view',
+], function(Chaplin, Controller, Model, Collection, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -18,6 +20,7 @@ define([
     },
 
     play : function(params){
+      var api_key   = '44393472';
       var self      = this;
 
       // View Handling
@@ -38,10 +41,8 @@ define([
         region      : 'guessInput'
       });
 
-      guessinputview.on('guess', function (data) {
-        guesshistoryview.addHistory(data.guess);
-        // send to server, if it's correct
-        // if its incorrect, add to guessed items
+      guessinputview.on('guess', function (e) {
+        socket.emit('guess', e.guess);
       });
 
       // When new people join, this view gets built
@@ -53,15 +54,37 @@ define([
         });
         watcherView.setDomId(domId);
 
+        socket.on('bad_guess', function (e) {
+          //data.player, guess
+          if (e.player.id === uid) {
+            guesshistoryview.addHistory(e.guess);
+          }
+        });
+
+        socket.on('correct_guess', function (e) {
+          //e.player, e.guess
+          if (e.player.id === uid) {
+            watcherView.trigger('correct_guess', e);
+          }
+        });
+
         return domId;
       };
 
       this.subscribeEvent('joinQueue', function(){
+        guessinputview.disableInput();
         socket.emit('enqueue');
       });
 
       socket.on('queue_updated', function(queue){
-        console.log('queue', queue);
+        var queueCollection = new Collection(queue);
+        var queueCollectionView = new QueueCollectionView({
+          autoRender : true,
+          collection : queueCollection,
+          region     : 'actorQueue',
+          session    : session,
+          api_key    : api_key
+        })
       });
 
       socket.on('new_phrase', function(data){
@@ -75,7 +98,6 @@ define([
       });
 
       // Connect to opentok
-      var api_key   = '44393472';
       var session   = TB.initSession(params.session_id);
       session.connect(api_key, params.token);
 
@@ -87,13 +109,15 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView(session.connection.connectionId), vidOptions);
+        console.log(socket.socket.sessionid);
+        var publisher = TB.initPublisher(api_key, createNewWatcherView(socket.socket.sessionid), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });
 
       // Listen for others to join
       session.on('streamCreated', function(e){
+        webcamview.killReminder();
         subscribeToStreams(e.streams);
       });
 

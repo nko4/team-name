@@ -200,7 +200,9 @@ define([
 
         session.publish(publisher);
         subscribeToStreams(e.streams);
+
         $('#userGuess').focus();
+        $(window).scrollTop(0);
       });
 
 

@@ -134,7 +134,7 @@ define([
       });
 
       socket.on('winner', function (e) {
-        var $player = $('#uid_'+e.player_id);
+        var $player = $('#uid_'+e.id);
         var $yay = $('#winner').removeClass('hidden');
         
         setTimeout(function(){

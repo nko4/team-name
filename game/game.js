@@ -98,17 +98,11 @@ Game.prototype.add_player = function (player) {
     });
 
     player.on('enqueue', function () {
-        if (!_.findWhere(game.queue, { id: player.id })) {
-            game.queue.push(player);
-            game.message_players('queue_updated', game.queue);
-        }
+        game.enqueue_player(player);
     });
 
     player.on('dequeue', function () {
-        if (_.findWhere(game.queue, { id: player.id })) {    
-            game.queue = _(game.queue).reject(function (e) { return are_same(e, player); });
-            game.message_players('queue_updated', game.queue);
-        }
+        game.dequeue_player(player);
     });
 
     this.emit('player_joined', player);
@@ -129,20 +123,42 @@ Game.prototype.remove_player = function (player) {
         this.clear_stage();
     }
 
-    this.players = _(this.players).reject(function (e) { return e.id == player.id; });
-    
     player.off('guess');
     player.off('info');
     player.off('guess');
     player.off('leave_stage');
     player.off('enqueue');
     player.off('dequeue');
-    
+
+    this.dequeue_player(player);    
+    this.players = _(this.players).reject(function (e) { return e.id == player.id; });
     this.message_players('players', this.players);
-    
+
     if (this.players.length < 2) {
         this.end();
     }
+};
+
+Game.prototype.enqueue_player = function (player) {
+    if (!this.is_player_in_queue(player.id)) {
+        this.queue.push(player);
+        this.message_players('queue_updated', this.queue);
+        return true;
+    }
+    return false;
+};
+
+Game.prototype.dequeue_player = function (player) {
+    if (this.is_player_in_queue(player.id)) {
+        this.queue = _(this.queue).reject(function (e) { return e.id == player.id; });
+        this.message_players('queue_updated', this.queue);
+        return true;
+    }
+    return false;
+};
+
+Game.prototype.is_player_in_queue = function (id) {
+    return !!_.findWhere(this.queue, { id: id });
 };
 
 Game.prototype.remove_player_with_id = function (id) {

@@ -41,10 +41,8 @@ define([
         region      : 'guessInput'
       });
 
-      guessinputview.on('guess', function (data) {
-        guesshistoryview.addHistory(data.guess);
-        // send to server, if it's correct
-        // if its incorrect, add to guessed items
+      guessinputview.on('guess', function (e) {
+        socket.emit('guess', e.guess);
       });
 
       // When new people join, this view gets built
@@ -56,10 +54,25 @@ define([
         });
         watcherView.setDomId(domId);
 
+        socket.on('bad_guess', function (e) {
+          //data.player, guess
+          if (e.player.id === uid) {
+            guesshistoryview.addHistory(e.guess);
+          }
+        });
+
+        socket.on('correct_guess', function (e) {
+          //e.player, e.guess
+          if (e.player.id === uid) {
+            watcherView.trigger('correct_guess', e);
+          }
+        });
+
         return domId;
       };
 
       this.subscribeEvent('joinQueue', function(){
+        guessinputview.disableInput();
         socket.emit('enqueue');
       });
 
@@ -104,6 +117,7 @@ define([
 
       // Listen for others to join
       session.on('streamCreated', function(e){
+        webcamview.killReminder();
         subscribeToStreams(e.streams);
       });
 

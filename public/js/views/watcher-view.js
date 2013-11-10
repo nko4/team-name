@@ -12,8 +12,16 @@ define([
 
   view.prototype.setDomId = function(id){
     $(this.el).find('.video').attr('id', id);
-  }
+  };
 
+
+  view.prototype.correct_guess = function(e){
+
+  };
+
+  view.prototype.bad_guess = function(e){
+
+  };
 
   return view;
 });

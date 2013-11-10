@@ -11,7 +11,17 @@ define([
       'click button' : 'makeGuess',
       'keyup input'  : 'updateGuess'
     },
-    updateGuess : function(e) {
+    disableInput : function () {
+      var $this = $(this.el);
+      $this.find('input').addClass('disable').attr('disabled', true);
+      $this.find('button').addClass('disable').attr('disabled', true);
+    },
+    enableInput : function () {
+      var $this = $(this.el);
+      $this.find('input').addClass('disable').attr('disabled', false);
+      $this.find('button').addClass('disable').attr('disabled', false);
+    },
+    updateGuess : function (e) {
       this.guess = e.currentTarget.value;
       if (e.keyCode === 13) { this.makeGuess(); }
     },

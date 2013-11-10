@@ -209,7 +209,7 @@ Game.prototype.guess_phrase_info = function () {
         return {
             value: this.current_phrase.value,
             duration: this.current_phrase.duration,
-            time_left: this.current_phrase.duration - (new Date().getTIme() - this.current_phrase.set_on),
+            time_left: this.current_phrase.duration - (new Date().getTime() - this.current_phrase.set_on),
             hint: this.current_phrase.hint
         }
     }

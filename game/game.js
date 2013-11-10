@@ -65,7 +65,9 @@ Game.prototype.add_player = function (player) {
     this.players.push(player);
 
     player.on('guess', (function (guess) {
-        if (!this.current_phrase)
+        if (!this.stage.player) return;
+
+        if (!this.current_phrase || are_same(this.stage.player, player))
             return;
 
         if (!this.check_guess(guess)) {

@@ -545,6 +545,8 @@ h4.border-bottom {
 }
 .winner .info,
 #winner .info {
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  border-radius: 3px;
   position: absolute;
   text-align: center;
   width: 400px;
@@ -586,8 +588,8 @@ h4.border-bottom {
 .winner .video,
 #winner .video {
   position: relative !important;
-  width: 400px !important;
-  height: 375px !important;
+  width: 390px !important;
+  height: 365px !important;
   top: 0 !important;
   left: 0 !important;
   margin-top: 0 !important;

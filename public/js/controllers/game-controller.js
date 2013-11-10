@@ -120,6 +120,14 @@ define([
         console.log('start', data);
       });
 
+      socket.on('stage_clear', function(data){
+        players.each(function(item){
+          item.set({ 'actor' : false });
+        });
+
+        cardModel.reset();
+      });
+
       // Listen for stage chane events to update the actor attribute
       socket.on('stage_change', function(data){
         players.each(function(item){
@@ -200,7 +208,9 @@ define([
 
         session.publish(publisher);
         subscribeToStreams(e.streams);
+
         $('#userGuess').focus();
+        $(window).scrollTop(0);
       });
 
 
@@ -221,7 +231,7 @@ define([
 
       // Are players leaving?
       session.on('players', function(e){
-        condole.log(e)
+        console.log(e)
       });
 
       $(document).on('click', '.gohome', function(e) {

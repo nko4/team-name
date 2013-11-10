@@ -135,7 +135,7 @@ define([
       var vidOptions = {
         publishAudio  : false,
         publishVideo  : true,
-        width         : 300,
+        width         : 350,
         height        : 150
       };
       session.on('sessionConnected', function(e){

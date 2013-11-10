@@ -38,6 +38,7 @@ h1 {
   box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
 }
 #webcamReminder {
+  z-index: 3;
   padding: 5px;
   color: #fff;
   width: 100%;
@@ -178,7 +179,7 @@ h1 {
   -webkit-animation-delay: 0.2s;
 }
 .gameWrapper {
-  margin-top: -50px;
+  margin-top: 15px;
 }
 #gameCtrls .control-set {
   margin-bottom: 15px;
@@ -278,30 +279,31 @@ h4.border-bottom {
 }
 #players {
   position: relative;
-  height: 410px;
+  height: 395px;
+  margin-bottom: 30px;
 }
 #players .thumbnail {
   overflow: hidden;
-  width: 135px;
-  height: 135px;
+  width: 125px;
+  height: 125px;
   margin: 0;
 }
 #players .thumbnail .video {
-  width: 125px !important;
-  height: 125px !important;
+  width: 115px !important;
+  height: 115px !important;
 }
 #players .player {
   position: absolute;
   left: 0;
 }
-#players .player.bad_guess video {
-  border: 1px solid #f00;
+#players .player.bad_guess .video {
+  border: 1px solid #f06060;
 }
 #players .player.bad_guess .guess {
-  background-color: #f00;
+  background-color: #f06060;
 }
-#players .player.correct_guess video {
-  border: 1px solid #008000;
+#players .player.correct_guess .video {
+  border: 1px solid #8cbeb2;
 }
 #players .player:nth-child(even) {
   left: auto;
@@ -357,9 +359,10 @@ h4.border-bottom {
   font-size: 1.4em;
   border-radius: 3px;
   box-shadow: 0px 0px 3px rgba(0,0,0,0.9);
-  border: 2px solid #fff;
-  background-color: #008000;
+  border: 3px solid #fff;
+  background-color: #8cbeb2;
   z-index: 100;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 }
 #players .guess.in {
   opacity: 1;

@@ -135,8 +135,6 @@ define([
         var player = new Model({ 'id' : socket.socket.sessionid });
         players.add(player);
         var view = playersview.initItemView(player);
-        view.append_name_entry();
-
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
 
         session.publish(publisher);

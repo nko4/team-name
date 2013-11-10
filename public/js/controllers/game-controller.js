@@ -52,21 +52,16 @@ define([
       });
 
       socket.on('bad_guess', function (e) {
-        //data.player, guess
-        if (e.player.id === uid) {
-          guesshistoryview.addHistory(e.guess);
-        }
+        players.findWhere({ id: e.player.id }).trigger('bad_guess', e);
       });
 
       socket.on('correct_guess', function (e) {
-        //e.player, e.guess
-        if (e.player.id === uid) {
-          //watcherView.trigger('correct_guess', e);
-        }
+        players.findWhere({ id: e.player.id }).trigger('correct_guess', e);
+        players.findWhere({ id: e.stage.id }).trigger('acting_points', e);
       });
 
       this.subscribeEvent('joinQueue', function(){
-        guessinputview.disableInput();
+        //guessinputview.disableInput();
         socket.emit('enqueue');
       });
 

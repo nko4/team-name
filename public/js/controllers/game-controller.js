@@ -17,7 +17,9 @@ define([
   var gameController = Controller.extend({
 
     idle : function() {
-      // Waiting for the session event
+      if (window.game.game_name) {
+        Chaplin.helpers.redirectTo('game#play', { game_name: window.game.game_name});
+      }
     },
 
     // Join a random game
@@ -27,8 +29,8 @@ define([
 
     play : function(params){      
       TB.setLogLevel(0);
-      
-      if (!window.game.session_id) {
+
+      if (!window.game.game_name) {
         socket.emit('join', { name: $.cookie('frazy.username'), game_name: params.game_name });
         return Chaplin.helpers.redirectTo('game#idle')
       }

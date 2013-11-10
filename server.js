@@ -80,7 +80,7 @@ var start_server = function (db) {
             var send_token = function (p) {
                 if (!game.session_id) return;
                 var token = opentok.get_token(game.session_id, p.id);
-                
+
                 p.emit('session', { 
                     session_id: game.session_id, 
                     token: token, 

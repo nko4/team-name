@@ -471,8 +471,3 @@ h4.border-bottom {
     height: 300px !important;
   }
 }
-@media (max-width: 991px) {
-  #playes .thumbnail.actor {
-    left: 150px;
-  }
-}

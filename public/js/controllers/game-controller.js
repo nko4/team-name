@@ -242,6 +242,13 @@ define([
         }
       });
 
+      $(document).on('click', '.gohome', function(e) {
+        e.preventDefault();
+        var gohome = confirm('This will take you out of the game, are you sure?');
+        if (gohome) window.location = '/';
+        return false;
+      });
+
       // Cool working code
       var subscribeToStreams = function(streams) {
         if (!session) return;

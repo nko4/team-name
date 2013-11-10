@@ -141,7 +141,7 @@ define([
 
       // Connect to opentok
       var session = TB.initSession(params.session_id);
-      session.connect(api_key, params.token);
+      session.connect(api_key, window.game.token);
 
       // When connected, create self
       var vidOptions = {
@@ -152,7 +152,15 @@ define([
       };
       session.on('sessionConnected', function(e){
         window.mySocketId = socket.socket.sessionid;
-        var player = new Model({ 'id' : socket.socket.sessionid, me : true });
+
+        var player = new Model({ 
+          'id'    : socket.socket.sessionid, 
+          'me'    : true,
+          'TB_id' : null
+        });
+        
+        players.add(player);
+        
         var view = playersview.initItemView(player);
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
 
@@ -160,8 +168,14 @@ define([
         subscribeToStreams(e.streams);
       });
 
-      session.on('sessionDisconnected', function (e) {
-        debugger;
+
+      session.on('streamDestroyed', function(e){
+        for(var i in e.streams){
+          var player = players.findWhere({ TB_id : e.streams[i].id });
+          if(typeof player !== 'undefined') {
+            player.collection.remove(player);
+          }
+        }
       });
 
       // Listen for others to join
@@ -183,8 +197,10 @@ define([
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
             var socketId = stream.connection.data.replace('socket_id:', '');
-
-            var player = new Model({ 'id' : socketId });
+            var player = new Model({ 
+              'id' : socketId,
+              'TB_id' : stream.id
+            });
             players.add(player);
             playersview.initItemView(player);
 

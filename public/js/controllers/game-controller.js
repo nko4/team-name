@@ -26,6 +26,8 @@ define([
       var self      = this;
       var players   = new Collection();
       var queueCollection = new Collection();
+      var cardModel = new Model();
+      var cardView  = null;
 
       // View Handling
       this.view = new GameView({
@@ -49,9 +51,15 @@ define([
         autoRender  : true,
         region      : 'guessInput'
       });
+      var cardView = new CardView({
+        autoRender  : true,
+        region      : 'card',
+        model       : cardModel
+      });
 
       // On page load
       socket.emit('info', function(data){
+
         // add the players
         if(data.players) players.add(data.players);
         // mark a player as the actor... maybe
@@ -59,7 +67,11 @@ define([
           var actor = players.findWhere({ id : data.stage.player.id });
           actor.set({ actor : true });
         }
-
+        // Update a card if late joining the game
+        if(data.phrase){
+          cardModel.set(data.phrase);
+          cardView.render();
+        }
         // Add players to the queue
         if(data.queue) queueCollection.add(data.queue);
       });
@@ -98,7 +110,7 @@ define([
         });
 
         var player = players.findWhere({ id : data.player.id });
-        player.set({ 'actor' : true });
+        if(player) player.set({ 'actor' : true });
       });
 
       var queueCollectionView = new QueueCollectionView({
@@ -117,15 +129,12 @@ define([
 
       window.guessinputview = guessinputview;
       socket.on('new_phrase', function(data){
-        //var me = players.findWhere({ me : true }).trigger('new_card', e);
+        // Clear out the guess inputs when cards change
         guessinputview.trigger('new_card')
-        var cardModel = new Model(data);
-        $('#cardHint').html('');
-        var cardView  = new CardView({
-          autoRender  : true,
-          region      : 'card',
-          model       : cardModel
-        });
+
+        // Re render the card view
+        cardModel.set(data);
+        cardView.render()
       });
 
       // Connect to opentok

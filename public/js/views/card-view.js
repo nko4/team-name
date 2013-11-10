@@ -13,12 +13,19 @@ define([
 
   view.prototype.initialize = function(){
     Chaplin.View.prototype.initialize.apply(this, arguments);
+    this.progressTimer = null;
+  };
+
+  view.prototype.render = function(){
+    Chaplin.View.prototype.render.apply(this, arguments);
+    clearInterval(this.progressTimer);
 
     var self = this;
     if(this.model.get('duration')){
       var duration  = this.model.get('duration');
-      var time      = duration;
-      setInterval(function(){
+      var time      = self.model.get('time_left') || duration;
+
+      self.progressTimer = setInterval(function(){
         time -= 1000;
 
         var progressWidth = time/duration * 100 + '%'

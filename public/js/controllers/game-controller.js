@@ -29,6 +29,7 @@ define([
       var cardModel = new Model();
       var cardView  = null;
 
+      window.playas = players;
       // View Handling
       this.view = new GameView({
         autoRender  : true,
@@ -124,6 +125,8 @@ define([
         queueCollection.reset();
         queueCollection.add(queue);
         queueCollectionView.renderAllItems();
+
+        self.publishEvent('queue_updated', queue);
       });
 
       window.guessinputview = guessinputview;
@@ -132,6 +135,7 @@ define([
         guessinputview.trigger('new_card')
 
         // Re render the card view
+        cardModel.reset();
         cardModel.set(data);
         cardView.render()
       });
@@ -148,8 +152,16 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var player = new Model({ 'id' : socket.socket.sessionid, me : true });
+        window.mySocketId = socket.socket.sessionid;
+
+        var player = new Model({ 
+          'id'    : socket.socket.sessionid, 
+          'me'    : true,
+          'TB_id' : null
+        });
+        
         players.add(player);
+        
         var view = playersview.initItemView(player);
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
 
@@ -157,8 +169,14 @@ define([
         subscribeToStreams(e.streams);
       });
 
-      session.on('sessionDisconnected', function (e) {
-        debugger;
+
+      session.on('streamDestroyed', function(e){
+        for(var i in e.streams){
+          var player = players.findWhere({ TB_id : e.streams[i].id });
+          if(typeof player !== 'undefined') {
+            player.collection.remove(player);
+          }
+        }
       });
 
       // Listen for others to join
@@ -180,8 +198,10 @@ define([
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
             var socketId = stream.connection.data.replace('socket_id:', '');
-
-            var player = new Model({ 'id' : socketId });
+            var player = new Model({ 
+              'id' : socketId,
+              'TB_id' : stream.id
+            });
             players.add(player);
             playersview.initItemView(player);
 

@@ -11,7 +11,6 @@ define([
 
       this.compose('site', SiteView);
 
-      // TODO - this won't work if a 
       if(arguments[1].action == 'play') {
         $('#site-navigation').hide();
         $('#vote-arrows').show();

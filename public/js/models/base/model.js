@@ -26,6 +26,15 @@ define([
           if(truths >= keys.length) model.set(message.data);
         }
       });
+    },
+
+    reset : function(){
+      var self = this;
+      for(key in this.attributes){
+        var obj = {}
+        obj[key] = null;
+        self.set(obj)
+      }
     }
   });
 

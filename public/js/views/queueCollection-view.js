@@ -13,6 +13,9 @@ define([
     events        : {
       'click .join-queue' : 'joinQueue',
       'click .leave-queue' : 'leaveQueue'
+    },
+    listen        : {
+      'queue_updated mediator' : 'updateQueueAction',
     }
   });
 
@@ -26,15 +29,23 @@ define([
   };
 
   collectionView.prototype.joinQueue = function(e) {
-    $(e.currentTarget).hide();
-    $(this.el).find('.leave-queue').removeClass('hidden').show();
     this.publishEvent('joinQueue');
   };
 
   collectionView.prototype.leaveQueue = function(e) {
-    $(e.currentTarget).hide();
-    $(this.el).find('.join-queue').show();
     this.publishEvent('leaveQueue');
+  };
+
+  collectionView.prototype.updateQueueAction = function(queue) {
+    var me  = _.findWhere(queue, { id : mySocketId });
+    var $el = $(this.el);
+    if(me) {
+      $el.find('.leave-queue').removeClass('hidden');
+      $el.find('.join-queue').addClass('hidden');
+    } else {
+      $el.find('.leave-queue').addClass('hidden');
+      $el.find('.join-queue').removeClass('hidden');
+    }
   };
 
   return collectionView;

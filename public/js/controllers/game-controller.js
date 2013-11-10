@@ -29,6 +29,7 @@ define([
       var cardModel = new Model();
       var cardView  = null;
 
+      window.playas = players;
       // View Handling
       this.view = new GameView({
         autoRender  : true,
@@ -124,6 +125,8 @@ define([
         queueCollection.reset();
         queueCollection.add(queue);
         queueCollectionView.renderAllItems();
+
+        self.publishEvent('queue_updated', queue);
       });
 
       window.guessinputview = guessinputview;
@@ -148,8 +151,8 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
+        window.mySocketId = socket.socket.sessionid;
         var player = new Model({ 'id' : socket.socket.sessionid, me : true });
-        players.add(player);
         var view = playersview.initItemView(player);
         var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
 

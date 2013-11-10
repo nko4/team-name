@@ -1,7 +1,8 @@
 define([
   'chaplin',
   'views/base/view',
-  'text!templates/nameView.hbs'
+  'text!templates/nameView.hbs',
+  'jquery-cookie'
 ], function(Chaplin, View, template){
   'use strict';
 

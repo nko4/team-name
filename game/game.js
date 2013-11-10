@@ -234,6 +234,7 @@ Game.prototype.guess_phrase_info = function () {
 };
 
 Game.prototype.set_stage = function (p) {
+    
     if (are_same(this.stage.player, p)) return;
 
     this.stage.completed_phrases = 0;
@@ -304,6 +305,7 @@ Game.prototype.update_queue = function () {
         if (this.phrase_time_left() < config().CHECK_QUEUE_INTERVAL) {
             this.clear_stage();
             this.set_stage(this.queue.shift());
+            this.message_players('queue_updated', this.queue);
             this.next_phrase();                    
             return true;
         }

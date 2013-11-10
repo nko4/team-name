@@ -86,6 +86,11 @@ Game.prototype.add_player = function (player) {
         }
     }).bind(this));
 
+    player.on('info', function (cb) {
+        var info = game.info();
+        cb(_.extend({ player_id: player.id }, info));
+    });
+
     player.on('leave_stage', function () {
         if (this.stage.player && this.stage.player.id == socket.id) {
             game.leave_stage();
@@ -127,6 +132,9 @@ Game.prototype.remove_player = function (player) {
     this.players = _(this.players).reject(function (e) { return e.id == player.id; });
     
     player.off('guess');
+    player.off('info');
+    player.off('guess');
+    player.off('leave_stage');
     player.off('enqueue');
     player.off('dequeue');
     
@@ -189,16 +197,24 @@ Game.prototype.next_phrase = function () {
         return o;
     };
     
-    this.message_players('new_phrase', {
-        set_on: this.current_phrase.set_on,
-        value: this.current_phrase.value,
-        duration: this.current_phrase.duration,
-        hint: this.current_phrase.hint
-    }, decorate_stage_player);
+    this.message_players('new_phrase', this.guess_phrase_info(), decorate_stage_player);
 
     this.phrase_timeout = setTimeout((function () {
         this.complete_phrase();
     }).bind(this),  this.current_phrase.duration);
+};
+
+Game.prototype.guess_phrase_info = function () {
+    if (this.current_phrase) {
+        return {
+            value: this.current_phrase.value,
+            duration: this.current_phrase.duration,
+            time_left: this.current_phrase.duration - (new Date().getTIme() - this.current_phrase.set_on),
+            hint: this.current_phrase.hint
+        }
+    }
+
+    return {};
 };
 
 Game.prototype.set_stage = function (p) {
@@ -291,10 +307,15 @@ Game.prototype.set_session_id = function (session_id) {
 };
 
 Game.prototype.info = function () {
-    return {
-        player_count: this.players.length,
-        session_id: this.session_id
-    }
+    return { 
+        game_name: this.name,
+        players: this.players, 
+        queue: this.queue, 
+        stage: this.stage, 
+        is_started: this.is_started, 
+        private: this.private,
+        phrase: this.guess_phrase_info()
+    };
 };
 
 module.exports = Game;

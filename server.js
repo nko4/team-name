@@ -49,6 +49,10 @@ app.get('/reload_data', function (req, res) {
     require('./game/phrase_store').load_data();
     res.end();
 });
+app.get('/reload_config', function (req, res) {
+    config.reload();
+    res.end();
+});
 
 // ROW-BRO!
 MongoClient.connect(config().MONGO_DB_CONNECTION, function (err, db) {

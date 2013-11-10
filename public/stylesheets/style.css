@@ -304,6 +304,20 @@ h1 {
   margin-bottom: 15px;
   padding-bottom: 1em;
 }
+#guessInput h5 {
+  width: 100%;
+  clear: left;
+  font-size: 0.75em;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+#guessInput .copy-input {
+  width: 100%;
+  padding: 0px 10px;
+}
+#guessInput .copy-input input {
+  width: 100%;
+}
 h4 {
   padding: 0.5em;
   background-color: #f3f3f3;

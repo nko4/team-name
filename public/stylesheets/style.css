@@ -500,11 +500,11 @@ h4.border-bottom {
     left: 100px;
   }
   #players .player.actor .thumbnail {
-    width: 610px;
+    width: 550px;
     height: 310px;
   }
   #players .player.actor .video {
-    width: 600px !important;
+    width: 540px !important;
     height: 300px !important;
   }
 }

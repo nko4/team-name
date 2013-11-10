@@ -65,11 +65,15 @@ Game.prototype.add_player = function (player) {
     this.players.push(player);
 
     player.on('guess', (function (guess) {
+        if (!this.current_phrase)
+            return;
+
         if (!this.check_guess(guess)) {
             this.message_players('bad_guess', { player: player, guess: guess });
         }
         else {
-            this.message_players('correct_guess', { player: player, guess: guess });  
+            this.message_players('correct_guess', { player: player, guess: guess }); 
+            this.stage.player.score += this.current_phrase.value * config.STAGE_PLAYER_SCORE_MOD; 
             player.score += this.current_phrase.value;
             this.complete_phrase();
         }
@@ -121,6 +125,9 @@ Game.prototype.remove_player = function (player) {
 };
 
 Game.prototype.check_guess = function (guess) {
+    if (!this.current_phrase) 
+        return false;
+
     return (normalize_string(guess) === this.current_phrase.normalized);
 };
 

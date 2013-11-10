@@ -77,7 +77,9 @@ define([
       });
 
       socket.on('queue_updated', function(queue){
+        console.log(queue);
         var queueCollection = new Collection(queue);
+        $('#actorQueue').html('');
         var queueCollectionView = new QueueCollectionView({
           autoRender : true,
           collection : queueCollection,
@@ -109,7 +111,6 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        console.log(socket.socket.sessionid);
         var publisher = TB.initPublisher(api_key, createNewWatcherView(socket.socket.sessionid), vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
@@ -128,7 +129,8 @@ define([
         for (var i = 0; i < streams.length; i++) {
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
-            session.subscribe(stream, createNewWatcherView(stream.connection.connectionId));
+            var socketId = stream.connection.data.replace('socket_id:', '')
+            session.subscribe(stream, createNewWatcherView(socketId));
           }
         }
       };

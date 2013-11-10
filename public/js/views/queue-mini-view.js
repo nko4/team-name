@@ -1,12 +1,10 @@
 define([
   'chaplin',
   'views/base/view',
-  'text!templates/queueMini.hbs'
-], function(Chaplin, View, template){
+], function(Chaplin, View){
   'use strict';
 
   var view = View.extend({
-    template : template,
     className : 'thumbnail'
   });
 
@@ -14,6 +12,7 @@ define([
     var uid = 'uid_' + this.model.get('id');
     var clone = $('#' + uid).clone();
     $(this.el).html(clone);
+    $(this.el).attr('id', this.model.get('id'));
   }
 
   return view;

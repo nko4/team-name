@@ -273,35 +273,35 @@ h4.border-bottom {
   border-radius: 3px 3px 0 0;
   border-bottom: 1px solid #e5e5e5;
 }
-#watchers {
+#players {
   position: relative;
   height: 510px;
 }
-#watchers .video {
+#players .video {
   width: 150px !important;
   height: 150px !important;
 }
-#watchers .watcher {
+#players .player {
   position: absolute;
   left: 15px;
 }
-#watchers .watcher:nth-child(even) {
+#players .player:nth-child(even) {
   left: auto;
   right: 15px;
 }
-#watchers .watcher:nth-child(1),
-#watchers .watcher:nth-child(2) {
+#players .player:nth-child(1),
+#players .player:nth-child(2) {
   top: 0;
 }
-#watchers .watcher:nth-child(3),
-#watchers .watcher:nth-child(4) {
+#players .player:nth-child(3),
+#players .player:nth-child(4) {
   top: 175px;
 }
-#watchers .watcher:nth-child(5),
-#watchers .watcher:nth-child(6) {
+#players .player:nth-child(5),
+#players .player:nth-child(6) {
   top: 350px;
 }
-#watchers .thumbnail {
+#players .thumbnail {
   overflow: hidden;
   width: 160px;
   height: 160px;

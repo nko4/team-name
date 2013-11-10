@@ -4,14 +4,13 @@ define([
   'models/base/model',
   'models/base/collection',
   'views/game-view',
-  'views/watcher-view',
   'views/webcamReminder-view',
   'views/guessHistory-view',
   'views/guessInput-view',
   'views/card-view',
   'views/queueCollection-view',
   'views/playerCollection-view',
-], function(Chaplin, Controller, Model, Collection, GameView, WatcherView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView, PlayerCollectionView){
+], function(Chaplin, Controller, Model, Collection, GameView, WebCamView, GuessHistoryView, GuessInputView, CardView, QueueCollectionView, PlayerCollectionView){
   'use strict';
 
   var gameController = Controller.extend({
@@ -23,6 +22,7 @@ define([
     play : function(params){
       var api_key   = '44393472';
       var self      = this;
+      var players   = new Collection();
 
       // View Handling
       this.view = new GameView({
@@ -35,7 +35,8 @@ define([
       });
       var playersview = new PlayerCollectionView({
         autoRender  : true,
-        region      : 'players'
+        region      : 'players',
+        collection  : players
       });
       var guesshistoryview = new GuessHistoryView({
         autoRender  : true,
@@ -50,31 +51,19 @@ define([
         socket.emit('guess', e.guess);
       });
 
-      // When new people join, this view gets built
-      var createNewWatcherView = function(uid){
-        var domId = 'uid_' + uid;
-        var watcherView = new WatcherView({
-          autoRender  : true,
-          region      : 'watchers',
-        });
-        watcherView.setDomId(domId);
+      socket.on('bad_guess', function (e) {
+        //data.player, guess
+        if (e.player.id === uid) {
+          guesshistoryview.addHistory(e.guess);
+        }
+      });
 
-        socket.on('bad_guess', function (e) {
-          //data.player, guess
-          if (e.player.id === uid) {
-            guesshistoryview.addHistory(e.guess);
-          }
-        });
-
-        socket.on('correct_guess', function (e) {
-          //e.player, e.guess
-          if (e.player.id === uid) {
-            watcherView.trigger('correct_guess', e);
-          }
-        });
-
-        return domId;
-      };
+      socket.on('correct_guess', function (e) {
+        //e.player, e.guess
+        if (e.player.id === uid) {
+          //watcherView.trigger('correct_guess', e);
+        }
+      });
 
       this.subscribeEvent('joinQueue', function(){
         guessinputview.disableInput();
@@ -117,7 +106,11 @@ define([
         height        : 150
       };
       session.on('sessionConnected', function(e){
-        var publisher = TB.initPublisher(api_key, createNewWatcherView(socket.socket.sessionid), vidOptions);
+        var player = new Model({ 'id' : socket.socket.sessionid });
+        players.add(player);
+        playersview.initItemView(player);
+
+        var publisher = TB.initPublisher(api_key, 'uid_' + socket.socket.sessionid, vidOptions);
         session.publish(publisher);
         subscribeToStreams(e.streams);
       });
@@ -135,8 +128,13 @@ define([
         for (var i = 0; i < streams.length; i++) {
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
-            var socketId = stream.connection.data.replace('socket_id:', '')
-            session.subscribe(stream, createNewWatcherView(socketId));
+            var socketId = stream.connection.data.replace('socket_id:', '');
+
+            var player = new Model({ 'id' : socketId });
+            players.add(player);
+            playersview.initItemView(player);
+
+            session.subscribe(stream, 'uid_' + socketId);
           }
         }
       };

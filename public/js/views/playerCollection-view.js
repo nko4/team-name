@@ -8,6 +8,7 @@ define([
 
   var collectionView = CollectionView.extend({
     itemView      : PlayerMiniView,
+    className     : 'players-wrapper',
     template      : playerCollectionTemplate,
     listSelector  : '.players'
   });

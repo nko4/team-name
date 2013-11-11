@@ -53,7 +53,7 @@ GameManager.prototype.get_public_game = function () {
     var game = _.find(this.games, function (r) { return r.has_space(); });
 
     if (!game) {
-        game = this.create_game('Game ' + this.games.length, false);
+        game = this.create_game('Game ' + (new Date().getTime()), false);
     }
 
     return game;
